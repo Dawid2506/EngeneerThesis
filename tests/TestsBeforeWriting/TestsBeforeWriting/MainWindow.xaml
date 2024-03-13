@@ -5,10 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestsBeforeWriting"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="CustomButtonStyle">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="145"/>
+            <Setter Property="Margin" Value="0, 0, 0, 5"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Button Name="employeeAdd" Content="Dodaj praownika" HorizontalAlignment="Left" Margin="78,140,0,0" VerticalAlignment="Top" Height="21" Width="74" Click="employeeAdd_Click"/>
-        <Label Name="labelx" Content="Label" HorizontalAlignment="Left" Height="25" Margin="78,40,0,0" VerticalAlignment="Top" Width="228"/>
-
+        <StackPanel Width="150" HorizontalAlignment="Left">
+            <Button Style="{StaticResource CustomButtonStyle}" Content="Dodaj pracownika" Name="addEmployee" Margin="0,150,0,5" Click="addEmployee_Click"/>
+            <Button Style="{StaticResource CustomButtonStyle}" Content="Button 2"/>
+            <Button Style="{StaticResource CustomButtonStyle}" Content="Button 3"/>
+        </StackPanel>
+        <Frame Name="MainFrame" HorizontalAlignment="Right" Width="650"/>
     </Grid>
 </Window>

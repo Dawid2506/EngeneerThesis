@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Release\
 TestsBeforeWriting
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\App.xaml
 2-1314749914
 
@@ -16,5 +16,5 @@ C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBef
 13-1310406943
 MainWindow.xaml;Res\Pages\AddEmployee.xaml;
 
-False
+True
 

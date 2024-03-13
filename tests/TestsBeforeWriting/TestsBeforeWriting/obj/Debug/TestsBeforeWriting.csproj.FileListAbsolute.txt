@@ -2,7 +2,6 @@ C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBef
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\bin\Debug\TestsBeforeWriting.exe
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\bin\Debug\TestsBeforeWriting.pdb
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting.csproj.AssemblyReference.cache
-C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting.csproj.SuggestedBindingRedirects.cache
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\MainWindow.g.cs
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\App.g.cs
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting_MarkupCompile.cache
@@ -14,3 +13,5 @@ C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBef
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting.csproj.CoreCompileInputs.cache
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting.exe
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting.pdb
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\Res\Pages\AddEmployee.g.cs
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\Res\Pages\AddEmployee.baml

@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TestsBeforeWriting.Res.Pages;
 
-namespace TestsBeforeWriting
+namespace TestsBeforeWriting.Res.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddEmployee.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddEmployee : Page
     {
-        public MainWindow()
+        public AddEmployee()
         {
             InitializeComponent();
-        }
-
-        private void addEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            AddEmployee addEmployee = new AddEmployee();
-            MainFrame.Content = addEmployee;
         }
     }
 }

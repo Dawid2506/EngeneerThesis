@@ -10,28 +10,24 @@
       Background="White">
 
     <Grid>
-        <StackPanel Width="250" HorizontalAlignment="Left">
+        <StackPanel Width="305" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Label Content="Imie" Width="100" />
-                <TextBox Name="Name" Width="150" />
+                <Label Content="Imie" Width="150" />
+                <TextBox Name="name" Width="150" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Label Content="Rodzaj umowy" Width="100" />
+                <Label Content="Rodzaj umowy" Width="150" />
                 <ComboBox Width="150" SelectedIndex="0">
-                    <ComboBoxItem Content="Opcja 1"/>
-                    <ComboBoxItem Content="Opcja 2"/>
-                    <ComboBoxItem Content="Opcja 3"/>
+                    <ComboBoxItem Content="Umowa o zlecenie"/>
+                    <ComboBoxItem Content="Umowa o prace"/>
                 </ComboBox>
             </StackPanel>
-            <!--<StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Label Content="Name" Width="100" />
-                <TextBox Name="Name" Width="150" />
-            </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Label Content="Name" Width="100" />
-                <TextBox Name="Name" Width="150" />
-            </StackPanel>-->
+                <Label Content="Minimalna liczba godzin" Width="150" />
+                <TextBox Name="minWorkHours" Width="150" />
+            </StackPanel>
 
         </StackPanel>
+        <Button Content="Dodaj pracownika" Click="addEmployee_Click" HorizontalAlignment="Left" Height="40" Margin="500,500,0,0" VerticalAlignment="Top" Width="103"/>
     </Grid>
 </Page>

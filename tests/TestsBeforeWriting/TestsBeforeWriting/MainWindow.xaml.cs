@@ -26,10 +26,16 @@ namespace TestsBeforeWriting
             InitializeComponent();
         }
 
-        private void addEmployee_Click(object sender, RoutedEventArgs e)
+        private void addEmployeePage_Click(object sender, RoutedEventArgs e)
         {
             AddEmployee addEmployee = new AddEmployee();
             MainFrame.Content = addEmployee;
+        }
+
+        private void employeePreferencePage_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeePreference employeePreference = new EmployeePreference();
+            MainFrame.Content = employeePreference;
         }
     }
 }

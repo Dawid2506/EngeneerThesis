@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\App.xaml
-2-1314749914
+3-348918379
 
-81451082161
+11-1899718069
 13-1310406943
-MainWindow.xaml;Res\Pages\AddEmployee.xaml;
+MainWindow.xaml;Res\Pages\AddEmployee.xaml;Res\Pages\EmployeePreference.xaml;
 
-True
+False
 

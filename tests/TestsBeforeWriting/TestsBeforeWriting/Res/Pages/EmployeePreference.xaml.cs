@@ -17,26 +17,20 @@ using TestsBeforeWriting.Res.Clases;
 namespace TestsBeforeWriting.Res.Pages
 {
     /// <summary>
-    /// Interaction logic for AddEmployee.xaml
+    /// Interaction logic for EmployeePreference.xaml
     /// </summary>
-    public partial class AddEmployee : Page
+    public partial class EmployeePreference : Page
     {
-        public AddEmployee()
+        public EmployeePreference()
         {
             InitializeComponent();
         }
 
-        private void addEmployee_Click(object sender, RoutedEventArgs e)
+        private void showClick_Click(object sender, RoutedEventArgs e)
         {
             IEmployeesRepository employeesRepository = EmployeesRepository.GetInstance();
-            string name = this.name.Text;
-            string contractType = "Zlecenie";
-            int minWorkHours = int.Parse(this.minWorkHours.Text);
-            Employee employee = new Employee(name, contractType, minWorkHours);
-            employeesRepository.AddEmployee(employee);
-            this.name.Text = "";
-            this.minWorkHours.Text = "";
-
+            List<Employee> employees = employeesRepository.GetEmployees();
+            show.Content = "cos:" + employees[1].name;
         }
     }
 }

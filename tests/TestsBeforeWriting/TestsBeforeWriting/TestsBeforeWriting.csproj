@@ -56,8 +56,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Res\Clases\Employee.cs" />
+    <Compile Include="Res\Clases\EmployeesRepository.cs" />
+    <Compile Include="Res\Clases\IEmployeesRepository.cs" />
     <Compile Include="Res\Pages\AddEmployee.xaml.cs">
       <DependentUpon>AddEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Res\Pages\EmployeePreference.xaml.cs">
+      <DependentUpon>EmployeePreference.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -72,6 +77,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Res\Pages\AddEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Res\Pages\EmployeePreference.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

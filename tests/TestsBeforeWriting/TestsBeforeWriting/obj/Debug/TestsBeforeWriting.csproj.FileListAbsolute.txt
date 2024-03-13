@@ -15,3 +15,5 @@ C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBef
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\TestsBeforeWriting.pdb
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\Res\Pages\AddEmployee.g.cs
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\Res\Pages\AddEmployee.baml
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\Res\Pages\EmployeePreference.g.cs
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\tests\TestsBeforeWriting\TestsBeforeWriting\obj\Debug\Res\Pages\EmployeePreference.baml

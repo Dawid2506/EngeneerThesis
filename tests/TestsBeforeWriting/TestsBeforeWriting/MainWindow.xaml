@@ -15,8 +15,8 @@
     </Window.Resources>
     <Grid>
         <StackPanel Width="150" HorizontalAlignment="Left">
-            <Button Style="{StaticResource CustomButtonStyle}" Content="Dodaj pracownika" Name="addEmployee" Margin="0,150,0,5" Click="addEmployee_Click"/>
-            <Button Style="{StaticResource CustomButtonStyle}" Content="Button 2"/>
+            <Button Style="{StaticResource CustomButtonStyle}" Content="Dodaj pracownika" Name="addEmployee" Margin="0,150,0,5" Click="addEmployeePage_Click"/>
+            <Button Style="{StaticResource CustomButtonStyle}" Content="Preferencje pracowników" Click="employeePreferencePage_Click"/>
             <Button Style="{StaticResource CustomButtonStyle}" Content="Button 3"/>
         </StackPanel>
         <Frame Name="MainFrame" HorizontalAlignment="Right" Width="650"/>

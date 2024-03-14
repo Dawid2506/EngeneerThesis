@@ -1,0 +1,29 @@
+﻿@page "/counter"
+@using OfficeOpenXml;
+@inject IJSRuntime JSRuntime
+@inject IHttpClientFactory _httpClientFactory;
+
+<button @onclick="GenerateExcel">Pobierz plik Excel</button>
+
+@code {
+    private async Task GenerateExcel()
+    {
+        using (var package = new ExcelPackage())
+        {
+            var worksheet = package.Workbook.Worksheets.Add("Arkusz1");
+
+            // Tutaj możesz dodać zawartość do pliku Excel
+            worksheet.Cells["A1"].Value = "Hello";
+            worksheet.Cells["B1"].Value = "World";
+
+            // Zapisz plik Excel do pamięci
+            var excelBytes = package.GetAsByteArray();
+
+            // Utwórz nazwę pliku
+            var fileName = "example.xlsx";
+
+            // Pobierz plik Excel
+            await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+    }
+}

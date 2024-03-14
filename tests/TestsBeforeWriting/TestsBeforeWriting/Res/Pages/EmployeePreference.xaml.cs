@@ -21,16 +21,39 @@ namespace TestsBeforeWriting.Res.Pages
     /// </summary>
     public partial class EmployeePreference : Page
     {
+        private static IEmployeesRepository employeesRepository;
+        private List<Employee> employees;
         public EmployeePreference()
         {
             InitializeComponent();
+            employeesRepository = EmployeesRepository.GetInstance();
+            employees = employeesRepository.GetEmployees();
         }
 
         private void showClick_Click(object sender, RoutedEventArgs e)
         {
-            IEmployeesRepository employeesRepository = EmployeesRepository.GetInstance();
-            List<Employee> employees = employeesRepository.GetEmployees();
             show.Content = "cos:" + employees[1].name;
+            foreach (Employee employee in employees)
+            {
+                ComboBoxItem newItem = new ComboBoxItem();
+                newItem.Content = employee.name;
+                newItem.Name = employee.name;
+                employeesList.Items.Add(newItem);
+            }
         }
+
+        private void onLoadPreferencePage(object sender, RoutedEventArgs e)
+        {
+            foreach (Employee employee in employees)
+            {
+                ComboBoxItem newItem = new ComboBoxItem();
+                newItem.Content = employee.name;
+                newItem.Name = employee.name;
+                employeesList.Items.Add(newItem);
+            }
+        }
+
+
+
     }
 }

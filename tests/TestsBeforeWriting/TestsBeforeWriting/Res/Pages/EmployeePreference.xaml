@@ -8,12 +8,13 @@
       d:DesignHeight="600" d:DesignWidth="650"
       Title="EmployeePreference"
       Background="White"
+      Loaded="onLoadPreferencePage"
       >
 
     <Grid>
         <StackPanel Orientation="Horizontal" Margin="0,15,0,0" Height="25" Width="305" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Label Content="Pracownik:" Width="150" Margin="10,0,0,0" />
-            <ComboBox Width="150" SelectedIndex="0">
+            <ComboBox Name="employeesList" Width="150" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Przykladowy pracownik"/>
             </ComboBox>
         </StackPanel>

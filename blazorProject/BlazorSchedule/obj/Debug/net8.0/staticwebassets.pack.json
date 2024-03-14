@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorSchedule.bundle.scp.css",
+      "PackagePath": "staticwebassets\\BlazorSchedule.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.BlazorSchedule.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.BlazorSchedule.props",
+      "PackagePath": "build\\BlazorSchedule.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.BlazorSchedule.props",
+      "PackagePath": "buildMultiTargeting\\BlazorSchedule.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.BlazorSchedule.props",
+      "PackagePath": "buildTransitive\\BlazorSchedule.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

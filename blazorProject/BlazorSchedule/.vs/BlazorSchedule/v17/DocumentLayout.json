@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{312C01B4-A018-43B5-A405-583F02DD11B3}|BlazorSchedule.csproj|c:\\users\\dawid\\documents\\github\\engeneerthesis\\blazorproject\\blazorschedule\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{312C01B4-A018-43B5-A405-583F02DD11B3}|BlazorSchedule.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{312C01B4-A018-43B5-A405-583F02DD11B3}|BlazorSchedule.csproj|c:\\users\\dawid\\documents\\github\\engeneerthesis\\blazorproject\\blazorschedule\\components\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{312C01B4-A018-43B5-A405-583F02DD11B3}|BlazorSchedule.csproj|solutionrelative:components\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Counter.razor",
+              "DocumentMoniker": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\Components\\Pages\\Counter.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Counter.razor",
+              "ToolTip": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\Components\\Pages\\Counter.razor",
+              "RelativeToolTip": "Components\\Pages\\Counter.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-03-14T11:22:21.295Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorProject\\BlazorSchedule\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-14T11:22:05.244Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

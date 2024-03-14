@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lp87GGSNKI646HsLs9GeRn3gLG7EccNGepYQl/yG3VM=",
+  "Hash": "7NERsNDncGqZxQ5YteoiNmMNrrNLGtxF8kBMM/lgtic=",
   "Source": "BlazorSchedule",
   "BasePath": "/",
   "Mode": "Root",
@@ -8242,25 +8242,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
-    },
-    {
-      "Identity": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\wwwroot\\jsInterop.js",
-      "SourceId": "BlazorSchedule",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "jsInterop.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\jsInterop.js"
     },
     {
       "Identity": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\wwwroot\\sample-data\\weather.json",

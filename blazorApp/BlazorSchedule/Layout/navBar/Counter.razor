@@ -3,7 +3,13 @@
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory _httpClientFactory;
 
-<button @onclick="GenerateExcel">Pobierz plik Excel</button>
+
+<head>
+    <link href="Counter.razor.css" rel="stylesheet" />
+</head>
+
+<button class="xxx" @onclick="GenerateExcel">Pobierz plik Excel</button>
+<p class="ppp">dasdasda</p>
 
 @code {
     private async Task GenerateExcel()
@@ -23,7 +29,8 @@
             var fileName = "example.xlsx";
 
             // Pobierz plik Excel
-            await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes),
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
     }
 }

@@ -41,10 +41,6 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
-      "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\wwwroot\\jsInterop.js",
-      "PackagePath": "staticwebassets\\jsInterop.js"
-    },
-    {
       "Id": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\wwwroot\\sample-data\\weather.json",
       "PackagePath": "staticwebassets\\sample-data\\weather.json"
     },

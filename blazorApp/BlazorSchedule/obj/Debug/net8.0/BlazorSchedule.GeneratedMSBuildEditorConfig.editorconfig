@@ -26,10 +26,6 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dawid/Documents/GitHub/EngeneerThesis/blazorApp/BlazorSchedule/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/dawid/Documents/GitHub/EngeneerThesis/blazorApp/BlazorSchedule/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -45,6 +41,10 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/dawid/Documents/GitHub/EngeneerThesis/blazorApp/BlazorSchedule/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-cnlhfibgf8
+
+[C:/Users/dawid/Documents/GitHub/EngeneerThesis/blazorApp/BlazorSchedule/Layout/navBar/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XG5hdkJhclxDb3VudGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-f1llhxhjpz
 
 [C:/Users/dawid/Documents/GitHub/EngeneerThesis/blazorApp/BlazorSchedule/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=

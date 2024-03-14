@@ -818,7 +818,6 @@ C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debu
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.BlazorSchedule.props
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\scopedcss\Layout\MainLayout.razor.rz.scp.css
-C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\scopedcss\bundle\BlazorSchedule.styles.css
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\scopedcss\projectbundle\BlazorSchedule.bundle.scp.css
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\compressed\pvqln91z98.gz
@@ -1070,3 +1069,5 @@ C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\bin\Debu
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\bin\Debug\net8.0\Microsoft.Extensions.Http.dll
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\webcil\Microsoft.Extensions.Http.wasm
 C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\compressed\kkuypesx5c.gz
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
+C:\Users\dawid\Documents\GitHub\EngeneerThesis\blazorApp\BlazorSchedule\obj\Debug\net8.0\scopedcss\Layout\navBar\Counter.razor.rz.scp.css

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W4WojHAy885PaJYS92rgmx4Xu+Ihg7IBwTzCdHDnqFAmsHhztNSDVrzc8mNxO09Mi/ymUSWpb1k5QBL19949tQ==",
+  "dgSpecHash": "AYMsV1hbRl7BPlizrXn9HspuZ0Ov55l5DmO2k1lYe+CBAxlHYxtc1DaoRFbH0+ghuPS/X/ssOBC8n4B1UwB/VQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj",
+  "projectFilePath": "C:\\Users\\dawid\\Documents\\GitHub\\EngineeringThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dawid\\.nuget\\packages\\epplus\\7.0.10\\epplus.7.0.10.nupkg.sha512",
     "C:\\Users\\dawid\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",

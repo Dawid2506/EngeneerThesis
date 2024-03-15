@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlazorSchedule")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+92f3b73a1e45fc41a5e23b6b8c796cdc07b267fa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5241ae168187329ccab6dfd3d238c384f16c4b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlazorSchedule")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlazorSchedule")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

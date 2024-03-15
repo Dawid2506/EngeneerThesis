@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj": {}
+    "C:\\Users\\dawid\\Documents\\GitHub\\EngineeringThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj": {
+    "C:\\Users\\dawid\\Documents\\GitHub\\EngineeringThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj",
+        "projectUniqueName": "C:\\Users\\dawid\\Documents\\GitHub\\EngineeringThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj",
         "projectName": "BlazorSchedule",
-        "projectPath": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj",
+        "projectPath": "C:\\Users\\dawid\\Documents\\GitHub\\EngineeringThesis\\blazorApp\\BlazorSchedule\\BlazorSchedule.csproj",
         "packagesPath": "C:\\Users\\dawid\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\blazorApp\\BlazorSchedule\\obj\\",
+        "outputPath": "C:\\Users\\dawid\\Documents\\GitHub\\EngineeringThesis\\blazorApp\\BlazorSchedule\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\dawid\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

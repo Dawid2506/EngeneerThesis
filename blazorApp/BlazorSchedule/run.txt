@@ -1,2 +1,12 @@
 dotnet run --urls "http://localhost:5000"
 dotnet watch run
+
+elephant bone - #F1E0C5  241, 224, 197
+red - #D31023
+
+
+dark-backgroung-#272727
+dark-red-#661D15;
+#551811
+
+

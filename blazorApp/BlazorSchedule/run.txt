@@ -6,7 +6,7 @@ red - #D31023
 
 
 dark-backgroung-#272727
-dark-red-#661D15;
-#551811
+normal-red-#661D15;
+dark-red#551811
 
 

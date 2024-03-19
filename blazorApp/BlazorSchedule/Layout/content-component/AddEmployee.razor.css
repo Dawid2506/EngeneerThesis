@@ -1,0 +1,20 @@
+.person-info-container{
+    height: 100vh;
+    width: 350px;
+    background-color: #551811;
+    display: none;
+}
+
+.block-field{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.particular-block{
+    width: 300px;
+    height: 200px;
+    background-color: #661D15;
+    margin: 1.5em 0 0 1.5em;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

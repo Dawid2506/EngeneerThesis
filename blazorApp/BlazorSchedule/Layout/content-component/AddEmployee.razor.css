@@ -17,4 +17,23 @@
     margin: 1.5em 0 0 1.5em;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.particular-block:hover{
+    background-color: #551811;
+    transform: scale(1.1);
+}
+
+.add-employee-icon{
+    font-size: 38px;
+    padding-right: 0.5em;
+}
+
+.employee-name-block{
+    font-size: 38px;
 }

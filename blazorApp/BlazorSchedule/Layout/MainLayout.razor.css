@@ -18,6 +18,10 @@ main {
     background-color: #661D15;
 }
 
+article {
+    padding: 0 !important;
+}
+
 @media (min-width: 641px) {
     .page {
         flex-direction: row;

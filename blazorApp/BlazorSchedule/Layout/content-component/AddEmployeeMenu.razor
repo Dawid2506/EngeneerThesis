@@ -2,13 +2,13 @@
 @using BlazorBootstrap;
 @inject NavigationManager NavigationManager;
 
-<div class="add-employee-container">
+<div class="add-employee-menu-container">
     <div class="person-info-container" @attributes="@PersonInfoContainerAttributes">
 
     </div>
 
-    <div class="block-field" @attributes="@BlockRight" @onclick="ChangeToAddEmployee">
-        <div class="particular-block">
+    <div class="block-field" @attributes="@BlockRight">
+        <div class="particular-block" @onclick="ChangeToAddEmployee">
             <div class="add-employee-icon">
                 <Icon Name="IconName.PersonPlus" />
             </div>

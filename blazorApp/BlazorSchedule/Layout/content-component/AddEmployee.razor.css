@@ -1,0 +1,30 @@
+.add-employee-container{
+    position: relative;
+}
+
+.particular-information{
+    display: flex;
+    padding: 2em;
+    justify-content: flex-start; /* Wyrównanie kontenera flexbox do lewej strony */
+    align-items: center;
+}
+
+.add-employee-text{
+    font-size: 22px;
+    margin-left: auto;
+}
+
+.add-employee-textbox{
+    margin-left: 1em;
+    border-radius: 8px;
+}
+
+.input-field{
+    width: 600px;
+}
+
+.add-employee-button{
+    position: absolute;
+    right: 3em;
+    bottom: 3em;
+}

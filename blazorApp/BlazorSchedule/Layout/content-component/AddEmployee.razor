@@ -1,25 +1,61 @@
 @page "/add-component"
 
 <div class="add-employee-container">
+    @if (errorMessage != null)
+    {
+        <div class="error-message">
+            <p>@errorMessage</p>
+        </div>
+    }
+
     <div class="input-field">
         <div class="particular-information">
             <p class="add-employee-text">Imię</p>
-            <input type="text" id="name" class="add-employee-textbox">
+            <input type="text" id="name" class="add-employee-textbox" @bind="name">
         </div>
         <div class="particular-information">
             <p class="add-employee-text">Rodzaj umowy</p>
-            <input type="text" id="type-of-agrement" class="add-employee-textbox">
+            @* <input type="text" id="type-of-agrement" class="add-employee-textbox"> *@
+            <select id="type-of-agrement" class="add-employee-textbox" @bind="typeOfAgreement">
+                <option value="1">Umowa o pracę</option>
+                <option value="2">Umowa zlecenie</option>
+            </select>
         </div>
         <div class="particular-information">
             <p class="add-employee-text">Minimalna liczba godzin</p>
-            <input type="text" id="min-hours" class="add-employee-textbox">
+            <input type="text" id="min-hours" class="add-employee-textbox" @bind="minHours">
         </div>
 
-        <input type="button" class="add-employee-button">
+        <button class="add-employee-button" @onclick="AddEmployeeMethod">Dodaj pracownika</button>
     </div>
 
 </div>
 
 @code {
+    private string minHours { get; set; }
+    private string typeOfAgreement { get; set; }
+    private string name { get; set; }
+    private int mintHours { get; set; }
+    private string errorMessage { get; set; }
 
+    private void AddEmployeeMethod()
+    {
+        try
+        {
+            mintHours = int.Parse(minHours);
+
+            Console.WriteLine("Name: " + name);
+            Console.WriteLine("Type of agreement: " + typeOfAgreement);
+            Console.WriteLine("Min hours: " + minHours);
+
+            errorMessage = null;
+        }
+        catch (Exception e)
+        {
+            errorMessage = "Wprowadzono niepoprawne dane!" + e.Message;
+        }
+
+
+
+    }
 }

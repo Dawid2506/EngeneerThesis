@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\testsbeforewriting\\res\\pages\\employeepreference.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\pages\\employeepreference.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\testsbeforewriting\\res\\pages\\employeepreference.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\pages\\employeepreference.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\testsbeforewriting\\res\\pages\\addemployee.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\pages\\addemployee.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -19,7 +11,15 @@
       "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\clases\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|c:\\users\\dawid\\documents\\github\\engeneerthesis\\tests\\testsbeforewriting\\testsbeforewriting\\res\\pages\\addemployee.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\testsbeforewriting\\res\\pages\\employeepreference.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\pages\\employeepreference.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|c:\\users\\dawid\\documents\\github\\engeneerthesis\\tests\\testsbeforewriting\\testsbeforewriting\\res\\pages\\employeepreference.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\pages\\employeepreference.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\testsbeforewriting\\res\\pages\\addemployee.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6A88AE4A-0E23-4525-A3C7-D239D5B18981}|TestsBeforeWriting\\TestsBeforeWriting.csproj|solutionrelative:testsbeforewriting\\res\\pages\\addemployee.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -54,8 +54,7 @@
               "RelativeToolTip": "TestsBeforeWriting\\Res\\Pages\\AddEmployee.xaml.cs",
               "ViewState": "AQIAAAEAAAAAAAAAAAAnwBwAAABFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-13T21:50:02.139Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-13T21:50:02.139Z"
             },
             {
               "$type": "Document",
@@ -78,8 +77,7 @@
               "ToolTip": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\TestsBeforeWriting\\MainWindow.xaml",
               "RelativeToolTip": "TestsBeforeWriting\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-03-13T21:37:27.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-13T21:37:27.706Z"
             },
             {
               "$type": "Document",
@@ -95,7 +93,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "EmployeePreference.xaml",
               "DocumentMoniker": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\TestsBeforeWriting\\Res\\Pages\\EmployeePreference.xaml",
               "RelativeDocumentMoniker": "TestsBeforeWriting\\Res\\Pages\\EmployeePreference.xaml",
@@ -107,7 +105,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "EmployeePreference.xaml.cs",
               "DocumentMoniker": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\TestsBeforeWriting\\Res\\Pages\\EmployeePreference.xaml.cs",
               "RelativeDocumentMoniker": "TestsBeforeWriting\\Res\\Pages\\EmployeePreference.xaml.cs",
@@ -120,7 +118,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "AddEmployee.xaml",
               "DocumentMoniker": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\TestsBeforeWriting\\Res\\Pages\\AddEmployee.xaml",
               "RelativeDocumentMoniker": "TestsBeforeWriting\\Res\\Pages\\AddEmployee.xaml",
@@ -132,7 +130,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Employee.cs",
               "DocumentMoniker": "C:\\Users\\dawid\\Documents\\GitHub\\EngeneerThesis\\tests\\TestsBeforeWriting\\TestsBeforeWriting\\Res\\Clases\\Employee.cs",
               "RelativeDocumentMoniker": "TestsBeforeWriting\\Res\\Clases\\Employee.cs",

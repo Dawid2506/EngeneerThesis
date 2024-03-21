@@ -1,49 +1,9 @@
-@page "/add-employee"
-@using BlazorBootstrap;
+@page "/add-component"
 
-<div class="add-employee-container">
-    <div class="person-info-container" @attributes="@PersonInfoContainerAttributes">
-
-    </div>
-
-    <div class="block-field" @attributes="@BlockRight">
-        <div class="particular-block">
-            <div class="add-employee-icon">
-                <Icon Name="IconName.PersonPlus" />
-            </div>
-            <div>
-                <h2>Dodaj <br> pracownika</h2>
-            </div>
-        </div>
-        <div class="particular-block" @onclick="TogglePersonInfoContainer">
-            <p class="employee-name-block">Denis</p>
-        </div>
-        <div class="particular-block" @onclick="TogglePersonInfoContainer"></div>
-        <div class="particular-block"></div>
-        <div class="particular-block"></div>
-        <div class="particular-block"></div>
-        <div class="particular-block"></div>
-    </div>
+<div>
+    <p>sdasd</p>
 </div>
 
+@code{
 
-
-
-@code {
-    private bool isPersonInfoVisible = false;
-
-    private IDictionary<string, object> PersonInfoContainerAttributes => new Dictionary<string, object>
-{
-{ "class", isPersonInfoVisible ? "person-info-container active" : "person-info-container" }
-};
-
-    private IDictionary<string, object> BlockRight => new Dictionary<string, object>
-{
-{ "class", isPersonInfoVisible ? "block-field active" : "block-field" }
-};
-
-    private void TogglePersonInfoContainer()
-    {
-        isPersonInfoVisible = !isPersonInfoVisible;
-    }
 }

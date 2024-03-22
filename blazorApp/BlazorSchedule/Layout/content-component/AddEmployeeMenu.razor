@@ -1,10 +1,9 @@
 @page "/add-employee-menu"
-@using BlazorBootstrap;
-@inject NavigationManager NavigationManager;
+@using BlazorBootstrap
+@inject NavigationManager NavigationManager
 
 <div class="add-employee-menu-container">
     <div class="person-info-container" @attributes="@PersonInfoContainerAttributes">
-
     </div>
 
     <div class="block-field" @attributes="@BlockRight">
@@ -19,15 +18,15 @@
         <div class="particular-block" @onclick="TogglePersonInfoContainer">
             <p class="employee-name-block">Denis</p>
         </div>
-        <div class="particular-block" @onclick="TogglePersonInfoContainer"></div>
-        <div class="particular-block"></div>
-        <div class="particular-block"></div>
-        <div class="particular-block"></div>
-        <div class="particular-block"></div>
+        @foreach (var employee in employeeList)
+        {
+            <div class="particular-block" @onclick="TogglePersonInfoContainer"><p class="employee-name-block">@employee.name</p></div>
+        }
     </div>
 </div>
 
 @code {
+    private List<Employee> employeeList = new List<Employee>();
     private bool isPersonInfoVisible = false;
 
     private IDictionary<string, object> PersonInfoContainerAttributes => new Dictionary<string, object>
@@ -39,6 +38,13 @@
     {
         { "class", isPersonInfoVisible ? "block-field active" : "block-field" }
     };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var employeesRepository = EmployeesRepository.GetInstance();
+        employeeList = employeesRepository.GetEmployees();
+    }
 
     private void TogglePersonInfoContainer()
     {

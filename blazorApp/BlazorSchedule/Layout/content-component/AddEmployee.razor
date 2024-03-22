@@ -1,4 +1,5 @@
 @page "/add-component"
+@inject NavigationManager NavigationManager;
 
 <div class="add-employee-container">
     @if (errorMessage != null)
@@ -26,7 +27,11 @@
             <input type="text" id="min-hours" class="add-employee-textbox" @bind="minHours">
         </div>
 
-        <button class="add-employee-button" @onclick="AddEmployeeMethod">Dodaj pracownika</button>
+        <div class="add-employee-buttons">
+            <button class="add-employee-button" @onclick="AddEmployeeMethod">Dodaj pracownika</button>
+            <button class="add-employee-button" @onclick="GoBack">Anuluj</button>
+        </div>
+
     </div>
 
 </div>
@@ -37,6 +42,8 @@
     private string name { get; set; }
     private int mintHours { get; set; }
     private string errorMessage { get; set; }
+    private static IEmployeesRepository employeesRepository = EmployeesRepository.GetInstance();
+    private List<Employee> employees = new List<Employee>();
 
     private void AddEmployeeMethod()
     {
@@ -44,18 +51,29 @@
         {
             mintHours = int.Parse(minHours);
 
-            Console.WriteLine("Name: " + name);
-            Console.WriteLine("Type of agreement: " + typeOfAgreement);
-            Console.WriteLine("Min hours: " + minHours);
+            Employee employee = new Employee(name, typeOfAgreement, mintHours);
+
+            employeesRepository.AddEmployee(employee);
+
+            employees = employeesRepository.GetEmployees();
+
+            Console.WriteLine("Name: " + employees[0].name);
+            Console.WriteLine("Type of agreement: " + employees[0].typeOfAgreement);
+            Console.WriteLine("Min hours: " + employees[0].minHours);
+            Console.WriteLine(employees[0]);
 
             errorMessage = null;
+
+            NavigationManager.NavigateTo("/add-employee-menu");
         }
         catch (Exception e)
         {
             errorMessage = "Wprowadzono niepoprawne dane!" + e.Message;
         }
+    }
 
-
-
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/add-employee-menu");
     }
 }

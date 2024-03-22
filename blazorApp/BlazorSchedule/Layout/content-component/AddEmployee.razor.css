@@ -24,11 +24,14 @@
     width: 600px;
 }
 
-.add-employee-button{
-    color: white;
+.add-employee-buttons{
     position: absolute;
     right: 3em;
     bottom: 3em;
+}
+
+.add-employee-button{
+    color: white;
     width: 10em;
     height: 4em;
     background-color: #661D15;

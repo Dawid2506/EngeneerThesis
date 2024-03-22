@@ -3,8 +3,15 @@
 @inject NavigationManager NavigationManager
 
 <div class="add-employee-menu-container">
-    <div class="person-info-container" @attributes="@PersonInfoContainerAttributes">
-    </div>
+    @if (isPersonInfoVisible)
+    {
+        <div class="person-info-container">
+            <p class="person-info-text">Imie: @actualEmployee.name</p>
+            <p class="person-info-text">Rodzaj umowy: @actualEmployee.typeOfAgreement</p>
+            <p class="person-info-text">Minimalna ilość godzin: @actualEmployee.minHours</p>
+        </div>
+    }
+
 
     <div class="block-field" @attributes="@BlockRight">
         <div class="particular-block" @onclick="ChangeToAddEmployee">
@@ -15,12 +22,11 @@
                 <h2>Dodaj <br> pracownika</h2>
             </div>
         </div>
-        <div class="particular-block" @onclick="TogglePersonInfoContainer">
-            <p class="employee-name-block">Denis</p>
-        </div>
         @foreach (var employee in employeeList)
         {
-            <div class="particular-block" @onclick="TogglePersonInfoContainer"><p class="employee-name-block">@employee.name</p></div>
+            <div class="particular-block" @onclick="() => TogglePersonInfoContainer(employee.name)">
+                <p class="employee-name-block">@employee.name</p>
+            </div>
         }
     </div>
 </div>
@@ -28,27 +34,25 @@
 @code {
     private List<Employee> employeeList = new List<Employee>();
     private bool isPersonInfoVisible = false;
-
-    private IDictionary<string, object> PersonInfoContainerAttributes => new Dictionary<string, object>
-    {
-        { "class", isPersonInfoVisible ? "person-info-container active" : "person-info-container" }
-    };
+    private Employee actualEmployee;
+    private EmployeesRepository employeesRepository;
 
     private IDictionary<string, object> BlockRight => new Dictionary<string, object>
-    {
-        { "class", isPersonInfoVisible ? "block-field active" : "block-field" }
-    };
+{
+{ "class", isPersonInfoVisible ? "block-field active" : "block-field" }
+};
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        var employeesRepository = EmployeesRepository.GetInstance();
+        employeesRepository = EmployeesRepository.GetInstance();
         employeeList = employeesRepository.GetEmployees();
     }
 
-    private void TogglePersonInfoContainer()
+    private void TogglePersonInfoContainer(string name)
     {
         isPersonInfoVisible = !isPersonInfoVisible;
+        actualEmployee = employeesRepository.GetEmployeeByName(name);
     }
 
     private void ChangeToAddEmployee()

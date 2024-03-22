@@ -2,13 +2,18 @@
     height: 100vh;
     width: 350px;
     background-color: #551811;
-    display: none;
+    display: flex;
+    flex-direction: column;
     position: fixed;
 }
 
-.person-info-container.active{
-    display: flex;
+.person-info-text{
+
 }
+
+/* .person-info-container.active{
+    display: flex;
+} */
 
 .block-field{
     display: grid;

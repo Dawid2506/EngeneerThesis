@@ -1,0 +1,13 @@
+.company-info-container{
+    height: 100vh;
+    width: 350px;
+    background-color: #551811;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    padding-top: 1em;
+}
+
+.company-info-text{
+    padding: 0 1em;
+}

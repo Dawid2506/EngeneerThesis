@@ -3,10 +3,11 @@
     height: 100vh;
 }
 
+
 .particular-information{
     display: flex;
     padding: 2em;
-    justify-content: flex-start; /* Wyrównanie kontenera flexbox do lewej strony */
+    justify-content: flex-start; 
     align-items: center;
 }
 

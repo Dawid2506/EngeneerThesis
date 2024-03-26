@@ -11,3 +11,26 @@
 .company-info-text{
     padding: 0 1em;
 }
+
+.company-info-button{
+    margin-top: 1em;
+    color: white;
+    width: 10em;
+    height: 4em;
+    background-color: #661D15;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.company-info-button:hover{
+    background-color: #551811;
+    cursor: pointer;
+}
+
+.company-info-button:active{
+    scale: 0.95;
+}
+
+.company-info-buttons{
+    margin-left: 400px;
+}

@@ -1,0 +1,92 @@
+@page "/company-information-edit";
+@inject NavigationManager NavigationManager;
+
+<div class="add-employee-container">
+    @if (errorMessage != null)
+    {
+        <div class="error-message">
+            <p>@errorMessage</p>
+        </div>
+    }
+
+    <div class="input-field">
+        <div class="particular-information">
+            <p class="add-employee-text">Nazwa firmy</p>
+            <input type="text" id="name" class="add-employee-textbox" @bind="name">
+        </div>
+        <div class="particular-information">
+            <p class="add-employee-text">Dni pracujące</p>
+            <div class="working-days-container">
+                <div class="particular-day @(workingDaysList.Contains("poniedziałek") ? "working-day" : "")"
+                    @onclick='() => AddDay("poniedziałek")'>Poniedziałek</div>
+                <div class="particular-day @(workingDaysList.Contains("wtorek") ? "working-day" : "")"
+                    @onclick='() => AddDay("wtorek")'>Wtorek</div>
+                <div class="particular-day @(workingDaysList.Contains("środa") ? "working-day" : "")"
+                    @onclick='() => AddDay("środa")'>Środa</div>
+                <div class="particular-day @(workingDaysList.Contains("czawartek") ? "working-day" : "")"
+                    @onclick='() => AddDay("czawartek")'>Czawartek</div>
+                <div class="particular-day @(workingDaysList.Contains("piątek") ? "working-day" : "")"
+                    @onclick='() => AddDay("piątek")'>Piątek</div>
+                <div class="particular-day @(workingDaysList.Contains("sobota") ? "working-day" : "")"
+                    @onclick='() => AddDay("sobota")'>Sobota</div>
+                <div class="particular-day @(workingDaysList.Contains("niedziela") ? "working-day" : "")"
+                    @onclick='() => AddDay("niedziela")'>Niedziela</div>
+            </div>
+        </div>
+        <div class="particular-information">
+            <p class="add-employee-text">Stanowisko</p>
+            <input type="text" id="position" class="add-employee-textbox" @bind="position">
+            <button class="add-position-button" @onclick="AddPosition">Dodaj stanowisko</button>
+        </div>
+    </div>
+
+    <div class="company-info-buttons">
+        <button class="company-info-button" @onclick="NextPage">Przejdź dalej </button>
+    </div>
+</div>
+
+@code {
+    private string name;
+    private int mintHours;
+    private string errorMessage;
+    private List<string> workingDaysList = new List<string>();
+    private string position;
+    private List<string> positions = new List<string>();
+
+    private void AddDay(string day)
+    {
+        if (workingDaysList.Contains(day))
+        {
+            workingDaysList.Remove(day);
+        }
+        else
+        {
+            workingDaysList.Add(day);
+        }
+    }
+
+    private void AddPosition()
+    {
+        if (positions.Contains(position))
+        {
+            errorMessage = "Stanowisko już istnieje";
+        }
+        else
+        {
+            positions.Add(position);
+            position = string.Empty;
+        }
+    }
+
+
+
+    private void NextPage()
+    {
+        
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/add-employee-menu");
+    }
+}

@@ -1,4 +1,6 @@
 @page "/company-information";
+@using BlazorBootstrap
+@inject NavigationManager NavigationManager;
 
 <div>
     <div class="company-info-container">
@@ -8,9 +10,18 @@
         <p class="company-info-text">Godzina przyjścia pomocy:</p>
     </div>
 
+    <div class="company-info-buttons">
+        <button class="company-info-button" @onclick="ChangeInformation">Edytuj informacje</button>
+    </div>
+
+
 
 </div>
 
 @code {
+    private void ChangeInformation()
+    {
+        NavigationManager.NavigateTo("/company-information-edit");
+    }
 
 }

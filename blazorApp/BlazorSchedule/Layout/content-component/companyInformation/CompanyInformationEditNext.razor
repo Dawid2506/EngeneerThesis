@@ -1,9 +1,28 @@
-@page "/company-information-edit-next"
+@page "/company-information-edit-next/{positions}/{workingDaysList}/{name}";
+@inject NavigationManager NavigationManager;
 
 <div>
-
+    <p>@positions</p>
+    <p>@workingDaysList</p>
+    <p>@name</p>
 </div>
 
-@code{
-    
+@code {
+    [Parameter]
+    public string positions { get; set; }
+
+    [Parameter]
+    public string workingDaysList { get; set; }
+
+    [Parameter]
+    public string name { get; set; }
+
+    // Możesz również zdeserializować dane JSON na listę
+    // private List<string> positions;
+
+    protected override void OnInitialized()
+    {
+        // Zdeserializuj dane JSON na listę
+        // positions = JsonSerializer.Deserialize<List<string>>(positionsJson);
+    }
 }

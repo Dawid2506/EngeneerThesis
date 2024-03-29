@@ -1,5 +1,6 @@
 @page "/company-information-edit";
 @inject NavigationManager NavigationManager;
+@using System.Text.Json;
 
 <div class="add-employee-container">
     @if (errorMessage != null)
@@ -46,12 +47,17 @@
 </div>
 
 @code {
-    private string name;
+    [Parameter]
+    public string name { get; set; }
     private int mintHours;
     private string errorMessage;
-    private List<string> workingDaysList = new List<string>();
+
+    [Parameter]
+    public List<string> workingDaysList { get; set; } = new List<string>();
     private string position;
-    private List<string> positions = new List<string>();
+
+    [Parameter]
+    public List<string> positions { get; set; } = new List<string>();
 
     private void AddDay(string day)
     {
@@ -75,6 +81,7 @@
         {
             positions.Add(position);
             position = string.Empty;
+            Console.WriteLine(positions[0]);
         }
     }
 
@@ -82,8 +89,10 @@
 
     private void NextPage()
     {
-        
+        NavigationManager.NavigateTo($"/company-information-edit-next/{JsonSerializer.Serialize(positions)}/{JsonSerializer.Serialize(workingDaysList)}/{JsonSerializer.Serialize(name)}");
     }
+
+
 
     private void GoBack()
     {

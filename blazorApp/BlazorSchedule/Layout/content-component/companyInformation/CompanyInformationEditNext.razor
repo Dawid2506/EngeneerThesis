@@ -1,28 +1,99 @@
-@page "/company-information-edit-next/{positions}/{workingDaysList}/{name}";
+@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}";
 @inject NavigationManager NavigationManager;
+@using BlazorBootstrap
+@using System.Text.Json;
+@using System.Collections.Generic;
 
 <div>
-    <p>@positions</p>
-    <p>@workingDaysList</p>
-    <p>@name</p>
+    <div class="input-field">
+        <div class="particular-information">
+            <p class="add-employee-text">Godziny pracy</p>
+            <input type="time" class="choose-hour" />
+            <input type="time" class="choose-hour" />
+            <div class="every-day">
+                <p>Dla wszystkich dni</p>
+                <div class="checkbox" @onclick="ToggleCheckbox">
+                    @if (isCheckboxChecked)
+                    {
+                        <Icon Name="IconName.Check" />
+                    }
+                </div>
+            </div>
+        </div>
+        @if (!isCheckboxChecked)
+        {
+            <div class="adjust-hours-per-day">
+                @for (int i = 0; i < workingDaysList.Count; i++)
+                {
+                    int index = i;
+                    <div class="adjust-particular-day-hour">
+                        <p class="add-employee-text">@workingDaysList[i]</p>
+                        <div style="display: flex;">
+                            <input type="time" class="choose-hour" @bind="startHours[index]"
+                                @oninput="@(e => UpdateWorkingHours(workingDaysList[index], startHours[index], endHours[index], true))" />
+                            <input type="time" class="choose-hour" @bind="endHours[index]"
+                                @oninput="@(e => UpdateWorkingHours(workingDaysList[index], startHours[index], endHours[index], false))" />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="save-company-info-buttons">
+        <button class="save-company-info-button">Zapisz</button>
+    </div>
 </div>
 
 @code {
     [Parameter]
-    public string positions { get; set; }
-
-    [Parameter]
-    public string workingDaysList { get; set; }
-
-    [Parameter]
     public string name { get; set; }
+    public List<string> positions { get; set; }
+    public List<string> workingDaysList { get; set; }
 
-    // Możesz również zdeserializować dane JSON na listę
-    // private List<string> positions;
+    [Parameter]
+    public string encodedPositions { get; set; }
+
+    [Parameter]
+    public string encodedWorkingDaysList { get; set; }
+
+    private bool isCheckboxChecked = true;
+    private List<DateTime> startHours { get; set; } = new List<DateTime>();
+    private List<DateTime> endHours { get; set; } = new List<DateTime>();
+    private Dictionary<DateTime, DateTime> workingHours { get; set; }
 
     protected override void OnInitialized()
     {
-        // Zdeserializuj dane JSON na listę
-        // positions = JsonSerializer.Deserialize<List<string>>(positionsJson);
+        //Decode the encoded strings
+        positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
+        workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
+
+        // Initialize startHours and endHours lists with default values
+        for (int i = 0; i < workingDaysList.Count; i++)
+        {
+            startHours.Add(DateTime.MinValue);
+            endHours.Add(DateTime.MinValue);
+        }
+    }
+
+    private void ToggleCheckbox()
+    {
+        isCheckboxChecked = !isCheckboxChecked;
+    }
+
+    private void UpdateWorkingHours(string day, DateTime startHour, DateTime endHour, bool isStartTime)
+    {
+        if (isStartTime)
+        {
+            // Update the startHour list with the selected start time for the specified day
+            startHours[workingDaysList.IndexOf(day)] = startHour;
+            Console.WriteLine(startHours[workingDaysList.IndexOf(day)].TimeOfDay);
+        }
+        else
+        {
+            // Update the endHour list with the selected end time for the specified day
+            endHours[workingDaysList.IndexOf(day)] = endHour;
+            Console.WriteLine(endHours[workingDaysList.IndexOf(day)].TimeOfDay);
+        }
     }
 }

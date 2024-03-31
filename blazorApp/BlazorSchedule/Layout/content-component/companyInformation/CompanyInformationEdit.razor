@@ -1,6 +1,7 @@
 @page "/company-information-edit";
 @inject NavigationManager NavigationManager;
 @using System.Text.Json;
+@using System.Web;
 
 <div class="add-employee-container">
     @if (errorMessage != null)
@@ -49,15 +50,15 @@
 @code {
     [Parameter]
     public string name { get; set; }
-    private int mintHours;
-    private string errorMessage;
 
     [Parameter]
     public List<string> workingDaysList { get; set; } = new List<string>();
-    private string position;
 
     [Parameter]
     public List<string> positions { get; set; } = new List<string>();
+    private string position;
+    private int mintHours;
+    private string errorMessage;
 
     private void AddDay(string day)
     {
@@ -89,7 +90,23 @@
 
     private void NextPage()
     {
-        NavigationManager.NavigateTo($"/company-information-edit-next/{JsonSerializer.Serialize(positions)}/{JsonSerializer.Serialize(workingDaysList)}/{JsonSerializer.Serialize(name)}");
+        if (AreParametersNotEmpty())
+        {
+            // Przekazanie danych poprzez adres URL
+            var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
+            var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
+            var encodedName = Uri.EscapeDataString(name);
+            NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}");
+        }
+        else
+        {
+            errorMessage = "Wypełnij wszystkie pola";
+        }
+    }
+
+    private bool AreParametersNotEmpty()
+    {
+        return !string.IsNullOrEmpty(name) && workingDaysList.Count > 0 && positions.Count > 0;
     }
 
 

@@ -6,8 +6,6 @@ namespace BlazorSchedule{
 
         public string name { get; set; }
         public List<string> workingDays { get; set; }
-        public List<string> positions { get; set; }
-        public Dictionary<int, int> workingHours { get; set; }
         public Dictionary<string, Dictionary<string, string>> workingHoursDay { get; set; }
 
         private Company()

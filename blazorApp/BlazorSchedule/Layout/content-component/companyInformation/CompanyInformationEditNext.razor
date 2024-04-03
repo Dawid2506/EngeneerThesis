@@ -46,17 +46,27 @@
             <p class="add-employee-text">Dostosuj stanowiska dla każdego dnia</p>
         </div>
         <div class="adjust-hours-per-day">
-                @for (int i = 0; i < workingDaysList.Count; i++)
-                {
-                    int index = i;
-                    <div class="adjust-particular-day-position">
-                        <p class="add-employee-text">@workingDaysList[i]</p>
-                        <p class="add-position-text">Dodaj stanowisko</p>
-                        <input type="text" class="choose-hour"/>
-                        <button class="add-position-button"></button>
+            @for (int i = 0; i < workingDaysList.Count; i++)
+            {
+                int jIndex = 0; // Assign a default value to jIndex
+                <div class="adjust-particular-day-position">
+                    <p class="add-employee-text">@workingDaysList[i]</p>
+                    <p class="add-position-text">Dodaj stanowisko</p>
+                    <div class="align-this">
+                        <select class="choose-hour" @bind="position">
+                            @for (int j = 0; j < positions.Count; j++)
+                            {
+                                <option value="@positions[j]">@positions[j]</option>
+                                jIndex = j;
+                            }
+                        </select>
+                        <div class="add-position-button" @onclick='() => AddPosition(i, jIndex)'>
+                            <Icon Name="IconName.PlusCircle" />
+                        </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
+        </div>
     </div>
 
     <div class="save-company-info-buttons">
@@ -80,6 +90,8 @@
     private List<DateTime> startHours { get; set; } = new List<DateTime>();
     private List<DateTime> endHours { get; set; } = new List<DateTime>();
     private Dictionary<DateTime, DateTime> workingHours { get; set; }
+    private Dictionary<string, List<string>> positionsPerDay { get; set; }
+    private string position { get; set; }
 
     protected override void OnInitialized()
     {
@@ -93,7 +105,16 @@
             startHours.Add(DateTime.MinValue);
             endHours.Add(DateTime.MinValue);
         }
+
+        positionsPerDay = new Dictionary<string, List<string>>();
+
+        // Initialize the dictionary with empty lists for each working day
+        foreach (var day in workingDaysList)
+        {
+            positionsPerDay.Add(day, new List<string>());
+        }
     }
+
 
     private void ToggleCheckbox()
     {
@@ -114,6 +135,24 @@
             endHours[workingDaysList.IndexOf(day)] = endHour;
             Console.WriteLine(endHours[workingDaysList.IndexOf(day)].TimeOfDay);
         }
+    }
+
+    private void AddPosition(int iIndex, int jIndex)
+    {
+        @* if (positionsPerDay == null)
+{
+positionsPerDay = new Dictionary<string, List<string>>();
+} *@
+
+        @* List<string> positionsList = positionsPerDay.ContainsKey(workingDaysList[iIndex]) ?
+positionsPerDay[workingDaysList[iIndex]] : new List<string>();
+positionsPerDay.Add(workingDaysList[iIndex], positionsList); *@
+        positionsPerDay[workingDaysList[iIndex]].Add(positions[jIndex]);
+        for (int i = 0; i < positionsPerDay[workingDaysList[iIndex]].Count; i++)
+        {
+            Console.WriteLine(positionsPerDay[workingDaysList[iIndex]][i]);
+        }
+
     }
 
     private void SaveData()

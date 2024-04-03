@@ -20,6 +20,7 @@
     background-color: #661D15;
     border: 1px solid black;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    color: white;
 }
 
 .every-day{
@@ -95,7 +96,24 @@
 }
 
 .add-position-button{
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     background-color: #661D15;
+    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 15px;
+    border-radius: 4px;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    cursor: pointer;
+    padding-top: 2px;
+}
+
+.align-this{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

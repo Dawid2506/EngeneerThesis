@@ -40,8 +40,23 @@
         }
     </div>
 
+    <div style="margin-top: 110px;"></div>
     <div class="input-field">
-        <p>Stanowiska</p>
+        <div class="particular-information">
+            <p class="add-employee-text">Dostosuj stanowiska dla każdego dnia</p>
+        </div>
+        <div class="adjust-hours-per-day">
+                @for (int i = 0; i < workingDaysList.Count; i++)
+                {
+                    int index = i;
+                    <div class="adjust-particular-day-position">
+                        <p class="add-employee-text">@workingDaysList[i]</p>
+                        <p class="add-position-text">Dodaj stanowisko</p>
+                        <input type="text" class="choose-hour"/>
+                        <button class="add-position-button"></button>
+                    </div>
+                }
+            </div>
     </div>
 
     <div class="save-company-info-buttons">

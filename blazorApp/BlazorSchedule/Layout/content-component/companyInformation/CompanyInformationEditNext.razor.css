@@ -58,6 +58,14 @@
     text-align: center;
 }
 
+.adjust-particular-day-position{
+    min-width: 200px;
+    background-color: #661D15;
+    margin-left: 1em;
+    text-align: center;
+    padding: 1em;
+}
+
 .save-company-info-buttons{
     position: absolute;
     right: 3em;
@@ -80,4 +88,14 @@
 
 .save-company-info-button:active{
     scale: 0.95;
+}
+
+.add-position-text{
+    font-size: 12px;
+}
+
+.add-position-button{
+    width: 25px;
+    height: 25px;
+    background-color: #661D15;
 }

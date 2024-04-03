@@ -8,11 +8,16 @@ namespace BlazorSchedule{
         public List<string> workingDays { get; set; }
         public List<string> positions { get; set; }
         public Dictionary<int, int> workingHours { get; set; }
-        public Dictionary<string, Dictionary<int, int>> workingHoursDay { get; set; }
+        public Dictionary<string, Dictionary<string, string>> workingHoursDay { get; set; }
 
         private Company()
         {
             // Private constructor to prevent instantiation
+        }
+
+        public void SetWorkingHoursDay(Dictionary<string, Dictionary<string, string>> workingHoursDay)
+        {
+            this.workingHoursDay = workingHoursDay;
         }
 
         public static Company Instance

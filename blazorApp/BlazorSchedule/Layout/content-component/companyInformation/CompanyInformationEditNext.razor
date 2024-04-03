@@ -41,7 +41,7 @@
     </div>
 
     <div class="save-company-info-buttons">
-        <button class="save-company-info-button">Zapisz</button>
+        <button class="save-company-info-button" @onclick="SaveData">Zapisz</button>
     </div>
 </div>
 
@@ -94,6 +94,34 @@
             // Update the endHour list with the selected end time for the specified day
             endHours[workingDaysList.IndexOf(day)] = endHour;
             Console.WriteLine(endHours[workingDaysList.IndexOf(day)].TimeOfDay);
+        }
+    }
+
+    private void SaveData()
+    {
+        int iteration = 0;
+        Dictionary<string, Dictionary<string, string>> myWorkingHoursDay = new Dictionary<string, Dictionary<string, string>>();
+        foreach (var day in workingDaysList)
+        {
+            Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
+            string startHour = startHours[iteration].TimeOfDay.ToString();
+            string endHour = endHours[iteration].TimeOfDay.ToString();
+            myWorkingHours.Add(startHour, endHour);
+            myWorkingHoursDay.Add(day, myWorkingHours);
+            iteration++;
+        }
+        Company companyInstance = Company.Instance;
+        companyInstance.SetWorkingHoursDay(myWorkingHoursDay);
+
+        //check if the data is saved correctly
+        foreach (var day in myWorkingHoursDay)
+        {
+            Console.WriteLine($"Day: {day.Key}");
+            foreach (var workingHours in day.Value)
+            {
+                Console.WriteLine($"Start Hour: {workingHours.Key}");
+                Console.WriteLine($"End Hour: {workingHours.Value}");
+            }
         }
     }
 }

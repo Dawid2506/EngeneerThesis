@@ -40,7 +40,7 @@
         }
     </div>
 
-    <div style="margin-top: 110px;"></div>
+    @* <div style="margin-top: 110px;"></div> *@
     <div class="input-field">
         <div class="particular-information">
             <p class="add-employee-text">Dostosuj stanowiska dla każdego dnia</p>
@@ -48,7 +48,7 @@
         <div class="adjust-hours-per-day">
             @for (int i = 0; i < workingDaysList.Count; i++)
             {
-                int jIndex = 0; // Assign a default value to jIndex
+                int iIndex = i; // Assign a default value to jIndex
                 <div class="adjust-particular-day-position">
                     <p class="add-employee-text">@workingDaysList[i]</p>
                     <p class="add-position-text">Dodaj stanowisko</p>
@@ -57,12 +57,17 @@
                             @for (int j = 0; j < positions.Count; j++)
                             {
                                 <option value="@positions[j]">@positions[j]</option>
-                                jIndex = j;
                             }
                         </select>
-                        <div class="add-position-button" @onclick='() => AddPosition(i, jIndex)'>
+                        <div class="add-position-button" @onclick='() => AddPosition(iIndex)'>
                             <Icon Name="IconName.PlusCircle" />
                         </div>
+                    </div>
+                    <div class="displayPositions">
+                        @foreach (var position in positionsPerDay[workingDaysList[i]])
+                        {
+                            <p>@position</p>
+                        }
                     </div>
                 </div>
             }
@@ -98,6 +103,7 @@
         //Decode the encoded strings
         positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
         workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
+        position = positions[0];
 
         // Initialize startHours and endHours lists with default values
         for (int i = 0; i < workingDaysList.Count; i++)
@@ -137,23 +143,25 @@
         }
     }
 
-    private void AddPosition(int iIndex, int jIndex)
-    {
-        @* if (positionsPerDay == null)
+    private void AddPosition(int iIndex)
 {
-positionsPerDay = new Dictionary<string, List<string>>();
-} *@
-
-        @* List<string> positionsList = positionsPerDay.ContainsKey(workingDaysList[iIndex]) ?
-positionsPerDay[workingDaysList[iIndex]] : new List<string>();
-positionsPerDay.Add(workingDaysList[iIndex], positionsList); *@
-        positionsPerDay[workingDaysList[iIndex]].Add(positions[jIndex]);
-        for (int i = 0; i < positionsPerDay[workingDaysList[iIndex]].Count; i++)
+    Console.WriteLine(iIndex);
+    if (position != null)
+    {
+        positionsPerDay[workingDaysList[iIndex]].Add(position);
+        Console.WriteLine("---------------------------------------");
+        Console.WriteLine("Positions per day:");
+        foreach (var day in positionsPerDay)
         {
-            Console.WriteLine(positionsPerDay[workingDaysList[iIndex]][i]);
+            Console.WriteLine($"Day: {day.Key}");
+            foreach (var position in day.Value)
+            {
+                Console.WriteLine($"Position: {position}");
+            }
         }
-
     }
+}
+
 
     private void SaveData()
     {

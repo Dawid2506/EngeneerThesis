@@ -44,19 +44,25 @@
 
 .adjust-hours-per-day{
     display: flex;
-    justify-content: center;
     align-items: center;
     width: auto;
     overflow-x: auto;
-    position: absolute;
+    /* position: absolute; */
+    overflow-x: auto;
+    width: 85vw;
+    padding-right: 1em;
 }
 
 .adjust-particular-day-hour{
-    min-width: 200px;
+    width: 230px;
     height: 100px;
     background-color: #661D15;
     margin-left: 1em;
     text-align: center;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 1em;
+    padding-right: 1em;
 }
 
 .adjust-particular-day-position{
@@ -65,6 +71,9 @@
     margin-left: 1em;
     text-align: center;
     padding: 1em;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 1em;
 }
 
 .save-company-info-buttons{

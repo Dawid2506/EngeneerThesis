@@ -8,8 +8,8 @@
     <div class="input-field">
         <div class="particular-information">
             <p class="add-employee-text">Godziny pracy</p>
-            <input type="time" class="choose-hour" />
-            <input type="time" class="choose-hour" />
+            <input type="time" class="choose-hour" @bind="startHourForAll" />
+            <input type="time" class="choose-hour" @bind="endHourForAll" />
             <div class="every-day">
                 <p>Dla wszystkich dni</p>
                 <div class="checkbox" @onclick="ToggleCheckbox">
@@ -97,6 +97,8 @@
     private Dictionary<DateTime, DateTime> workingHours { get; set; }
     private Dictionary<string, List<string>> positionsPerDay { get; set; }
     private string position { get; set; }
+    public DateTime startHourForAll { get; set; }
+    public DateTime endHourForAll { get; set; }
 
     protected override void OnInitialized()
     {
@@ -144,14 +146,67 @@
     }
 
     private void AddPosition(int iIndex)
-{
-    Console.WriteLine(iIndex);
-    if (position != null)
     {
-        positionsPerDay[workingDaysList[iIndex]].Add(position);
+        Console.WriteLine(iIndex);
+        if (position != null)
+        {
+            positionsPerDay[workingDaysList[iIndex]].Add(position);
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Positions per day:");
+            foreach (var day in positionsPerDay)
+            {
+                Console.WriteLine($"Day: {day.Key}");
+                foreach (var position in day.Value)
+                {
+                    Console.WriteLine($"Position: {position}");
+                }
+            }
+        }
+    }
+
+
+    private void SaveData()
+    {
+        //save the working hours per day
+        int iteration = 0;
+        Dictionary<string, Dictionary<string, string>> myWorkingHoursDay = new Dictionary<string, Dictionary<string, string>>();
+        if (isCheckboxChecked)
+        {
+            foreach (var day in workingDaysList)
+            {
+                Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
+                string startHour = startHourForAll.TimeOfDay.ToString();
+                string endHour = endHourForAll.TimeOfDay.ToString();
+                myWorkingHours.Add(startHour, endHour);
+                myWorkingHoursDay.Add(day, myWorkingHours);
+            }
+        }
+        else
+        {
+            foreach (var day in workingDaysList)
+            {
+                Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
+                string startHour = startHours[iteration].TimeOfDay.ToString();
+                string endHour = endHours[iteration].TimeOfDay.ToString();
+                myWorkingHours.Add(startHour, endHour);
+                myWorkingHoursDay.Add(day, myWorkingHours);
+                iteration++;
+            }
+        }
+
+        Company companyInstance = Company.Instance;
+        companyInstance.workingHoursDay = myWorkingHoursDay;
+
+        //save the positions per day
+        companyInstance.positionsPerDay = positionsPerDay;
+
+        //save the name of the company
+        companyInstance.name = name;
+
+        //check if the data is saved correctly
         Console.WriteLine("---------------------------------------");
         Console.WriteLine("Positions per day:");
-        foreach (var day in positionsPerDay)
+        foreach (var day in companyInstance.positionsPerDay)
         {
             Console.WriteLine($"Day: {day.Key}");
             foreach (var position in day.Value)
@@ -159,25 +214,6 @@
                 Console.WriteLine($"Position: {position}");
             }
         }
-    }
-}
-
-
-    private void SaveData()
-    {
-        int iteration = 0;
-        Dictionary<string, Dictionary<string, string>> myWorkingHoursDay = new Dictionary<string, Dictionary<string, string>>();
-        foreach (var day in workingDaysList)
-        {
-            Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
-            string startHour = startHours[iteration].TimeOfDay.ToString();
-            string endHour = endHours[iteration].TimeOfDay.ToString();
-            myWorkingHours.Add(startHour, endHour);
-            myWorkingHoursDay.Add(day, myWorkingHours);
-            iteration++;
-        }
-        Company companyInstance = Company.Instance;
-        companyInstance.SetWorkingHoursDay(myWorkingHoursDay);
 
         //check if the data is saved correctly
         foreach (var day in myWorkingHoursDay)
@@ -189,5 +225,7 @@
                 Console.WriteLine($"End Hour: {workingHours.Value}");
             }
         }
+
+        NavigationManager.NavigateTo($"/company-information");
     }
 }

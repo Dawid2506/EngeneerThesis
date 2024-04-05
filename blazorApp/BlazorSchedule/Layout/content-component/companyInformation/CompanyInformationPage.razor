@@ -4,10 +4,24 @@
 
 <div>
     <div class="company-info-container">
-        <p class="company-info-text">Nazwa:</p>
-        <p class="company-info-text">Dni pracujące:</p>
-        <p class="company-info-text">Ilość godzin:</p>
-        <p class="company-info-text">Godzina przyjścia pomocy:</p>
+        <p class="company-info-text"  style="font-size: 24px;">Nazwa: @companyName</p>
+        <br>
+        @if (companyName != null && workingHoursDay != null && positionsPerDay != null)
+        {
+            @for (int i = 0; i < workingHoursDay.Count; i++)
+            {
+                Dictionary<string, string> workingHours = workingHoursDay.ElementAt(i).Value;
+                List<string> positions = positionsPerDay.ElementAt(i).Value;
+                Console.WriteLine(workingHoursDay.Count);
+                <p class="company-info-text" style="font-size: 24px;">Dzien: @workingHoursDay.ElementAt(i).Key</p>
+                <p class="company-info-text"><Icon Name="IconName.Clock" /> @workingHours.ElementAt(0).Key - @workingHours.ElementAt(0).Value
+                </p>
+                @for (int j = 0; j < positions.Count; j++)
+                {
+                    <p class="company-info-text"><Icon Name="IconName.Person" /> @positions[j]</p>
+                }
+            }
+        }
     </div>
 
     <div class="company-info-buttons">
@@ -19,6 +33,21 @@
 </div>
 
 @code {
+    Company companyInstance;
+    private string companyName;
+    private Dictionary<string, Dictionary<string, string>> workingHoursDay;
+    private Dictionary<string, List<string>> positionsPerDay;
+
+    protected override void OnInitialized()
+    {
+        companyInstance = Company.Instance;
+        companyName = companyInstance.name;
+        workingHoursDay = companyInstance.workingHoursDay;
+        positionsPerDay = companyInstance.positionsPerDay;
+        Console.WriteLine("companyName:");
+        Console.WriteLine(companyName);
+        Console.WriteLine(companyInstance.name);
+    }
     private void ChangeInformation()
     {
         NavigationManager.NavigateTo("/company-information-edit");

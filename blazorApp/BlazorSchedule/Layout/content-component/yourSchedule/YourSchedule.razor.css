@@ -20,3 +20,19 @@
 .show-schedule-button:active{
     scale: 0.95;
 }
+
+.particular-information{
+    display: flex;
+    padding: 2em;
+    justify-content: flex-start; 
+    align-items: center;
+}
+
+.add-employee-text{
+    font-size: 22px;
+}
+
+.add-employee-textbox{
+    margin-left: 1em;
+    border-radius: 8px;
+}

@@ -1,10 +1,48 @@
 @page "/your-schedule"
 
+<div class="particular-information">
+    <p class="add-employee-text">Miesiąc</p>
+    <select id="type-of-agreement" class="add-employee-textbox" @bind="month">
+        @for (int i = 1; i <= 12; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+</div>
+
+<div class="particular-information">
+    <p class="add-employee-text">Rok</p>
+    <select id="type-of-agreement" class="add-employee-textbox" @bind="year">
+        @for (int i = 2020; i <= 2050; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+</div>
+
 <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div>
 
 @code {
+    private int month;
+    private int year;
     private void MakeSchedule()
     {
-        
+        Console.WriteLine("month"); 
+        Console.WriteLine(month); 
+        // Utworzenie obiektu DateTime dla kwietnia 2024 roku
+        DateTime april2024 = new DateTime(year, month, 1);
+
+        // Pobranie liczby dni w kwietniu 2024 roku
+        int daysInApril = DateTime.DaysInMonth(april2024.Year, april2024.Month);
+
+        // Utworzenie obiektu DateTime dla pierwszego dnia kwietnia 2024 roku
+        DateTime firstDayOfApril = new DateTime(april2024.Year, april2024.Month, 1);
+
+        // Pobranie dnia tygodnia, od którego zaczyna się kwiecień 2024 roku
+        DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
+
+        // Wypisanie informacji w konsoli
+        Console.WriteLine($"Kwiecień 2024 roku ma {daysInApril} dni.");
+        Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}.");
     }
 }

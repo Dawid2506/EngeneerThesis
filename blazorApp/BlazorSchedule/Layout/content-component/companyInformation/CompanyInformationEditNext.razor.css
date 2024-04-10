@@ -77,9 +77,11 @@
 }
 
 .save-company-info-buttons{
-    position: absolute;
-    right: 3em;
-    bottom: 3em;
+    padding-right: 3em;
+    padding-bottom: 3em;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .save-company-info-button{

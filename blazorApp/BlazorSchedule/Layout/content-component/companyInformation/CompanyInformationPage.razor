@@ -4,7 +4,7 @@
 
 <div>
     <div class="company-info-container">
-        <p class="company-info-text"  style="font-size: 24px;">Nazwa: @companyName</p>
+        <p class="company-info-text" style="font-size: 24px;">Nazwa: @companyName</p>
         <br>
         @if (companyName != null && workingHoursDay != null && positionsPerDay != null)
         {
@@ -14,11 +14,14 @@
                 List<string> positions = positionsPerDay.ElementAt(i).Value;
                 Console.WriteLine(workingHoursDay.Count);
                 <p class="company-info-text" style="font-size: 24px;">Dzien: @workingHoursDay.ElementAt(i).Key</p>
-                <p class="company-info-text"><Icon Name="IconName.Clock" /> @workingHours.ElementAt(0).Key - @workingHours.ElementAt(0).Value
+                <p class="company-info-text">
+                    <Icon Name="IconName.Clock" /> @workingHours.ElementAt(0).Key - @workingHours.ElementAt(0).Value
                 </p>
                 @for (int j = 0; j < positions.Count; j++)
                 {
-                    <p class="company-info-text"><Icon Name="IconName.Person" /> @positions[j]</p>
+                    <p class="company-info-text">
+                        <Icon Name="IconName.Person" /> @positions[j]
+                    </p>
                 }
             }
         }
@@ -48,8 +51,11 @@
         Console.WriteLine(companyName);
         Console.WriteLine(companyInstance.name);
     }
+
     private void ChangeInformation()
     {
+        Console.WriteLine("companyInstance.name");
+        Console.WriteLine(companyInstance.name);
         NavigationManager.NavigateTo("/company-information-edit");
     }
 

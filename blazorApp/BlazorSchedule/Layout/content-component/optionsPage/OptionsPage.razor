@@ -3,22 +3,49 @@
 
 <div class="buttons">
     <div class="button" @onclick="SavaAllData">Zapisz dane</div>
-    <div class="button">Wczytaj dane</div>
+    <div class="button" @onclick="LoadAllData">Wczytaj dane</div>
+    <div class="button" @onclick="ReadData">read</div>
+    <input type="text" id="date" class="add-employee-textbox" @bind="employeeData">
+    <input type="text" id="date" class="add-employee-textbox" @bind="companyData">
 </div>
 
 
 @code {
+    string employeeData;
+    string companyData;
+    Company companyInstance;
+    IEmployeesRepository employeesRepository;
+
+    protected void OnInitialized()
+    {
+        companyInstance = Company.Instance;
+        employeesRepository = EmployeesRepository.GetInstance();
+    }
+
+    private void ReadData()
+    {
+        Console.WriteLine(companyInstance.name);
+        
+    }
 
     private void SavaAllData()
     {
-        Company companyInstance = Company.Instance;
-        EmployeesRepository employeesRepository = EmployeesRepository.GetInstance();
         string employeeData = JsonConvert.SerializeObject(employeesRepository);
         Console.WriteLine("employeeData");
         Console.WriteLine(employeeData);
 
-        string companyData = JsonConvert.SerializeObject(employeesRepository);
+        string companyData = JsonConvert.SerializeObject(companyInstance);
         Console.WriteLine("companyData");
         Console.WriteLine(companyData);
+    }
+
+    private void LoadAllData()
+    {
+
+        Console.WriteLine(employeeData);
+        Console.WriteLine(companyData);
+        companyInstance = JsonConvert.DeserializeObject<Company>(companyData);
+        employeesRepository = JsonConvert.DeserializeObject<EmployeesRepository>(employeeData);
+        Console.WriteLine(companyInstance.name);
     }
 }

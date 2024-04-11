@@ -3,7 +3,7 @@ namespace BlazorSchedule
     internal class EmployeesRepository : IEmployeesRepository
     {
         private static EmployeesRepository instance;
-        private List<Employee> employees;
+        public List<Employee> employees { get; set; }
 
         private EmployeesRepository()
         {

@@ -1,0 +1,24 @@
+@page "/options"
+@using Newtonsoft.Json;
+
+<div class="buttons">
+    <div class="button" @onclick="SavaAllData">Zapisz dane</div>
+    <div class="button">Wczytaj dane</div>
+</div>
+
+
+@code {
+
+    private void SavaAllData()
+    {
+        Company companyInstance = Company.Instance;
+        EmployeesRepository employeesRepository = EmployeesRepository.GetInstance();
+        string employeeData = JsonConvert.SerializeObject(employeesRepository);
+        Console.WriteLine("employeeData");
+        Console.WriteLine(employeeData);
+
+        string companyData = JsonConvert.SerializeObject(employeesRepository);
+        Console.WriteLine("companyData");
+        Console.WriteLine(companyData);
+    }
+}

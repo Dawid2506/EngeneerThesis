@@ -11,7 +11,7 @@
     padding: 2em;
 }
 
-.add-employee-text{
+.list-days{
     font-size: 18px;
 }
 
@@ -41,4 +41,17 @@
 
 .add-day:active{
     scale: 0.95;
+}
+
+.error-message{
+    background-color: #661D15;
+    color: red;
+    font-size: 28px;
+    width: 1000px;
+    height: 100px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-left: 2em;
+    margin-top: 2em;
 }

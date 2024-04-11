@@ -1,5 +1,12 @@
 @page "/employee-preference"
+@using Newtonsoft.Json;
 
+@if (errorMessage != null)
+    {
+        <div class="error-message">
+            <p>@errorMessage</p>
+        </div>
+    }
 @foreach (var employee in employees)
 {
     <div class="particular-employee">
@@ -10,9 +17,20 @@
             <div class="add-day" @onclick='() => AddDate(employee)'>Dodaj</div>
             @if (employee.daysOff != null)
             {
-                @for(int i = 0; i < employee.daysOff.Count; i++)
+                @for (int i = 0; i < employee.daysOff.Count; i++)
                 {
-                    <p class="add-employee-text">@employee.daysOff[i]</p>
+                    <div>
+                        @if (i == 0)
+                        {
+                            <p class="list-days">&nbsp;&nbsp;@employee.daysOff[i]</p>
+                            //&nbsp; - non-breaking space
+                        }
+                        else if (i > 0)
+                        {
+                            <p class="list-days">, @employee.daysOff[i]</p>
+                        }
+                    </div>
+
                 }
             }
         </div>
@@ -21,6 +39,7 @@
 }
 
 @code {
+    private string errorMessage;
     private List<Employee> employees;
     private static IEmployeesRepository employeesRepository;
     protected override void OnInitialized()
@@ -31,6 +50,19 @@
 
     private void AddDate(Employee employee)
     {
-        employee.daysOff.Add(employee.SelectedDayOff);
+        if (employee.SelectedDayOff > 0 && employee.SelectedDayOff < 32 && employee.SelectedDayOff != null)
+        {
+            errorMessage = null;
+            employee.daysOff.Add(employee.SelectedDayOff);
+            @* Console.WriteLine("json");
+            Company companyInstance = Company.Instance;
+            string json = JsonConvert.SerializeObject(companyInstance.workingHoursDay);
+            Console.WriteLine("json");
+            Console.WriteLine(json); *@
+        }
+        else
+        {
+            errorMessage = "Niepoprawny format daty";
+        }
     }
 }

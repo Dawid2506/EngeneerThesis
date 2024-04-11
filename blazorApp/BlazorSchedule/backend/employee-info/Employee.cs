@@ -13,6 +13,7 @@ namespace BlazorSchedule{
             this.name = name;
             this.typeOfAgreement = typeOfAgreement;
             this.minHours = minHours;
+            daysOff = new List<int>();
         }
     }
 }

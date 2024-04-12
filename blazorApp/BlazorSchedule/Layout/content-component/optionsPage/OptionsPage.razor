@@ -1,5 +1,7 @@
 @page "/options"
 @using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Components;
+@inject AppState appState;
 
 <div class="buttons">
     <div class="button" @onclick="SavaAllData">Zapisz dane</div>
@@ -47,5 +49,7 @@
         companyInstance = JsonConvert.DeserializeObject<Company>(companyData);
         employeesRepository = JsonConvert.DeserializeObject<EmployeesRepository>(employeeData);
         Console.WriteLine(companyInstance.name);
+
+        appState.CompanyInstance = companyInstance;
     }
 }

@@ -1,6 +1,7 @@
 @page "/company-information";
 @using BlazorBootstrap
 @inject NavigationManager NavigationManager;
+@inject AppState appState;
 
 <div>
     <div class="company-info-container">
@@ -43,7 +44,7 @@
 
     protected override void OnInitialized()
     {
-        companyInstance = Company.Instance;
+        companyInstance = appState.CompanyInstance;
         companyName = companyInstance.name;
         workingHoursDay = companyInstance.workingHoursDay;
         positionsPerDay = companyInstance.positionsPerDay;

@@ -1,5 +1,6 @@
 @page "/add-component"
 @inject NavigationManager NavigationManager;
+@inject AppState appState;
 
 <div class="add-employee-container">
     @if (errorMessage != null)
@@ -39,11 +40,13 @@
     private string name;
     private int mintHours;
     private string errorMessage;
-    private static IEmployeesRepository employeesRepository = EmployeesRepository.GetInstance();
     private List<Employee> employees = new List<Employee>();
+
 
     private void AddEmployeeMethod()
     {
+        Console.WriteLine("dsadasdasdas");
+        Console.WriteLine(appState.CompanyInstance.name);
         try
         {
             mintHours = int.Parse(minHours);
@@ -53,16 +56,16 @@
                 typeOfAgreement = "Umowa o pracę";
             }
 
-            if(employeesRepository.GetEmployees().Any(e => e.name == name))
+            if (appState.EmployeesRepository.GetEmployees().Any(e => e.name == name))
             {
                 throw new Exception("Pracownik o takim imieniu już istnieje!");
             }
 
             Employee employee = new Employee(name, typeOfAgreement, mintHours);
 
-            employeesRepository.AddEmployee(employee);
+            appState.EmployeesRepository.AddEmployee(employee);
 
-            employees = employeesRepository.GetEmployees();
+            employees = appState.EmployeesRepository.employees;
 
             errorMessage = null;
 

@@ -16,18 +16,27 @@
     string employeeData;
     string companyData;
     Company companyInstance;
-    IEmployeesRepository employeesRepository;
+    EmployeesRepository employeesRepository;
 
-    protected void OnInitialized()
+    @* protected void OnInitialized()
+{
+companyInstance = appState.CompanyInstance;
+employeesRepository = appState.EmployeesRepository;
+Console.WriteLine(companyInstance.name);
+} *@
+
+    protected override async Task OnInitializedAsync()
     {
-        companyInstance = Company.Instance;
-        employeesRepository = EmployeesRepository.GetInstance();
+        await base.OnInitializedAsync();
+        companyInstance = appState.CompanyInstance;
+        employeesRepository = appState.EmployeesRepository;
+        Console.WriteLine(companyInstance.name);
     }
 
     private void ReadData()
     {
         Console.WriteLine(companyInstance.name);
-        
+
     }
 
     private void SavaAllData()
@@ -51,5 +60,6 @@
         Console.WriteLine(companyInstance.name);
 
         appState.CompanyInstance = companyInstance;
+        appState.EmployeesRepository = employeesRepository;
     }
 }

@@ -1,5 +1,6 @@
 @page "/employee-preference"
 @using Newtonsoft.Json;
+@inject AppState appState;
 
 @if (errorMessage != null)
     {
@@ -41,10 +42,10 @@
 @code {
     private string errorMessage;
     private List<Employee> employees;
-    private static IEmployeesRepository employeesRepository;
+    private IEmployeesRepository employeesRepository;
     protected override void OnInitialized()
     {
-        employeesRepository = EmployeesRepository.GetInstance();
+        employeesRepository = appState.EmployeesRepository;
         employees = employeesRepository.GetEmployees();
     }
 

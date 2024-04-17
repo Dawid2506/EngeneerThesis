@@ -1,6 +1,7 @@
 @page "/add-employee-menu"
 @using BlazorBootstrap
 @inject NavigationManager NavigationManager
+@inject AppState appState;
 
 <div class="add-employee-menu-container">
     @if (isPersonInfoVisible)
@@ -45,7 +46,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        employeesRepository = EmployeesRepository.GetInstance();
+        employeesRepository = appState.EmployeesRepository;
         employeeList = employeesRepository.GetEmployees();
     }
 

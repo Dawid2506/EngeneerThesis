@@ -3,6 +3,7 @@
 @using BlazorBootstrap
 @using System.Text.Json;
 @using System.Collections.Generic;
+@inject AppState appState;
 
 <div>
     <div class="input-field">
@@ -60,13 +61,18 @@
                             }
                         </select>
                         <div class="add-position-button" @onclick='() => AddPosition(iIndex)'>
-                            <Icon Name="IconName.PlusCircle" />
+                            <Icon Name="IconName.FilePlus" />
                         </div>
                     </div>
                     <div class="displayPositions">
                         @foreach (var position in positionsPerDay[workingDaysList[i]])
                         {
-                            <p>@position</p>
+                            <div class="align-this">
+                                <p>@position</p>
+                                <div class="add-position-button" @onclick='() => RemovePosition(iIndex)'>
+                                    <Icon Name="IconName.FileMinus" />
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
@@ -99,6 +105,7 @@
     private string position { get; set; }
     public DateTime startHourForAll { get; set; }
     public DateTime endHourForAll { get; set; }
+    Company companyInstance;
 
     protected override void OnInitialized()
     {
@@ -164,6 +171,24 @@
         }
     }
 
+    private void RemovePosition(int iIndex)
+    {
+        if (position != null)
+        {
+            positionsPerDay[workingDaysList[iIndex]].Remove(position);
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Positions per day:");
+            foreach (var day in positionsPerDay)
+            {
+                Console.WriteLine($"Day: {day.Key}");
+                foreach (var position in day.Value)
+                {
+                    Console.WriteLine($"Position: {position}");
+                }
+            }
+        }
+    }
+
 
     private void SaveData()
     {
@@ -194,7 +219,10 @@
             }
         }
 
-        Company companyInstance = Company.Instance;
+        companyInstance = Company.Instance;
+    
+        companyInstance.workingDays = workingDaysList;
+
         companyInstance.workingHoursDay = myWorkingHoursDay;
 
         //save the positions per day

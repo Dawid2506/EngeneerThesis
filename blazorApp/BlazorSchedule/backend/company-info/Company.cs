@@ -11,7 +11,7 @@ namespace BlazorSchedule{
 
         private Company()
         {
-            // Private constructor to prevent instantiation
+            workingDays = new List<string>();
         }
 
         public void SetWorkingHoursDay(Dictionary<string, Dictionary<string, string>> workingHoursDay)

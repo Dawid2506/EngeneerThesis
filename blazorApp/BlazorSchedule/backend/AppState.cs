@@ -4,11 +4,13 @@ namespace BlazorSchedule
     {
         public Company CompanyInstance { get; set; }
         public EmployeesRepository EmployeesRepository { get; set; }
+        public Schedule schedule { get; set;}
 
         public AppState()
         {
             CompanyInstance = Company.Instance;
             EmployeesRepository = new EmployeesRepository();
+            schedule = Schedule.Instance;
         }
     }
 }

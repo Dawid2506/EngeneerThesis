@@ -5,8 +5,6 @@ public class Schedule
 
     private Schedule()
     {
-        schedule = new bool[32,5];
-        schedule[1, 2] = true;
     }
 
     public static Schedule Instance
@@ -28,4 +26,10 @@ public class Schedule
     }
 
     public bool[,] schedule { get; set; }
+
+    public void InitializeSchedule(int numberOfDays)
+    {
+        schedule = new bool[numberOfDays,5];
+        Console.WriteLine(schedule.GetLength(0));
+    }
 }

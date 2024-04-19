@@ -1,4 +1,5 @@
 @page "/your-schedule"
+@inject AppState appState;
 
 <div class="particular-information">
     <p class="add-employee-text">Miesiąc</p>
@@ -32,19 +33,13 @@
 
         DateTime date = new DateTime(year, month, 1);
         int daysInApril = DateTime.DaysInMonth(date.Year, date.Month);
-        
-
-
-
-
-        @* // Utworzenie obiektu DateTime dla pierwszego dnia kwietnia 2024 roku
         DateTime firstDayOfApril = new DateTime(date.Year, date.Month, 1);
-
-        // Pobranie dnia tygodnia, od którego zaczyna się kwiecień 2024 roku
         DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
 
-        // Wypisanie informacji w konsoli
         Console.WriteLine($"Kwiecień 2024 roku ma {daysInApril} dni.");
-        Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}."); *@
+        Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}.");
+
+        @* appState.CompanyInstance. *@
+        appState.schedule.InitializeSchedule(daysInApril);
     }
 }

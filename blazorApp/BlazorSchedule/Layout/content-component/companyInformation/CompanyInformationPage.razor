@@ -44,19 +44,19 @@
 
     protected override void OnInitialized()
     {
-        companyInstance = appState.CompanyInstance;
-        companyName = companyInstance.name;
-        workingHoursDay = companyInstance.workingHoursDay;
-        positionsPerDay = companyInstance.positionsPerDay;
-        Console.WriteLine("companyName:");
-        Console.WriteLine(companyName);
-        Console.WriteLine(companyInstance.name);
+            companyInstance = appState.CompanyInstance;
+            companyName = companyInstance.name;
+            workingHoursDay = companyInstance.workingHoursDay;
+            positionsPerDay = companyInstance.positionsPerDay;
+            Console.WriteLine("companyName:");  
+            Console.WriteLine(companyName);
+            Console.WriteLine(companyInstance.name);
     }
 
     private void ChangeInformation()
     {
-        Console.WriteLine("companyInstance.name");
-        Console.WriteLine(companyInstance.name);
+            Console.WriteLine("companyInstance.name");
+            Console.WriteLine(companyInstance.name);
         NavigationManager.NavigateTo("/company-information-edit");
     }
 

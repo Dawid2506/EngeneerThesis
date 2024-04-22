@@ -31,15 +31,6 @@ public class Schedule
 
     public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees)
     {
-        Console.WriteLine("huyyyyyyyyyyyyyyyyyyyyyy");
-        foreach (var employee in employees)
-        {
-            foreach (var day in employee.daysOff)
-            {
-                Console.WriteLine(day);
-            }
-        }
-
         int numberOfEmployees = employees.Count;
         schedule = new bool[numberOfDays, numberOfEmployees + 1];
         //Console.WriteLine(schedule.GetLength(0));
@@ -87,14 +78,6 @@ public class Schedule
         }
 
 
-    }
-
-    public void PrintZeroLayerOfSchedule()
-    {
-        for (int i = 0; i < schedule.GetLength(0); i++)
-        {
-            Console.WriteLine(schedule[i, 0]);
-        }
     }
 
     public void PrintAllSchedule()

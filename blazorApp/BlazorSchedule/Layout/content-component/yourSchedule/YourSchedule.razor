@@ -29,14 +29,69 @@
 
 <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div>
 
+@if (scheduleIsVisible)
+{
+    <div class="schedule">
+        <table>
+            <tr>
+                <th>Imię</th>
+                @for (int i = 1; i <= 30; i++)
+                {
+                    <th>@i</th>
+                }
+            </tr>
+            @foreach (var employee in appState.EmployeesRepository.employees)
+            {
+                <tr>
+                    <td>@employee.name</td>
+                    @foreach (var day in appState.schedule.schedule)
+                    {
+                        <td>@day</td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+@if (scheduleIsVisible)
+{
+    <div class="schedule">
+        <table>
+            <tr>
+                <th>imie</th>
+                @foreach (var employee in appState.EmployeesRepository.employees)
+                {
+                    <th>@employee.name</th>
+                }
+            </tr>
+
+            @for (int i = 0; i < 29; i++)
+            {
+                int day = i + 1;
+                <tr>
+                    <th>@day</th>
+                    @foreach (var employee in appState.EmployeesRepository.employees)
+                    {
+                        int numOfEmployee = appState.EmployeesRepository.employees.IndexOf(employee);
+                        <td>@appState.schedule.schedule[22, 1]</td>
+                        //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+}
+
 @code {
     private string errorMessage;
     private int month;
     private int year;
     private Dictionary<string, int> workingDaysToInt;
+    private bool scheduleIsVisible = false;
     private void MakeSchedule()
     {
-        if(month == 0 || year == 0)
+        if (month == 0 || year == 0)
         {
             errorMessage = "Podaj miesiąc oraz rok";
             return;
@@ -50,12 +105,11 @@
         Console.WriteLine(month);
 
         DateTime date = new DateTime(year, month, 1);
-        int daysInApril = DateTime.DaysInMonth(date.Year, date.Month);
+        int NumOfDaysInApril = DateTime.DaysInMonth(date.Year, date.Month);
         DateTime firstDayOfApril = new DateTime(date.Year, date.Month, 1);
         DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
         int FirstDayOfMonth = (int)startDayOfWeek;
 
-        Console.WriteLine($"Kwiecień 2024 roku ma {daysInApril} dni.");
         //Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}.");
         Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {FirstDayOfMonth}.");
 
@@ -63,16 +117,17 @@
         List<Employee> employees = appState.EmployeesRepository.employees;
 
         Console.WriteLine("------------------sss");
-        foreach(var day in workingDaysInt)
+        foreach (var day in workingDaysInt)
         {
             Console.WriteLine(day);
         }
 
-        appState.schedule.InitializeSchedule(daysInApril, workingDaysInt, FirstDayOfMonth, employees);
+        appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees);
 
         Console.WriteLine("printing");
         appState.schedule.PrintAllSchedule();
 
+        scheduleIsVisible = true;
     }
 
     private List<int> MakeNumberOfDaysDictionary()
@@ -88,11 +143,11 @@
         workingDaysToInt.Add("piątek", 5);
         workingDaysToInt.Add("sobota", 6);
 
-        foreach(var day in appState.CompanyInstance.workingDays)
+        foreach (var day in appState.CompanyInstance.workingDays)
         {
             workingDaysInt.Add(workingDaysToInt[day]);
         }
-        
+
         return workingDaysInt;
     }
 }

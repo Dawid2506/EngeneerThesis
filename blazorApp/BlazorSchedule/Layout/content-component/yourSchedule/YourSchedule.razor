@@ -56,15 +56,22 @@
         int FirstDayOfMonth = (int)startDayOfWeek;
 
         Console.WriteLine($"Kwiecień 2024 roku ma {daysInApril} dni.");
-        Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}.");
+        //Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}.");
         Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {FirstDayOfMonth}.");
 
         List<int> workingDaysInt = MakeNumberOfDaysDictionary();
+        List<Employee> employees = appState.EmployeesRepository.employees;
 
-        appState.schedule.InitializeSchedule(daysInApril, workingDaysInt, FirstDayOfMonth);
+        Console.WriteLine("------------------sss");
+        foreach(var day in workingDaysInt)
+        {
+            Console.WriteLine(day);
+        }
+
+        appState.schedule.InitializeSchedule(daysInApril, workingDaysInt, FirstDayOfMonth, employees);
 
         Console.WriteLine("printing");
-        appState.schedule.PrintZeroLayerOfSchedule();
+        appState.schedule.PrintAllSchedule();
 
     }
 

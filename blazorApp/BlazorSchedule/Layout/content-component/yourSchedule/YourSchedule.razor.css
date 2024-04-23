@@ -49,3 +49,8 @@
     margin-left: 2em;
     margin-top: 2em;
 }
+
+.cell{
+    text-align: center;
+    border: 1px solid black;
+}

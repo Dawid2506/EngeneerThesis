@@ -1,99 +1,107 @@
-using BlazorSchedule;
+using System;
+using System.Collections.Generic;
 
-public class Schedule
+namespace BlazorSchedule
 {
-    private static Schedule instance;
-    private static readonly object lockObject = new object();
-
-    private Schedule()
+    public class Schedule
     {
-    }
+        private static Schedule instance;
+        private static readonly object lockObject = new object();
 
-    public static Schedule Instance
-    {
-        get
+        private Schedule()
         {
-            if (instance == null)
+        }
+
+        public static Schedule Instance
+        {
+            get
             {
-                lock (lockObject)
+                if (instance == null)
                 {
-                    if (instance == null)
+                    lock (lockObject)
                     {
-                        instance = new Schedule();
+                        if (instance == null)
+                        {
+                            instance = new Schedule();
+                        }
                     }
                 }
-            }
-            return instance;
-        }
-    }
-
-    public bool[,] schedule { get; set; }
-
-    public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees)
-    {
-        int numberOfEmployees = employees.Count;
-        schedule = new bool[numberOfDays, numberOfEmployees + 1];
-        //Console.WriteLine(schedule.GetLength(0));
-
-        int actualDay = firstDayOfMonth;
-
-        //making the first layer of the schedule with the working days
-        for (int i = 0; i < numberOfDays; i++)
-        {
-            for (int j = 0; j < workingDaysInt.Count; j++)
-            {
-                if (workingDaysInt[j] == actualDay)
-                {
-                    schedule[i, 0] = true;
-                }
-            }
-            if (actualDay == 6)
-            {
-                actualDay = 0;
-            }
-            else
-            {
-                actualDay++;
+                return instance;
             }
         }
 
-        int actualDate = 1;
-        //making the second layer of the schedule with informtation wether the employee can working or not
-        for (int i = 0; i < numberOfEmployees; i++)
+        public string[,] schedule; // Zmieniamy na pole
+
+        public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees)
         {
-            for (int j = 0; j < numberOfDays; j++)
+            int numberOfEmployees = employees.Count;
+            schedule = new string[numberOfDays, numberOfEmployees + 1];
+
+            int actualDay = firstDayOfMonth;
+
+            for (int i = 0; i < schedule.GetLength(0); i++)
             {
-                //the numer of employee on the second dimension is equel to the number of the employee from the list + 1
-                if(schedule[j, 0] == false)
+                for (int j = 0; j < schedule.GetLength(1); j++)
                 {
-                    schedule[j, i + 1] = false;
+                    schedule[i, j] = "#";
                 }
-                else if (employees[i].daysOff.Contains(actualDate))
+            }
+
+            // Tworzenie pierwszej warstwy harmonogramu z dniami roboczymi
+            for (int i = 0; i < numberOfDays; i++)
+            {
+                for (int j = 0; j < workingDaysInt.Count; j++)
                 {
-                    schedule[j, i + 1] = false;
+                    if (workingDaysInt[j] == actualDay)
+                    {
+                        schedule[i, 0] = "true";
+                    }
+                }
+                if (actualDay == 6)
+                {
+                    actualDay = 0;
                 }
                 else
                 {
-                    schedule[j, i + 1] = true;
+                    actualDay++;
                 }
-                actualDate++;
             }
-            actualDate = 1;
+
+            int actualDate = 1;
+            // Tworzenie drugiej warstwy harmonogramu z informacją czy pracownik może pracować czy nie
+            for (int i = 0; i < numberOfEmployees; i++)
+            {
+                for (int j = 0; j < numberOfDays; j++)
+                {
+                    if (schedule[j, 0] == "#")
+                    {
+                        schedule[j, i + 1] = "#";
+                    }
+                    else if (employees[i].daysOff.Contains(actualDate))
+                    {
+                        schedule[j, i + 1] = "/";
+                    }
+                    else
+                    {
+                        schedule[j, i + 1] = "x";
+                    }
+                    actualDate++;
+                }
+                actualDate = 1;
+            }
         }
 
-
-    }
-
-    public void PrintAllSchedule()
-    {
-        for (int i = 0; i < schedule.GetLength(0); i++)
+        public void PrintAllSchedule()
         {
-            Console.Write("Day " + (i + 1));
-            for (int j = 0; j < schedule.GetLength(1); j++)
+            for (int i = 0; i < schedule.GetLength(0); i++)
             {
-                Console.Write(schedule[i, j] + " ");
+                Console.Write("Day " + (i + 1) + " ");
+                for (int j = 0; j < schedule.GetLength(1); j++)
+                {
+                    Console.Write(schedule[i, j] + " ");
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine();
         }
     }
 }

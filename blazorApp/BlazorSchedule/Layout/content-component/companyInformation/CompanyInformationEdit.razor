@@ -2,6 +2,7 @@
 @inject NavigationManager NavigationManager;
 @using System.Text.Json;
 @using System.Web;
+@inject AppState appState;
 
 <div class="add-employee-container">
     @if (errorMessage != null)
@@ -14,7 +15,7 @@
     <div class="input-field">
         <div class="particular-information">
             <p class="add-employee-text">Nazwa firmy</p>
-            <input type="text" id="name" class="add-employee-textbox" @bind="name">
+            <input type="text" class="add-employee-textbox" @bind="name">
         </div>
         <div class="particular-information">
             <p class="add-employee-text">Dni pracujące</p>
@@ -59,6 +60,16 @@
     private string position;
     private int mintHours;
     private string errorMessage;
+
+    protected override void OnInitialized()
+    {
+        if(appState.CompanyInstance.name != null)
+        {
+            name = appState.CompanyInstance.name;
+            workingDaysList = appState.CompanyInstance.workingDays;
+            positions = appState.CompanyInstance.positionsList;
+        }
+    }
 
     private void AddDay(string day)
     {

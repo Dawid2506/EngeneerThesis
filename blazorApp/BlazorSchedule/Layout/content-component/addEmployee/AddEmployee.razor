@@ -1,6 +1,7 @@
 @page "/add-component"
 @inject NavigationManager NavigationManager;
 @inject AppState appState;
+@using System.Collections.Generic;
 
 <div class="add-employee-container">
     @if (errorMessage != null)
@@ -26,6 +27,26 @@
             <p class="add-employee-text">Minimalna liczba godzin</p>
             <input type="text" id="min-hours" class="add-employee-textbox" @bind="minHours">
         </div>
+        <div class="particular-information">
+            <p class="add-employee-text">Stanowisko</p>
+            <select id="type-of-agreement" class="add-employee-textbox" @bind="position">
+                @foreach (var position in appState.CompanyInstance.positionsList)
+                {
+                    <option value="@position">@position</option>
+                }
+            </select>
+            <button class="add-position-button" @onclick="AddPosition">Dodaj stanowisko</button>
+        </div>
+        <div class="displayPositions">
+            @foreach (var position in positions)
+            {
+                <div class="align-this">
+                    <p>@position</p>
+                </div>
+            }
+        </div>
+
+
 
         <div class="add-employee-buttons">
             <button class="add-employee-button" @onclick="AddEmployeeMethod">Dodaj pracownika</button>
@@ -41,7 +62,13 @@
     private int mintHours;
     private string errorMessage;
     private List<Employee> employees = new List<Employee>();
+    private List<string> positions;
+    private string position;
 
+    protected override void OnInitialized()
+    {
+        positions = new List<string>();
+    }
 
     private void AddEmployeeMethod()
     {
@@ -61,7 +88,7 @@
                 throw new Exception("Pracownik o takim imieniu już istnieje!");
             }
 
-            Employee employee = new Employee(name, typeOfAgreement, mintHours);
+            Employee employee = new Employee(name, typeOfAgreement, mintHours, positions);
 
             appState.EmployeesRepository.AddEmployee(employee);
 
@@ -74,6 +101,20 @@
         catch (Exception e)
         {
             errorMessage = $"Wprowadzono niepoprawne dane! {e.Message}";
+        }
+    }
+
+    private void AddPosition()
+    {
+        if (positions.Contains(position))
+        {
+            errorMessage = "Stanowisko już istnieje";
+        }
+        else
+        {
+            positions.Add(position);
+            position = string.Empty;
+            errorMessage = null;
         }
     }
 

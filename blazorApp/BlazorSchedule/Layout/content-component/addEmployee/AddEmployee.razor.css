@@ -49,6 +49,31 @@
     scale: 0.95;
 }
 
+.add-employee-buttons{
+    position: absolute;
+    right: 3em;
+    bottom: 3em;
+}
+
+.add-position-button{
+    margin-left: 1em;
+    color: white;
+    width: 10em;
+    height: 2em;
+    background-color: #661D15;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.add-position-button:hover{
+    background-color: #551811;
+    cursor: pointer;
+}
+
+.add-position-button:active{
+    scale: 0.95;
+}
+
 .error-message{
     background-color: #661D15;
     color: red;
@@ -60,4 +85,10 @@
     align-items: center;
     margin-left: 2em;
     margin-top: 2em;
+}
+
+.align-this{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

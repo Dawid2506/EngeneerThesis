@@ -6,13 +6,14 @@ namespace BlazorSchedule{
         public int minHours { get; set; }
         public List<int> daysOff { get; set; }
         public int SelectedDayOff { get; set; }
-        public bool[,] personalSchedule { get; set; }
+        public List<string> positions { get; set; }
 
-        public Employee(string name, string typeOfAgreement, int minHours)
+        public Employee(string name, string typeOfAgreement, int minHours, List<string> positions)
         {
             this.name = name;
             this.typeOfAgreement = typeOfAgreement;
             this.minHours = minHours;
+            this.positions = positions;
             daysOff = new List<int>();
         }
     }

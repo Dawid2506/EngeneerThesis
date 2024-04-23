@@ -109,6 +109,11 @@
 
     protected override void OnInitialized()
     {
+        if(appState.CompanyInstance.workingHoursDay != null)
+        {
+            positionsPerDay = appState.CompanyInstance.positionsPerDay;
+        }
+
         //Decode the encoded strings
         positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
         workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
@@ -231,6 +236,8 @@
         //save the name of the company
         companyInstance.name = name;
 
+        companyInstance.positionsList = positions;
+
         //check if the data is saved correctly
         Console.WriteLine("---------------------------------------");
         Console.WriteLine("Positions per day:");
@@ -252,6 +259,11 @@
                 Console.WriteLine($"Start Hour: {workingHours.Key}");
                 Console.WriteLine($"End Hour: {workingHours.Value}");
             }
+        }
+
+        foreach (var positon in companyInstance.positionsList)
+        {
+            Console.WriteLine($"Position: {positon}");
         }
 
         NavigationManager.NavigateTo($"/company-information");

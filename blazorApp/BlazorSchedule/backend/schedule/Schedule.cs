@@ -64,7 +64,11 @@ public class Schedule
             for (int j = 0; j < numberOfDays; j++)
             {
                 //the numer of employee on the second dimension is equel to the number of the employee from the list + 1
-                if (employees[i].daysOff.Contains(actualDate))
+                if(schedule[j, 0] == false)
+                {
+                    schedule[j, i + 1] = false;
+                }
+                else if (employees[i].daysOff.Contains(actualDate))
                 {
                     schedule[j, i + 1] = false;
                 }

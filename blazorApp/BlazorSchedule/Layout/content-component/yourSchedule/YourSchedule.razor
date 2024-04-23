@@ -34,31 +34,6 @@
     <div class="schedule">
         <table>
             <tr>
-                <th>Imię</th>
-                @for (int i = 1; i <= 30; i++)
-                {
-                    <th>@i</th>
-                }
-            </tr>
-            @foreach (var employee in appState.EmployeesRepository.employees)
-            {
-                <tr>
-                    <td>@employee.name</td>
-                    @foreach (var day in appState.schedule.schedule)
-                    {
-                        <td>@day</td>
-                    }
-                </tr>
-            }
-        </table>
-    </div>
-}
-
-@if (scheduleIsVisible)
-{
-    <div class="schedule">
-        <table>
-            <tr>
                 <th>imie</th>
                 @foreach (var employee in appState.EmployeesRepository.employees)
                 {
@@ -66,15 +41,14 @@
                 }
             </tr>
 
-            @for (int i = 0; i < 29; i++)
+            @for (int i = 0; i < NumOfDays; i++)
             {
                 int day = i + 1;
                 <tr>
                     <th>@day</th>
-                    @foreach (var employee in appState.EmployeesRepository.employees)
+                    @for (int j = 0; j < appState.EmployeesRepository.employees.Count; j++)
                     {
-                        int numOfEmployee = appState.EmployeesRepository.employees.IndexOf(employee);
-                        <td>@appState.schedule.schedule[22, 1]</td>
+                        <td>@appState.schedule.schedule[i,j+1]</td>
                         //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
                     }
                 </tr>
@@ -89,6 +63,7 @@
     private int year;
     private Dictionary<string, int> workingDaysToInt;
     private bool scheduleIsVisible = false;
+    private int NumOfDays;
     private void MakeSchedule()
     {
         if (month == 0 || year == 0)
@@ -110,17 +85,8 @@
         DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
         int FirstDayOfMonth = (int)startDayOfWeek;
 
-        //Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {startDayOfWeek}.");
-        Console.WriteLine($"Kwiecień 2024 roku rozpoczyna się od dnia tygodnia: {FirstDayOfMonth}.");
-
         List<int> workingDaysInt = MakeNumberOfDaysDictionary();
         List<Employee> employees = appState.EmployeesRepository.employees;
-
-        Console.WriteLine("------------------sss");
-        foreach (var day in workingDaysInt)
-        {
-            Console.WriteLine(day);
-        }
 
         appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees);
 
@@ -128,6 +94,7 @@
         appState.schedule.PrintAllSchedule();
 
         scheduleIsVisible = true;
+        NumOfDays = NumOfDaysInApril;
     }
 
     private List<int> MakeNumberOfDaysDictionary()

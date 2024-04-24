@@ -109,11 +109,6 @@
 
     protected override void OnInitialized()
     {
-        if(appState.CompanyInstance.workingHoursDay != null)
-        {
-            positionsPerDay = appState.CompanyInstance.positionsPerDay;
-        }
-
         //Decode the encoded strings
         positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
         workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
@@ -132,6 +127,32 @@
         foreach (var day in workingDaysList)
         {
             positionsPerDay.Add(day, new List<string>());
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (appState.CompanyInstance.workingHoursDay != null)
+        {
+            positionsPerDay = appState.CompanyInstance.positionsPerDay;
+        }
+
+        if (appState.CompanyInstance.workingHoursDay != null)
+        {
+            if (appState.CompanyInstance.isCheckboxChecked)
+            {
+                startHourForAll = DateTime.Parse(appState.CompanyInstance.workingHoursDay.Values.First().Keys.First());
+                endHourForAll = DateTime.Parse(appState.CompanyInstance.workingHoursDay.Values.First().Values.First());
+            }
+            else
+            {
+                foreach (var day in appState.CompanyInstance.workingHoursDay)
+                {
+                    startHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Keys.First());
+                    endHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Values.First());
+                }
+            }
         }
     }
 
@@ -199,6 +220,7 @@
     {
         //save the working hours per day
         int iteration = 0;
+        bool isChecked = false;
         Dictionary<string, Dictionary<string, string>> myWorkingHoursDay = new Dictionary<string, Dictionary<string, string>>();
         if (isCheckboxChecked)
         {
@@ -209,6 +231,7 @@
                 string endHour = endHourForAll.TimeOfDay.ToString();
                 myWorkingHours.Add(startHour, endHour);
                 myWorkingHoursDay.Add(day, myWorkingHours);
+                isChecked = true;
             }
         }
         else
@@ -221,11 +244,12 @@
                 myWorkingHours.Add(startHour, endHour);
                 myWorkingHoursDay.Add(day, myWorkingHours);
                 iteration++;
+                isChecked = false;
             }
         }
 
         companyInstance = Company.Instance;
-    
+
         companyInstance.workingDays = workingDaysList;
 
         companyInstance.workingHoursDay = myWorkingHoursDay;
@@ -237,6 +261,8 @@
         companyInstance.name = name;
 
         companyInstance.positionsList = positions;
+
+        companyInstance.isCheckboxChecked = isChecked;
 
         //check if the data is saved correctly
         Console.WriteLine("---------------------------------------");

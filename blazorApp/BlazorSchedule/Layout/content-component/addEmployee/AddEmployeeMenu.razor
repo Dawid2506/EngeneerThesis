@@ -10,6 +10,10 @@
             <p class="person-info-text">Imie: @actualEmployee.name</p>
             <p class="person-info-text">Rodzaj umowy: @actualEmployee.typeOfAgreement</p>
             <p class="person-info-text">Minimalna ilość godzin: @actualEmployee.minHours</p>
+            <div class="manage-person-buttons">
+                <button class="manage-person-button" @onclick="EditPerson">Edytuj</button>
+                <button class="manage-person-button">Usuń</button>
+            </div>
         </div>
     }
 
@@ -37,6 +41,9 @@
     private bool isPersonInfoVisible = false;
     private Employee actualEmployee;
     private EmployeesRepository employeesRepository;
+    
+    [Parameter]
+    public string editByName { get; set; }
 
     private IDictionary<string, object> BlockRight => new Dictionary<string, object>
 {
@@ -59,5 +66,11 @@
     private void ChangeToAddEmployee()
     {
         NavigationManager.NavigateTo("/add-component");
+    }
+
+    private void EditPerson()
+    {
+        editByName = actualEmployee.name;
+        NavigationManager.NavigateTo($"/add-component/{editByName}");
     }
 }

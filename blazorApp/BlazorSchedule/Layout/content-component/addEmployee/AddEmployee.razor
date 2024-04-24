@@ -1,3 +1,4 @@
+@page "/add-component/{editByName}"
 @page "/add-component"
 @inject NavigationManager NavigationManager;
 @inject AppState appState;
@@ -65,10 +66,29 @@
     private List<string> positions;
     private string position;
 
+    [Parameter]
+    public string editByName { get; set; }
+
     protected override void OnInitialized()
     {
         positions = new List<string>();
         position = appState.CompanyInstance.positionsList[0];
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("editByName");
+            Console.WriteLine(editByName);
+        await base.OnInitializedAsync();
+        if (editByName != null)
+        {
+            name = editByName;
+            List<Employee> employees = appState.EmployeesRepository.GetEmployees();
+            Employee employee = employees.FirstOrDefault(e => e.name == editByName);
+            typeOfAgreement = employee.typeOfAgreement;
+            minHours = employee.minHours.ToString();
+            positions = employee.positions;
+        }
     }
 
     private void AddEmployeeMethod()

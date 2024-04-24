@@ -106,14 +106,21 @@
 
             if (appState.EmployeesRepository.GetEmployees().Any(e => e.name == name))
             {
-                throw new Exception("Pracownik o takim imieniu już istnieje!");
+                //throw new Exception("Pracownik o takim imieniu już istnieje!");
+                Employee particularEmployee = appState.EmployeesRepository.GetEmployeeByName(name);
+                particularEmployee.typeOfAgreement = typeOfAgreement;
+                particularEmployee.minHours = mintHours;
+                particularEmployee.positions = positions;
+                particularEmployee.name = name;
             }
+            else
+            {
+                Employee employee = new Employee(name, typeOfAgreement, mintHours, positions);
 
-            Employee employee = new Employee(name, typeOfAgreement, mintHours, positions);
+                appState.EmployeesRepository.AddEmployee(employee);
 
-            appState.EmployeesRepository.AddEmployee(employee);
-
-            employees = appState.EmployeesRepository.employees;
+                employees = appState.EmployeesRepository.employees;
+            }
 
             errorMessage = null;
 

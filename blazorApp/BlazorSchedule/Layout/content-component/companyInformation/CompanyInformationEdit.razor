@@ -41,89 +41,96 @@
             <input type="text" id="position" class="add-employee-textbox" @bind="position">
             <button class="add-position-button" @onclick="AddPosition">Dodaj stanowisko</button>
         </div>
+        <div class="displayPositions">
+            @foreach (var position in positions)
+            {
+                <div class="align-this" style="margin-left: 5em;">
+                    <p>@position</p>
+                </div>
+            }
+        </div>
+
+        <div class="company-info-buttons">
+            <button class="company-info-button" @onclick="NextPage">Przejdź dalej </button>
+        </div>
     </div>
 
-    <div class="company-info-buttons">
-        <button class="company-info-button" @onclick="NextPage">Przejdź dalej </button>
-    </div>
-</div>
+    @code {
+        [Parameter]
+        public string name { get; set; }
 
-@code {
-    [Parameter]
-    public string name { get; set; }
+        [Parameter]
+        public List<string> workingDaysList { get; set; } = new List<string>();
 
-    [Parameter]
-    public List<string> workingDaysList { get; set; } = new List<string>();
+        [Parameter]
+        public List<string> positions { get; set; } = new List<string>();
+        private string position;
+        private int mintHours;
+        private string errorMessage;
 
-    [Parameter]
-    public List<string> positions { get; set; } = new List<string>();
-    private string position;
-    private int mintHours;
-    private string errorMessage;
-
-    protected override void OnInitialized()
-    {
-        if(appState.CompanyInstance.name != null)
+        protected override void OnInitialized()
         {
-            name = appState.CompanyInstance.name;
-            workingDaysList = appState.CompanyInstance.workingDays;
-            positions = appState.CompanyInstance.positionsList;
+            if (appState.CompanyInstance.name != null)
+            {
+                name = appState.CompanyInstance.name;
+                workingDaysList = appState.CompanyInstance.workingDays;
+                positions = appState.CompanyInstance.positionsList;
+            }
+        }
+
+        private void AddDay(string day)
+        {
+            if (workingDaysList.Contains(day))
+            {
+                workingDaysList.Remove(day);
+            }
+            else
+            {
+                workingDaysList.Add(day);
+            }
+        }
+
+        private void AddPosition()
+        {
+            if (positions.Contains(position))
+            {
+                errorMessage = "Stanowisko już istnieje";
+            }
+            else
+            {
+                positions.Add(position);
+                position = string.Empty;
+                Console.WriteLine(positions[0]);
+            }
+        }
+
+
+
+        private void NextPage()
+        {
+            if (AreParametersNotEmpty())
+            {
+                // Przekazanie danych poprzez adres URL
+                var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
+                var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
+                var encodedName = Uri.EscapeDataString(name);
+                NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}");
+            }
+            else
+            {
+                errorMessage = "Wypełnij wszystkie pola";
+            }
+        }
+
+        private bool AreParametersNotEmpty()
+        {
+            return !string.IsNullOrEmpty(name) && workingDaysList.Count > 0 && positions.Count > 0;
+        }
+
+
+
+        private void GoBack()
+        {
+            NavigationManager.NavigateTo("/add-employee-menu");
         }
     }
-
-    private void AddDay(string day)
-    {
-        if (workingDaysList.Contains(day))
-        {
-            workingDaysList.Remove(day);
-        }
-        else
-        {
-            workingDaysList.Add(day);
-        }
-    }
-
-    private void AddPosition()
-    {
-        if (positions.Contains(position))
-        {
-            errorMessage = "Stanowisko już istnieje";
-        }
-        else
-        {
-            positions.Add(position);
-            position = string.Empty;
-            Console.WriteLine(positions[0]);
-        }
-    }
-
-
-
-    private void NextPage()
-    {
-        if (AreParametersNotEmpty())
-        {
-            // Przekazanie danych poprzez adres URL
-            var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
-            var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
-            var encodedName = Uri.EscapeDataString(name);
-            NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}");
-        }
-        else
-        {
-            errorMessage = "Wypełnij wszystkie pola";
-        }
-    }
-
-    private bool AreParametersNotEmpty()
-    {
-        return !string.IsNullOrEmpty(name) && workingDaysList.Count > 0 && positions.Count > 0;
-    }
-
-
-
-    private void GoBack()
-    {
-        NavigationManager.NavigateTo("/add-employee-menu");
-    }
-}

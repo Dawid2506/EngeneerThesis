@@ -29,6 +29,12 @@ namespace BlazorSchedule
             employees.Remove(employee);
         }
 
+        public void DeleteEmployee(string name)
+        {
+            Employee employeeToDelete = employees.Find(e => e.name == name);
+            employees.Remove(employeeToDelete);
+        }
+
         public void UpdateEmployee(Employee employee)
         {
             Employee employeeToUpdate = employees.Find(e => e.name == employee.name);

@@ -10,9 +10,16 @@
             <p class="person-info-text">Imie: @actualEmployee.name</p>
             <p class="person-info-text">Rodzaj umowy: @actualEmployee.typeOfAgreement</p>
             <p class="person-info-text">Minimalna ilość godzin: @actualEmployee.minHours</p>
+            <p class="person-info-text">
+                Stanowiska: 
+                @foreach (var position in actualEmployee.positions)
+                {
+                    <p>@position</p>
+                }
+                </p>
             <div class="manage-person-buttons">
                 <button class="manage-person-button" @onclick="EditPerson">Edytuj</button>
-                <button class="manage-person-button">Usuń</button>
+                <button class="manage-person-button" @onclick="DeletePerson">Usuń</button>
             </div>
         </div>
     }
@@ -72,5 +79,12 @@
     {
         editByName = actualEmployee.name;
         NavigationManager.NavigateTo($"/add-component/{editByName}");
+    }
+
+    private void DeletePerson()
+    {
+        employeesRepository.DeleteEmployee(actualEmployee.name);
+        employeeList = employeesRepository.GetEmployees();
+        isPersonInfoVisible = false;
     }
 }

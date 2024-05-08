@@ -87,8 +87,9 @@
 
         List<int> workingDaysInt = MakeNumberOfDaysDictionary();
         List<Employee> employees = appState.EmployeesRepository.employees;
+        Company company = appState.CompanyInstance;
 
-        appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees);
+        appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees, company);
 
         Console.WriteLine("printing");
         appState.schedule.PrintAllSchedule();

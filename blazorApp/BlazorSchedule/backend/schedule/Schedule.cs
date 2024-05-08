@@ -30,9 +30,9 @@ namespace BlazorSchedule
             }
         }
 
-        public string[,] schedule; // Zmieniamy na pole
+        public string[,] schedule;
 
-        public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees)
+        public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees, Company company)
         {
             int numberOfEmployees = employees.Count;
             schedule = new string[numberOfDays, numberOfEmployees + 1];
@@ -47,7 +47,7 @@ namespace BlazorSchedule
                 }
             }
 
-            // Tworzenie pierwszej warstwy harmonogramu z dniami roboczymi
+            // Making first layer of schedule with information about working days
             for (int i = 0; i < numberOfDays; i++)
             {
                 for (int j = 0; j < workingDaysInt.Count; j++)
@@ -68,7 +68,7 @@ namespace BlazorSchedule
             }
 
             int actualDate = 1;
-            // Tworzenie drugiej warstwy harmonogramu z informacją czy pracownik może pracować czy nie
+            // Making second layer of schedule with information about employees
             for (int i = 0; i < numberOfEmployees; i++)
             {
                 for (int j = 0; j < numberOfDays; j++)
@@ -89,6 +89,49 @@ namespace BlazorSchedule
                 }
                 actualDate = 1;
             }
+
+            // actualDay = firstDayOfMonth;
+            // for (int i = 0; i < numberOfDays; i++)
+            // {
+            //     if (!(schedule[i, 0] == "#"))
+            //     {
+            //         for (int j = 0; j < numberOfEmployees; j++)
+            //         {
+            //             if (schedule[i, j + 1] == "x")
+            //             {
+            //                 string day = GetDayOfWeekName(actualDay);
+            //                 List<string> positions = company.positionsPerDay[day];
+
+            //                 int x = 0;
+            //                 while (positions.Count > 0)
+            //                 {
+            //                     int randomEmployee = new Random().Next(0, employees.Count);
+            //                     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x")
+            //                     {
+            //                         schedule[i, randomEmployee + 1] = positions[x];
+            //                         positions.RemoveAt(x);
+            //                         x++;
+            //                     }
+            //                 }
+
+            //                 Console.WriteLine(day);
+            //                 foreach (string position in positions)
+            //                 {
+            //                     Console.WriteLine("Position: " + position);
+            //                 }
+            //                 //schedule[i, j + 1] = employees[j].positions[0];
+            //             }
+            //         }
+            //     }
+            //     if (actualDay == 6)
+            //     {
+            //         actualDay = 0;
+            //     }
+            //     else
+            //     {
+            //         actualDay++;
+            //     }
+            // }
         }
 
         public void PrintAllSchedule()
@@ -101,6 +144,29 @@ namespace BlazorSchedule
                     Console.Write(schedule[i, j] + " ");
                 }
                 Console.WriteLine();
+            }
+        }
+
+        public string GetDayOfWeekName(int dayOfWeek)
+        {
+            switch (dayOfWeek)
+            {
+                case 0:
+                    return "niedziela";
+                case 1:
+                    return "poniedziałek";
+                case 2:
+                    return "wtorek";
+                case 3:
+                    return "środa";
+                case 4:
+                    return "czwartek";
+                case 5:
+                    return "piątek";
+                case 6:
+                    return "sobota";
+                default:
+                    return "error";
             }
         }
     }

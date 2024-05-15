@@ -100,40 +100,70 @@ namespace BlazorSchedule
                     positions = new List<string>(company.positionsPerDay[day]); // get positions for this day
                     Console.WriteLine("day" + day);
                     List<int> randomEmployeesUsed = new List<int>();
-                    foreach (string position in positions)
+                    // foreach (string position in positions)
+                    // {
+                    //     Console.WriteLine("position:" + position);
+                    // }
+                    // for (int j = 0; j < numberOfEmployees; j++) // for each employee
+                    // {
+                    //     if (schedule[i, j + 1] == "x") // if employee is working
+                    //     {
+                    //         for (int x = 0; x < positions.Count; x++) // iterate over each position
+                    //         {
+                    //             int randomEmployee;
+                    //             do
+                    //             {
+                    //                 randomEmployee = new Random().Next(0, employees.Count); // get random employee int
+                    //             } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
+
+                    //             if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
+                    //             {
+                    //                 schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
+                    //                 positions.RemoveAt(x);
+                    //                 randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
+                    //                 x--; // adjust x to account for removed position
+                    //             }
+                    //         }
+
+                    //         // Console.WriteLine(day);
+                    //         // foreach (string position in positions)
+                    //         // {
+                    //         //     Console.WriteLine("Position: " + position);
+                    //         // }
+                    //         //schedule[i, j + 1] = employees[j].positions[0];
+
+                    //     }
+                    // }
+
+
+                    int tryCount = 0;
+                    while (positions.Count > 0)
                     {
-                        Console.WriteLine("position:" + position);
-                    }
-                    for (int j = 0; j < numberOfEmployees; j++) // for each employee
-                    {
-                        if (schedule[i, j + 1] == "x") // if employee is working
+                        int randomEmployee;
+                        do
                         {
-                            for (int x = 0; x < positions.Count; x++) // iterate over each position
-                            {
-                                int randomEmployee;
-                                do
-                                {
-                                    randomEmployee = new Random().Next(0, employees.Count); // get random employee int
-                                } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
+                            randomEmployee = new Random().Next(0, employees.Count); // get random employee int
+                        } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
 
-                                if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
-                                {
-                                    schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
-                                    positions.RemoveAt(x);
-                                    randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                                    x--; // adjust x to account for removed position
-                                }
-                            }
-
-                            // Console.WriteLine(day);
-                            // foreach (string position in positions)
-                            // {
-                            //     Console.WriteLine("Position: " + position);
-                            // }
-                            //schedule[i, j + 1] = employees[j].positions[0];
-
+                        int x;
+                        x = new Random().Next(0, positions.Count);
+                        if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
+                        {
+                            schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
+                            randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
+                            Console.WriteLine("randomEmployee: " + randomEmployee + " position: " + positions[x]);
+                            positions.Remove(positions[x]); // remove the position from the list
+                        }
+                        tryCount++;
+                        if (tryCount > 20)
+                        {
+                            Console.WriteLine("Error: too many tries");
+                            break;
                         }
                     }
+
+
+
                     positions.Clear();
                     randomEmployeesUsed.Clear();
                 }

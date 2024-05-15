@@ -90,48 +90,62 @@ namespace BlazorSchedule
                 actualDate = 1;
             }
 
-            // actualDay = firstDayOfMonth;
-            // for (int i = 0; i < numberOfDays; i++)
-            // {
-            //     if (!(schedule[i, 0] == "#"))
-            //     {
-            //         for (int j = 0; j < numberOfEmployees; j++)
-            //         {
-            //             if (schedule[i, j + 1] == "x")
-            //             {
-            //                 string day = GetDayOfWeekName(actualDay);
-            //                 List<string> positions = company.positionsPerDay[day];
+            actualDay = firstDayOfMonth;
+            List<string> positions;
+            for (int i = 0; i < numberOfDays; i++)
+            {
+                if (!(schedule[i, 0] == "#"))  //if day is working day
+                {
+                    string day = GetDayOfWeekName(actualDay);
+                    positions = new List<string>(company.positionsPerDay[day]); // get positions for this day
+                    Console.WriteLine("day" + day);
+                    List<int> randomEmployeesUsed = new List<int>();
+                    foreach (string position in positions)
+                    {
+                        Console.WriteLine("position:" + position);
+                    }
+                    for (int j = 0; j < numberOfEmployees; j++) // for each employee
+                    {
+                        if (schedule[i, j + 1] == "x") // if employee is working
+                        {
+                            for (int x = 0; x < positions.Count; x++) // iterate over each position
+                            {
+                                int randomEmployee;
+                                do
+                                {
+                                    randomEmployee = new Random().Next(0, employees.Count); // get random employee int
+                                } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
 
-            //                 int x = 0;
-            //                 while (positions.Count > 0)
-            //                 {
-            //                     int randomEmployee = new Random().Next(0, employees.Count);
-            //                     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x")
-            //                     {
-            //                         schedule[i, randomEmployee + 1] = positions[x];
-            //                         positions.RemoveAt(x);
-            //                         x++;
-            //                     }
-            //                 }
+                                if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
+                                {
+                                    schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
+                                    positions.RemoveAt(x);
+                                    randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
+                                    x--; // adjust x to account for removed position
+                                }
+                            }
 
-            //                 Console.WriteLine(day);
-            //                 foreach (string position in positions)
-            //                 {
-            //                     Console.WriteLine("Position: " + position);
-            //                 }
-            //                 //schedule[i, j + 1] = employees[j].positions[0];
-            //             }
-            //         }
-            //     }
-            //     if (actualDay == 6)
-            //     {
-            //         actualDay = 0;
-            //     }
-            //     else
-            //     {
-            //         actualDay++;
-            //     }
-            // }
+                            // Console.WriteLine(day);
+                            // foreach (string position in positions)
+                            // {
+                            //     Console.WriteLine("Position: " + position);
+                            // }
+                            //schedule[i, j + 1] = employees[j].positions[0];
+
+                        }
+                    }
+                    positions.Clear();
+                    randomEmployeesUsed.Clear();
+                }
+                if (actualDay == 6)
+                {
+                    actualDay = 0;
+                }
+                else
+                {
+                    actualDay++;
+                }
+            }
         }
 
         public void PrintAllSchedule()

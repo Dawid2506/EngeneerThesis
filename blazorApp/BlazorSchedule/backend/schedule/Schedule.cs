@@ -31,9 +31,11 @@ namespace BlazorSchedule
         }
 
         public string[,] schedule;
+        public List<int> brokenDays;
 
         public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees, Company company)
         {
+            brokenDays = new List<int>();
             int numberOfEmployees = employees.Count;
             schedule = new string[numberOfDays, numberOfEmployees + 1];
 
@@ -91,6 +93,7 @@ namespace BlazorSchedule
             }
 
             actualDay = firstDayOfMonth;
+            actualDate = 1;
             List<string> positions;
             for (int i = 0; i < numberOfDays; i++)
             {
@@ -100,41 +103,6 @@ namespace BlazorSchedule
                     positions = new List<string>(company.positionsPerDay[day]); // get positions for this day
                     Console.WriteLine("day" + day);
                     List<int> randomEmployeesUsed = new List<int>();
-                    // foreach (string position in positions)
-                    // {
-                    //     Console.WriteLine("position:" + position);
-                    // }
-                    // for (int j = 0; j < numberOfEmployees; j++) // for each employee
-                    // {
-                    //     if (schedule[i, j + 1] == "x") // if employee is working
-                    //     {
-                    //         for (int x = 0; x < positions.Count; x++) // iterate over each position
-                    //         {
-                    //             int randomEmployee;
-                    //             do
-                    //             {
-                    //                 randomEmployee = new Random().Next(0, employees.Count); // get random employee int
-                    //             } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
-
-                    //             if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
-                    //             {
-                    //                 schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
-                    //                 positions.RemoveAt(x);
-                    //                 randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                    //                 x--; // adjust x to account for removed position
-                    //             }
-                    //         }
-
-                    //         // Console.WriteLine(day);
-                    //         // foreach (string position in positions)
-                    //         // {
-                    //         //     Console.WriteLine("Position: " + position);
-                    //         // }
-                    //         //schedule[i, j + 1] = employees[j].positions[0];
-
-                    //     }
-                    // }
-
 
                     int tryCount = 0;
                     while (positions.Count > 0)
@@ -157,16 +125,16 @@ namespace BlazorSchedule
                         tryCount++;
                         if (tryCount > 20)
                         {
-                            Console.WriteLine("Error: too many tries");
+                            Console.WriteLine("Error: too many tries at day: " + actualDate);
+                            brokenDays.Add(actualDate);
                             break;
                         }
                     }
 
-
-
                     positions.Clear();
                     randomEmployeesUsed.Clear();
                 }
+                actualDate++;
                 if (actualDay == 6)
                 {
                     actualDay = 0;

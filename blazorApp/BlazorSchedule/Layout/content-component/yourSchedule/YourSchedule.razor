@@ -44,7 +44,8 @@
             @for (int i = 0; i < NumOfDays; i++)
             {
                 int day = i + 1;
-                <tr>
+                string rowStyle = daysToColor.Contains(day) ? "background-color: red;" : "";
+                <tr style="@rowStyle">
                     <th class="cell">@day</th>
                     @for (int j = 0; j < appState.EmployeesRepository.employees.Count; j++)
                     {
@@ -64,6 +65,7 @@
     private Dictionary<string, int> workingDaysToInt;
     private bool scheduleIsVisible = false;
     private int NumOfDays;
+    private List<int> daysToColor;
     private void MakeSchedule()
     {
         if (month == 0 || year == 0)
@@ -96,6 +98,14 @@
 
         scheduleIsVisible = true;
         NumOfDays = NumOfDaysInApril;
+
+        daysToColor = appState.schedule.brokenDays;
+
+        Console.WriteLine("broken days");
+        foreach(var day in daysToColor)
+        {
+            Console.WriteLine(day);
+        }
     }
 
     private List<int> MakeNumberOfDaysDictionary()

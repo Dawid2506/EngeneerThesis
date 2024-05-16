@@ -4,6 +4,7 @@ namespace BlazorSchedule{
         public string name { get; set; }
         public string typeOfAgreement { get; set; }
         public int minHours { get; set; }
+        public int minHoursUsed { get; set; }
         public List<int> daysOff { get; set; }
         public int SelectedDayOff { get; set; }
         public List<string> positions { get; set; }

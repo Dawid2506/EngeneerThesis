@@ -38,5 +38,18 @@ namespace BlazorSchedule{
                 return instance;
             }
         }
+
+        public int CountWorkingHours(string day)
+        {
+            int workingHours = 0;
+            Dictionary<string, string> hours = workingHoursDay[day];
+            DateTime startHourForAll = DateTime.Parse(workingHoursDay.Values.First().Keys.First());
+            DateTime endHourForAll = DateTime.Parse(workingHoursDay.Values.First().Values.First());
+
+            TimeSpan duration = endHourForAll - startHourForAll;
+            workingHours = (int)duration.TotalHours;
+
+            return workingHours;
+        }
     }
 }

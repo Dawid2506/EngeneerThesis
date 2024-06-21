@@ -106,6 +106,12 @@
         {
             Console.WriteLine(day);
         }
+
+        foreach (var employee in employees)
+            {
+                Console.WriteLine(employee.name);
+                Console.WriteLine(employee.minHours - employee.minHoursUsed);
+            }
     }
 
     private List<int> MakeNumberOfDaysDictionary()

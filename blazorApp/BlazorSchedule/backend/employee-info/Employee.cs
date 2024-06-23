@@ -9,6 +9,11 @@ namespace BlazorSchedule{
         public int SelectedDayOff { get; set; }
         public List<string> positions { get; set; }
 
+        public int realHoursUsed()
+        {
+            return minHours - minHoursUsed;
+        }
+
         public Employee(string name, string typeOfAgreement, int minHours, List<string> positions)
         {
             this.name = name;

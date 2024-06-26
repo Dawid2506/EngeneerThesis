@@ -24,3 +24,21 @@ SOPRANO TRZY
 {"employees":[{"name":"Denis","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[1,21,22],"SelectedDayOff":22,"positions":["Kierowca"]},{"name":"Asia","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[2],"SelectedDayOff":2,"positions":["Burger","Pizza"]},{"name":"Ania","typeOfAgreement":"Umowa o pracę","minHours":70,"daysOff":[13,16],"SelectedDayOff":16,"positions":["Bar"]},{"name":"Weronika","typeOfAgreement":"Umowa zlecenie","minHours":120,"daysOff":[3,7],"SelectedDayOff":7,"positions":["Bar"]},{"name":"Beniamin","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[30,5],"SelectedDayOff":5,"positions":["Kierowca"]},{"name":"Magda","typeOfAgreement":"Umowa zlecenie","minHours":180,"daysOff":[8],"SelectedDayOff":8,"positions":["Burger","Bar","Pizza"]},{"name":"Brygida","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[15,16,17,1],"SelectedDayOff":1,"positions":["Pizza"]}]}
 
 {"name":"Soprano","workingDays":["wtorek","środa","czwartek","piątek","sobota","niedziela"],"workingHoursDay":{"wtorek":{"12:00:00":"22:00:00"},"piątek":{"12:00:00":"23:00:00"},"sobota":{"12:00:00":"23:00:00"},"niedziela":{"15:00:00":"22:00:00"},"środa":{"12:00:00":"22:00:00"},"czwartek":{"12:00:00":"22:00:00"}},"positionsPerDay":{"wtorek":["Kierowca","Bar","Pizza"],"środa":["Kierowca","Bar","Pizza"],"czwartek":["Kierowca","Bar","Pizza"],"piątek":["Kierowca","Bar","Pizza","Burger"],"sobota":["Kierowca","Bar","Pizza","Burger","Kierowca"],"niedziela":["Bar","Pizza","Burger","Kierowca","Kierowca"]},"positionsList":["Kierowca","Pizza","Burger","Bar"],"isCheckboxChecked":false}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+czterty
+{"name":"Soprano","workingDays":["wtorek","środa","czwartek","piątek","sobota","niedziela"],"workingHoursDay":{"wtorek":{"12:00:00":"22:00:00"},"środa":{"12:00:00":"22:00:00"},"czwartek":{"12:00:00":"22:00:00"},"piątek":{"12:00:00":"23:00:00"},"sobota":{"12:00:00":"23:00:00"},"niedziela":{"15:00:00":"22:00:00"}},"positionsPerDay":{"wtorek":["Kuchnia","Kierowca","Bar"],"środa":["Kuchnia","Kierowca","Bar"],"czwartek":["Kuchnia","Kierowca","Bar"],"piątek":["Kuchnia","Kuchnia","Kierowca","Kierowca","Bar"],"sobota":["Kuchnia","Kuchnia","Kierowca","Kierowca","Bar"],"niedziela":["Kuchnia","Kuchnia","Kierowca","Kierowca","Bar"]},"positionsList":["Kuchnia","Bar","Kierowca"],"isCheckboxChecked":true}
+
+{"employees":[{"name":"Denis","typeOfAgreement":"mandate","minHours":160,"minHoursUsed":30,"daysOff":[1,13],"SelectedDayOff":13,"positions":["Kierowca"]},{"name":"Brygida","typeOfAgreement":"mandate","minHours":160,"minHoursUsed":30,"daysOff":[6],"SelectedDayOff":6,"positions":["Kuchnia"]},{"name":"Magda","typeOfAgreement":"mandate","minHours":170,"minHoursUsed":0,"daysOff":[5],"SelectedDayOff":5,"positions":["Kuchnia","Bar"]},{"name":"Asia","typeOfAgreement":"mandate","minHours":160,"minHoursUsed":50,"daysOff":[18],"SelectedDayOff":18,"positions":["Kuchnia"]},{"name":"Ania","typeOfAgreement":"mandate","minHours":80,"minHoursUsed":0,"daysOff":[21],"SelectedDayOff":21,"positions":["Bar"]},{"name":"Julia","typeOfAgreement":"mandate","minHours":80,"minHoursUsed":0,"daysOff":[],"SelectedDayOff":0,"positions":["Bar"]},{"name":"Beniamin","typeOfAgreement":"mandate","minHours":160,"minHoursUsed":10,"daysOff":[],"SelectedDayOff":0,"positions":["Kierowca"]},{"name":"Dawid","typeOfAgreement":"mandate","minHours":70,"minHoursUsed":0,"daysOff":[],"SelectedDayOff":0,"positions":["Kierowca"]}]}

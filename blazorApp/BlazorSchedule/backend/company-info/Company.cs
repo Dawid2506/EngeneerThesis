@@ -43,11 +43,16 @@ namespace BlazorSchedule{
         {
             int workingHours = 0;
             Dictionary<string, string> hours = workingHoursDay[day];
-            DateTime startHourForAll = DateTime.Parse(workingHoursDay.Values.First().Keys.First());
-            DateTime endHourForAll = DateTime.Parse(workingHoursDay.Values.First().Values.First());
+            // DateTime startHourForAll = DateTime.Parse(workingHoursDay.Values.First().Keys.First());
+            // DateTime endHourForAll = DateTime.Parse(workingHoursDay.Values.First().Values.First());
 
-            TimeSpan duration = endHourForAll - startHourForAll;
-            workingHours = (int)duration.TotalHours;
+            int startHour = int.Parse(hours.Keys.First().Substring(0, 2));
+            int endHour = int.Parse(hours.Values.First().Substring(0, 2));
+
+            workingHours = endHour - startHour;
+
+            // TimeSpan duration = endHourForAll - startHourForAll;
+            //workingHours = (int)duration.TotalHours;
 
             return workingHours;
         }

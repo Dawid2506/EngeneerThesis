@@ -29,34 +29,50 @@
 
 <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div>
 
-@if (scheduleIsVisible)
-{
-    <div class="schedule">
-        <table>
-            <tr>
-                <th class="cell">Imie</th>
-                @foreach (var employee in appState.EmployeesRepository.employees)
-                {
-                    <th class="cell">@employee.name</th>
-                }
-            </tr>
-
-            @for (int i = 0; i < NumOfDays; i++)
-            {
-                int day = i + 1;
-                string rowStyle = daysToColor.Contains(day) ? "background-color: red;" : "";
-                <tr style="@rowStyle">
-                    <th class="cell">@day</th>
-                    @for (int j = 0; j < appState.EmployeesRepository.employees.Count; j++)
+<div class="scheduleContainer">
+        @if (scheduleIsVisible)
+    {
+        <div class="schedule">
+            <table>
+                <tr>
+                    <th class="cell">Imie</th>
+                    @foreach (var employee in appState.EmployeesRepository.employees)
                     {
-                        <td class="cell">@appState.schedule.schedule[i,j+1]</td>
-                        //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
+                        <th class="cell">@employee.name</th>
                     }
                 </tr>
-            }
-        </table>
+
+                @for (int i = 0; i < NumOfDays; i++)
+                {
+                    int day = i + 1;
+                    string rowStyle = daysToColor.Contains(day) ? "background-color: red;" : "";
+                    <tr style="@rowStyle">
+                        <th class="cell">@day</th>
+                        @for (int j = 0; j < appState.EmployeesRepository.employees.Count; j++)
+                        {
+                            <td class="cell">@appState.schedule.schedule[i,j+1]</td>
+                            //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    @* zrobic zeby bylo widac kto ma ile godzin *@
+
+    <div class="hoursInfo">
+        @foreach (var employee in appState.EmployeesRepository.employees)
+        {
+            string stylee = employee.realHoursUsed() < employee.minHours ? "background-color: red;" : "";
+            <p>@employee.name</p>
+            <div style=@stylee>
+                <p>@employee.realHoursUsed() / @employee.minHours</p>
+            </div>
+        }
     </div>
-}
+</div>
+
 
 @code {
     private string errorMessage;

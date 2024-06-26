@@ -32,24 +32,26 @@ namespace BlazorSchedule
 
         public string[,] schedule;
         public List<int> brokenDays;
+        public Dictionary<int, List<string>> brokenDaysPositions;
 
         public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees, Company company)
         {
-            Console.WriteLine("-------------------------------");
-            foreach (var kvp in company.positionsPerDay)
-            {
-                Console.WriteLine("Day: " + kvp.Key);
-                foreach (var position in kvp.Value)
-                {
-                    Console.WriteLine("Position: " + position);
-                }
-            }
-            Console.WriteLine("-------------------------------");
+            // Console.WriteLine("-------------------------------");
+            // foreach (var kvp in company.positionsPerDay)
+            // {
+            //     Console.WriteLine("Day: " + kvp.Key);
+            //     foreach (var position in kvp.Value)
+            //     {
+            //         Console.WriteLine("Position: " + position);
+            //     }
+            // }
+            // Console.WriteLine("-------------------------------");
             foreach (var employee in employees)
             {
                 employee.minHoursUsed = employee.minHours;
             }
             brokenDays = new List<int>();
+            brokenDaysPositions = new Dictionary<int, List<string>>();
             int numberOfEmployees = employees.Count;
             schedule = new string[numberOfDays, numberOfEmployees + 1];
 
@@ -73,34 +75,33 @@ namespace BlazorSchedule
             ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company);
 
             // Making fourth layer of schedule witch adjust the broken days
-            //FourthLayerOfSchedule(company, employees);
-            FourthAndAHalfLayerOfSchedule(employees);
+            FourthLayerOfSchedule(company, employees);
 
 
-            Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
-            foreach (var kvp in company.positionsPerDay)
-            {
-                Console.WriteLine("Day: " + kvp.Key);
-                foreach (var position in kvp.Value)
-                {
-                    Console.WriteLine("Position: " + position);
-                }
-            }
-            Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            // Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            // foreach (var kvp in company.positionsPerDay)
+            // {
+            //     Console.WriteLine("Day: " + kvp.Key);
+            //     foreach (var position in kvp.Value) 
+            //     {
+            //         Console.WriteLine("Position: " + position);
+            //     }
+            // }
+            // Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
 
         }
 
         public void PrintAllSchedule()
         {
-            for (int i = 0; i < schedule.GetLength(0); i++)
-            {
-                Console.Write("Day " + (i + 1) + " ");
-                for (int j = 0; j < schedule.GetLength(1); j++)
-                {
-                    Console.Write(schedule[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
+            // for (int i = 0; i < schedule.GetLength(0); i++)
+            // {
+            //     Console.Write("Day " + (i + 1) + " ");
+            //     for (int j = 0; j < schedule.GetLength(1); j++)
+            //     {
+            //         Console.Write(schedule[i, j] + " ");
+            //     }
+            //     Console.WriteLine();
+            // }
         }
 
         private void FirstLayerOfSchedule(int numberOfDays, List<int> workingDaysInt, int actualDay)
@@ -169,26 +170,6 @@ namespace BlazorSchedule
                     actualDay++;
                 }
             }
-
-
-
-
-            // here i was trying to fix the problem with broken days
-
-            // int fuse = 0;
-            // while (brokenDays.Count > 0)
-            // {
-            //     if (fuse > 50)
-            //     {
-            //         Console.WriteLine("fuse");
-            //         break;
-            //     }
-            //     foreach (int day in brokenDays)
-            //     {
-            //         ThirdLayerEngine(numberOfDays, firstDayOfMonth, employees, company, day, actualDay, actualDate);
-            //     }
-            //     fuse++;
-            // }
         }
 
         private void ThirdLayerEngine(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int i, int actualDay, int actualDate)
@@ -217,7 +198,8 @@ namespace BlazorSchedule
                     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
                     {
                         int workingHours = company.CountWorkingHours(day);
-                        if (employees[randomEmployee].minHoursUsed >= workingHours)
+                        Console.WriteLine("Working hours: " + workingHours + " for " + day);
+                        if (employees[randomEmployee].minHoursUsed >= (workingHours - 1))
                         {
                             employees[randomEmployee].minHoursUsed -= workingHours;
                             schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
@@ -230,6 +212,7 @@ namespace BlazorSchedule
                     if (tryCount > 20)
                     {
                         brokenDays.Add(actualDate);
+                        brokenDaysPositions.Add(actualDate, positions);
                         break;
                     }
                 }
@@ -239,39 +222,52 @@ namespace BlazorSchedule
             }
         }
 
-        private void FourthAndAHalfLayerOfSchedule(List<Employee> employeesToCopy)
+        private void FourthLayerOfSchedule(Company company, List<Employee> employees)
         {
-            Console.WriteLine("Emplfsdfsdfdsfsdfsdfds hours: ");
-            List<Employee> employees = employeesToCopy;
-
-            //checking whitch employee has the biggest hours diffrence from working hours to min hours
             Employee employeeWithBiggestHoursDifference = SearchEmployeeWithBiggestDiffrence(employees);
+            Console.WriteLine("Employee with biggest hours difference: " + employeeWithBiggestHoursDifference.name);
 
-            Console.WriteLine("Employee with biggest hours diffrence: " + employeeWithBiggestHoursDifference.name);
-
-            Console.WriteLine("Check wether employee can work------------");
             foreach (var brokenDay in brokenDays)
             {
-                int nextBrokenDay = brokenDay;
-                //checking if this employee is working in the next broken day
-                int index = employees.IndexOf(employeeWithBiggestHoursDifference);
-                Console.WriteLine("index: " + index);
-                //console writing broken days
-                Console.WriteLine("broken day: " + brokenDay);
+                Console.WriteLine("Broken day: " + brokenDay);
+                List<string> positions = brokenDaysPositions[brokenDay];
+                Console.WriteLine("Positions: " + string.Join(", ", positions));
+                // List<int> randomEmployeesUsed = new List<int>();
+                // Random random = new Random();
 
-                if (schedule[brokenDay - 1, index + 1] == "x")
-                {
-                    Console.WriteLine("at the day: " + brokenDay + "this employee can work: " + schedule[brokenDay, index]);
-                }
-                else
-                {
-                    Console.WriteLine("at the day: " + brokenDay + "this employee can't work");
-                }
-                Console.WriteLine("Check wether employee can work--------");
+                // int tryCount = 0;
+                // while (positions.Count > 0)
+                // {
+                //     int randomEmployee;
+                //     do
+                //     {
+                //         randomEmployee = random.Next(0, employees.Count); // get random employee int
+                //     } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
+
+                //     int x;
+                //     x = random.Next(0, positions.Count);
+                //     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[brokenDay - 1, randomEmployee + 1] == "x") // if employee has this position and is working
+                //     {
+                //         int workingHours = company.CountWorkingHours(GetDayOfWeekName(brokenDay - 1));
+                //         if (employees[randomEmployee].minHoursUsed >= (workingHours - 1))
+                //         {
+                //             employees[randomEmployee].minHoursUsed -= workingHours;
+                //             schedule[brokenDay - 1, randomEmployee + 1] = positions[x]; // assign position to employee
+                //             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
+                //             //Console.WriteLine($"Removing position {positions[x]} for employee {employees[randomEmployee].name} on day {brokenDay}");
+                //             positions.RemoveAt(x); // remove the position from the list
+                //         }
+                //     }
+                //     tryCount++;
+                //     if (tryCount > 20)
+                //     {
+                //         break;
+                //     }
+                // }
+
+                // positions.Clear();
+                // randomEmployeesUsed.Clear();
             }
-
-
-            //teraz sprawdzic czy ta osoba pracuje w kolejny broken day i jesli nie to ja tam dac i od nowa zrobic ten dzien 
         }
 
         private Employee SearchEmployeeWithBiggestDiffrence(List<Employee> employees)
@@ -288,127 +284,6 @@ namespace BlazorSchedule
             }
             return employeeWithBiggestHoursDifference;
         }
-
-        // private void FourthLayerOfSchedule(Company company, List<Employee> employees)
-        // {
-        //     // Copies the list of broken days to a new list to work with
-        //     List<int> brokenDaysCopy = new List<int>(brokenDays);
-        //     Random random = new Random();
-
-        //     // Iterates over each broken day
-        //     for (int j = 0; j < brokenDays.Count; j++)
-        //     {
-        //         string dayName = "";
-        //         // Adjusts the day index to be 0-based
-        //         int day = brokenDays[j] - 1;
-
-        //         // Checks if the day index is out of the schedule's range
-        //         if (day < 0 || day >= schedule.GetLength(0))
-        //         {
-        //             Console.WriteLine("Error: day out of range: " + day);
-        //             continue;
-        //         }
-
-        //         // Creates a copy of the list of employees to track free employees
-        //         List<Employee> freeEmployees = new List<Employee>(employees);
-
-        //         // Calculates the index of the weekday for the current day
-        //         int weekDayIndex = day % 7;
-        //         // Retrieves the name of the day of the week
-        //         dayName = GetDayOfWeekName(weekDayIndex);
-
-        //         // Checks if the dayName exists in the company's positionsPerDay dictionary
-        //         if (!company.positionsPerDay.ContainsKey(dayName))
-        //         {
-        //             Console.WriteLine($"Key '{dayName}' does not exist in the dictionary.");
-        //             continue;
-        //         }
-
-        //         // Creates a copy of the positions required for the current day
-        //         List<string> positions = new List<string>(company.positionsPerDay[dayName]);
-        //         Console.WriteLine($"Created copy of positions for day {dayName}: {string.Join(", ", positions)}");
-
-        //         Console.WriteLine("Positions for " + dayName + ": " + string.Join(", ", positions));
-
-        //         int tryCount = 0;
-        //         // Attempts to assign positions to employees until all positions are filled or a limit is reached
-        //         while (positions.Count > 0)
-        //         {
-        //             int maxMinHoursUsed = 0;
-        //             int employeeWithMaxMinHoursUsed = -1;
-
-        //             // Finds the employee with the maximum of minimum hours used
-        //             for (int i = 0; i < freeEmployees.Count; i++)
-        //             {
-        //                 if (freeEmployees[i].minHoursUsed > maxMinHoursUsed)
-        //                 {
-        //                     maxMinHoursUsed = freeEmployees[i].minHoursUsed;
-        //                     employeeWithMaxMinHoursUsed = i;
-        //                 }
-        //             }
-
-        //             // If no suitable employee is found, breaks the loop
-        //             if (employeeWithMaxMinHoursUsed == -1)
-        //             {
-        //                 Console.WriteLine("No suitable employee found for position.");
-        //                 break;
-        //             }
-
-        //             // Randomly selects a position to assign
-        //             int x = random.Next(0, positions.Count);
-
-        //             // Checks if the selected index is within the range of positions list
-        //             if (x < 0 || x >= positions.Count)
-        //             {
-        //                 Console.WriteLine($"Index out of range for positions: {x}");
-        //                 continue;
-        //             }
-
-        //             // Checks if the selected employee can work on the selected position and is not already assigned
-        //             if (employees[employeeWithMaxMinHoursUsed].positions.Contains(positions[x]) && schedule[day, employeeWithMaxMinHoursUsed + 1] != "/")
-        //             {
-        //                 int workingHours = company.CountWorkingHours(dayName);
-
-        //                 // Checks if the employee index is within the range of freeEmployees list
-        //                 if (employeeWithMaxMinHoursUsed < 0 || employeeWithMaxMinHoursUsed >= freeEmployees.Count)
-        //                 {
-        //                     Console.WriteLine($"Index out of range for freeEmployees: {employeeWithMaxMinHoursUsed}");
-        //                     continue;
-        //                 }
-
-        //                 // Assigns the position if the employee's minimum hours used is greater than or equal to the working hours
-        //                 if (freeEmployees[employeeWithMaxMinHoursUsed].minHoursUsed > freeEmployees[employeeWithMaxMinHoursUsed].minHours)
-        //                 {
-        //                     // Assigns the position to the employee for the day
-        //                     schedule[day, employeeWithMaxMinHoursUsed + 1] = positions[x];
-        //                     // Decreases the employee's minimum hours used by the working hours
-        //                     freeEmployees[employeeWithMaxMinHoursUsed].minHoursUsed -= workingHours;
-
-        //                     // Removes the employee from the list of free employees
-        //                     if (employeeWithMaxMinHoursUsed >= 0 && employeeWithMaxMinHoursUsed < freeEmployees.Count)
-        //                     {
-        //                         freeEmployees.RemoveAt(employeeWithMaxMinHoursUsed);
-        //                     }
-
-        //                     // Removes the assigned position from the list of positions
-        //                     if (x >= 0 && x < positions.Count)
-        //                     {
-        //                         Console.WriteLine($"Removing position {positions[x]} for employee {employees[employeeWithMaxMinHoursUsed].name} on day {day + 1} ({dayName})");
-        //                         positions.RemoveAt(x);
-        //                     }
-        //                 }
-        //             }
-
-        //             // Increments the try counter and checks if it exceeds the limit
-        //             tryCount++;
-        //             if (tryCount > 20)
-        //             {
-        //                 Console.WriteLine("Error: too many tries at day: " + (day + 1));
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
 
 
 

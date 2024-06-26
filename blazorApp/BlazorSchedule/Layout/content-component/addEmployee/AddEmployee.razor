@@ -20,8 +20,8 @@
         <div class="particular-information">
             <p class="add-employee-text">Rodzaj umowy</p>
             <select id="type-of-agreement" class="add-employee-textbox" @bind="typeOfAgreement">
-                <option value="Umowa o pracę">Umowa o pracę</option>
-                <option value="Umowa zlecenie">Umowa zlecenie</option>
+                <option value="contract">Umowa o pracę</option>
+                <option value="mandate">Umowa zlecenie</option>
             </select>
         </div>
         <div class="particular-information">
@@ -99,9 +99,9 @@
         {
             mintHours = int.Parse(minHours);
 
-            if (typeOfAgreement != "Umowa zlecenie")
+            if (typeOfAgreement != "contract")
             {
-                typeOfAgreement = "Umowa o pracę";
+                typeOfAgreement = "mandate";
             }
 
             if (appState.EmployeesRepository.GetEmployees().Any(e => e.name == name))

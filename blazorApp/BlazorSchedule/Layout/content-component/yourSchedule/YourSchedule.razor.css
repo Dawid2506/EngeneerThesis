@@ -58,3 +58,12 @@
 .schedule{
     margin: 1em;
 }
+
+.scheduleContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.hoursInfo{
+    padding-left: 2em;
+}

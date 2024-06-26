@@ -259,7 +259,7 @@ namespace BlazorSchedule
                 //console writing broken days
                 Console.WriteLine("broken day: " + brokenDay);
 
-                if (schedule[brokenDay - 1, index] == "x" && (index + 1) < schedule.GetLength(1))
+                if (schedule[brokenDay - 1, index + 1] == "x")
                 {
                     Console.WriteLine("at the day: " + brokenDay + "this employee can work: " + schedule[brokenDay, index]);
                 }

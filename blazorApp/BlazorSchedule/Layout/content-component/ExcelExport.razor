@@ -3,6 +3,7 @@
 @using Microsoft.JSInterop
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory _httpClientFactory;
+@inject AppState appState;
 
 
 <head>
@@ -20,8 +21,20 @@
             var worksheet = package.Workbook.Worksheets.Add("Arkusz1");
 
             // Tutaj możesz dodać zawartość do pliku Excel
-            worksheet.Cells["A1"].Value = "Hello";
-            worksheet.Cells["B1"].Value = "World";
+            @* worksheet.Cells["A1"].Value = "Hello";
+            worksheet.Cells["B1"].Value = "World"; *@
+
+            string[,] schedule = appState.schedule.schedule;
+
+            for (int i = 0; i < schedule.GetLength(0); i++)
+            {
+                for (int j = 0; j < schedule.GetLength(1); j++)
+                {
+                    // Indeksy Excel (A1, B1, itd.)
+                    string cellAddress = $"{(char)('A' + j)}{i + 1}";
+                    worksheet.Cells[cellAddress].Value = schedule[i, j];
+                }
+            }
 
             // Zapisz plik Excel do pamięci
             var excelBytes = package.GetAsByteArray();

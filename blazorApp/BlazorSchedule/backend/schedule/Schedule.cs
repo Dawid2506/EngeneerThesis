@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Blazorise.Extensions;
 
 namespace BlazorSchedule
 {
@@ -170,7 +171,7 @@ namespace BlazorSchedule
 
             //generate dictionary daysOfWeek
             int dayOfWeek = firstDayOfMonth;
-            for(int i = 1; i <= numberOfDays; i++)
+            for (int i = 1; i <= numberOfDays; i++)
             {
                 daysOfWeek.Add(i, dayOfWeek);
 
@@ -182,50 +183,110 @@ namespace BlazorSchedule
                 {
                     dayOfWeek++;
                 }
-            } 
+            }
 
             // // Console write whole daysofweek
             // foreach (var kvp in daysOfWeek)
             // {
             //     Console.WriteLine("Day: " + kvp.Key + " Day of Week: " + kvp.Value);
             // }
-            
+
+            //copy positions per day
+            Dictionary<int, List<string>> positionsPerDay = new Dictionary<int, List<string>>();
+            // foreach (var entry in company.positionsPerDay)
+            // {
+            //     positionsPerDay[entry.Key] = new List<string>(entry.Value);
+            // }
+
+            for (int i = 1; i <= numberOfDays; i++)
+            {
+                positionsPerDay[i] = new List<string>();
+            }
+
+            dayOfWeek = firstDayOfMonth;
+            for (int i = 1; i <= numberOfDays; i++)
+            {
+                string DayOfWeekString = GetDayOfWeekName(dayOfWeek);
+                positionsPerDay[i].AddRange(company.positionsPerDay[DayOfWeekString]);
+
+                if (dayOfWeek == 6)
+                {
+                    dayOfWeek = 0;
+                }
+                else
+                {
+                    dayOfWeek++;
+                }
+            }
 
             foreach (var employee in sortedEmployees)
             {
-                while(employee.minHours > employee.realHoursUsed())
+                List<int> randomDaysUsed = new List<int>();
+                int attemptCounter = 0;
+                int maxAttempts = 500;
+
+                while (employee.minHours > employee.realHoursUsed() && attemptCounter < maxAttempts)
                 {
+                    attemptCounter++;
                     //Console.WriteLine("Employee: " + employee.name + " " + employee.minHoursUsed);
-                    List<int> randomDaysUsed = new List<int>();
+
                     Random random = new Random();
 
                     int randomDay = random.Next(1, numberOfDays + 1);
                     int randomDayOfWeekInt = daysOfWeek[randomDay];
                     string randomDayOfWeek = GetDayOfWeekName(randomDayOfWeekInt);
 
-                    List<string> positions = new List<string>(company.positionsPerDay[randomDayOfWeek]);
+                    if (randomDaysUsed.Contains(randomDay))
+                    {
+                        continue;
+                    }
+                    if (!positionsPerDay.ContainsKey(randomDay) || positionsPerDay[randomDay].Count == 0)
+                    {
+                        continue; // Skip if no positions available for the day
+                    }
+                    randomDaysUsed.Add(randomDay);
 
-                    //Console.WriteLine("randomday" + randomDay + "day of week" + randomDayOfWeek);
+                    List<string> positions = positionsPerDay[randomDay];
+
+                    Console.WriteLine("randomday" + randomDay + "name:" + employee.name);
 
                     int employeeIdx = EmployeeIndexByName(employee.name, employees);
-                                        
-                    //Console.WriteLine("Employee: " + employee.name + " " + employeeIdx + " " + employee.positions.Count + " " + string.Join(", ", employee.positions) + " " + string.Join(", ", positions) + " " + randomDay + " " + randomDayOfWeek + " " + randomDayOfWeekInt + " " + schedule[randomDay, employeeIdx + 1] + " " + employee.daysOff.Contains(randomDay) + " " + employee.positions.Intersect(positions).Any() + " " + employee.minHoursUsed + " " + company.CountWorkingHours(randomDayOfWeek) + " " + employee.minHours + " " + employee.realHoursUsed());
 
-                    if(schedule[randomDay - 1, employeeIdx + 1] == "x" && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positions).Any())
+                    //Console.WriteLine("positionPerDay: " + positionsPerDay["poniedziałek"][0]);
+
+                    //Console.WriteLine("Employee: " + employee.name + "employeeIdx " + employeeIdx + "employee.positions.Count " + employee.positions.Count + "string.Join( , employee.positions) " + string.Join(", ", employee.positions) + "string.Join(, positionsPerDay[randomDayOfWeek]) " + string.Join(", ", positionsPerDay[randomDayOfWeek]) + "randomDay " + randomDay + "randomDayOfWeek " + randomDayOfWeek + "randomDayOfWeekInt " + randomDayOfWeekInt + "schedule[randomDay, employeeIdx + 1] " + schedule[randomDay - 1, employeeIdx + 1] + "employee.daysOff.Contains(randomDay) " + employee.daysOff.Contains(randomDay) + "employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() " + employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() + "employee.minHoursUsed " + employee.minHoursUsed + " " + company.CountWorkingHours(randomDayOfWeek) + " " + employee.minHours + " " + employee.realHoursUsed());
+
+                    Console.WriteLine("positions" + string.Join(", ", positionsPerDay[randomDay]) + "day of week: " + randomDayOfWeek);
+                    if (schedule[randomDay - 1, employeeIdx + 1] == "x" && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positionsPerDay[randomDay]).Any())
                     {
                         int workingHours = company.CountWorkingHours(randomDayOfWeek);
                         employee.minHoursUsed -= workingHours;
-                        foreach(var employeePosition in employee.positions)
+                        foreach (var employeePosition in employee.positions)
                         {
-                            if(positions.Contains(employeePosition))
+                            if (positionsPerDay[randomDay].Contains(employeePosition))
                             {
                                 schedule[randomDay - 1, employeeIdx + 1] = employeePosition;
                                 //teraz usunac ta pozycje z listy i dodac break
-                                positions.Remove(employeePosition);
+                                positionsPerDay[randomDay].Remove(employeePosition);
+                                break;
                             }
-                            break;
                         }
                     }
+
+                    if (attemptCounter >= maxAttempts)
+                    {
+                        Console.WriteLine("Employee: " + employee.name);
+                    }
+                }
+            }
+
+            //broken day
+            for(int i = 1; i <= numberOfDays; i++)
+            {
+                if(!positionsPerDay[i].IsNullOrEmpty())
+                {
+                    brokenDays.Add(i);
+                    brokenDaysPositions.Add(i, positionsPerDay[i]);
                 }
             }
         }
@@ -262,8 +323,8 @@ namespace BlazorSchedule
             if (!(schedule[i, 0] == "#"))  //if day is working day
             {
                 string day = GetDayOfWeekName(actualDay);
-                positions = new List<string>(company.positionsPerDay[day]); 
-                                                                            //Console.WriteLine($"Created copy of positions for day {day}: {string.Join(", ", positions)}");
+                positions = new List<string>(company.positionsPerDay[day]);
+                //Console.WriteLine($"Created copy of positions for day {day}: {string.Join(", ", positions)}");
 
                 List<int> randomEmployeesUsed = new List<int>();
                 Random random = new Random();

@@ -34,6 +34,8 @@ namespace BlazorSchedule
         public string[,] schedule;
         public List<int> brokenDays;
         public Dictionary<int, List<string>> brokenDaysPositions;
+        public string month;
+        public string year;
 
         public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees, Company company)
         {
@@ -54,7 +56,7 @@ namespace BlazorSchedule
             brokenDays = new List<int>();
             brokenDaysPositions = new Dictionary<int, List<string>>();
             int numberOfEmployees = employees.Count;
-            schedule = new string[numberOfDays, numberOfEmployees + 1];
+            schedule = new string[numberOfDays, numberOfEmployees + 2];
 
             int actualDay = firstDayOfMonth;
 
@@ -74,7 +76,7 @@ namespace BlazorSchedule
 
             // Making third layer of schedule with information about positions
             //ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company);
-            ThirdLayerOfScheduleEmployee(numberOfDays, firstDayOfMonth, employees, company);
+            ThirdLayerOfScheduleEmployee(numberOfDays, firstDayOfMonth, employees, company, numberOfEmployees);
 
             // Making fourth layer of schedule witch adjust the broken days
             //FourthLayerOfSchedule(company, employees);
@@ -138,15 +140,15 @@ namespace BlazorSchedule
                 {
                     if (schedule[j, 0] == "#")
                     {
-                        schedule[j, i + 1] = "#";
+                        schedule[j, i + 2] = "#";
                     }
                     else if (employees[i].daysOff.Contains(actualDate))
                     {
-                        schedule[j, i + 1] = "/";
+                        schedule[j, i + 2] = "/";
                     }
                     else
                     {
-                        schedule[j, i + 1] = "x";
+                        schedule[j, i + 2] = "x";
                     }
                     actualDate++;
                 }
@@ -154,7 +156,7 @@ namespace BlazorSchedule
             }
         }
 
-        private void ThirdLayerOfScheduleEmployee(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company)
+        private void ThirdLayerOfScheduleEmployee(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int numberOfEmployees)
         {
             // Sort employees by typeOfAgreement
             List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == "contract").ToList();
@@ -173,6 +175,8 @@ namespace BlazorSchedule
             int dayOfWeek = firstDayOfMonth;
             for (int i = 1; i <= numberOfDays; i++)
             {
+                //add the day of the week string
+                schedule[i - 1, 1] = GetDayOfWeekName(dayOfWeek);
                 daysOfWeek.Add(i, dayOfWeek);
 
                 if (dayOfWeek == 6)
@@ -257,7 +261,7 @@ namespace BlazorSchedule
                     //Console.WriteLine("Employee: " + employee.name + "employeeIdx " + employeeIdx + "employee.positions.Count " + employee.positions.Count + "string.Join( , employee.positions) " + string.Join(", ", employee.positions) + "string.Join(, positionsPerDay[randomDayOfWeek]) " + string.Join(", ", positionsPerDay[randomDayOfWeek]) + "randomDay " + randomDay + "randomDayOfWeek " + randomDayOfWeek + "randomDayOfWeekInt " + randomDayOfWeekInt + "schedule[randomDay, employeeIdx + 1] " + schedule[randomDay - 1, employeeIdx + 1] + "employee.daysOff.Contains(randomDay) " + employee.daysOff.Contains(randomDay) + "employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() " + employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() + "employee.minHoursUsed " + employee.minHoursUsed + " " + company.CountWorkingHours(randomDayOfWeek) + " " + employee.minHours + " " + employee.realHoursUsed());
 
                     Console.WriteLine("positions" + string.Join(", ", positionsPerDay[randomDay]) + "day of week: " + randomDayOfWeek);
-                    if (schedule[randomDay - 1, employeeIdx + 1] == "x" && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positionsPerDay[randomDay]).Any())
+                    if (schedule[randomDay - 1, employeeIdx + 2] == "x" && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positionsPerDay[randomDay]).Any())
                     {
                         int workingHours = company.CountWorkingHours(randomDayOfWeek);
                         employee.minHoursUsed -= workingHours;
@@ -265,7 +269,7 @@ namespace BlazorSchedule
                         {
                             if (positionsPerDay[randomDay].Contains(employeePosition))
                             {
-                                schedule[randomDay - 1, employeeIdx + 1] = employeePosition;
+                                schedule[randomDay - 1, employeeIdx + 2] = employeePosition;
                                 //teraz usunac ta pozycje z listy i dodac break
                                 positionsPerDay[randomDay].Remove(employeePosition);
                                 break;
@@ -281,9 +285,9 @@ namespace BlazorSchedule
             }
 
             //broken day
-            for(int i = 1; i <= numberOfDays; i++)
+            for (int i = 1; i <= numberOfDays; i++)
             {
-                if(!positionsPerDay[i].IsNullOrEmpty())
+                if (!positionsPerDay[i].IsNullOrEmpty())
                 {
                     brokenDays.Add(i);
                     brokenDaysPositions.Add(i, positionsPerDay[i]);

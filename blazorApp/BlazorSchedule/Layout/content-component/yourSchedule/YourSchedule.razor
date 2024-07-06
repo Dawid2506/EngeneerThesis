@@ -38,7 +38,8 @@
         <div class="schedule">
             <table>
                 <tr>
-                    <th class="cell">Imie</th>
+                    <th class="cell"></th>
+                    <th class="cell">@month.@year</th>
                     @foreach (var employee in appState.EmployeesRepository.employees)
                     {
                         <th class="cell">@employee.name</th>
@@ -51,7 +52,7 @@
                     string rowStyle = daysToColor.Contains(day) ? "background-color: red;" : "";
                     <tr style="@rowStyle">
                         <th class="cell">@day</th>
-                        @for (int j = 0; j < appState.EmployeesRepository.employees.Count; j++)
+                        @for (int j = 0; j < appState.EmployeesRepository.employees.Count + 1; j++)
                         {
                             <td class="cell">@appState.schedule.schedule[i, j + 1]</td>
                             //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
@@ -111,6 +112,9 @@
         Company company = appState.CompanyInstance;
 
         appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees, company);
+
+        appState.schedule.month = month.ToString();
+        appState.schedule.year = year.ToString();
 
         //Console.WriteLine("printing");
         //appState.schedule.PrintAllSchedule();

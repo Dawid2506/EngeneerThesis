@@ -72,10 +72,11 @@ namespace BlazorSchedule
             SecondLayerOfSchedule(numberOfEmployees, employees, numberOfDays);
 
             // Making third layer of schedule with information about positions
-            ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company);
+            //ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company);
+            ThirdLayerOfScheduleEmployee(numberOfDays, firstDayOfMonth, employees, company);
 
             // Making fourth layer of schedule witch adjust the broken days
-            FourthLayerOfSchedule(company, employees);
+            //FourthLayerOfSchedule(company, employees);
 
 
             // Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
@@ -152,6 +153,89 @@ namespace BlazorSchedule
             }
         }
 
+        private void ThirdLayerOfScheduleEmployee(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company)
+        {
+            // Sort employees by typeOfAgreement
+            List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == "contract").ToList();
+            List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != "contract").ToList();
+            List<Employee> sortedEmployees = employeesWithAgreement.Concat(employeesWithoutAgreement).ToList();
+
+            // foreach (var employee in sortedEmployees)
+            // {
+            //     Console.WriteLine("Employee: " + employee.name + " " + employee.typeOfAgreement);
+            // }
+
+            //<number of day of month, mon of day of week>
+            Dictionary<int, int> daysOfWeek = new Dictionary<int, int>();
+
+            //generate dictionary daysOfWeek
+            int dayOfWeek = firstDayOfMonth;
+            for(int i = 1; i <= numberOfDays; i++)
+            {
+                daysOfWeek.Add(i, dayOfWeek);
+
+                if (dayOfWeek == 6)
+                {
+                    dayOfWeek = 0;
+                }
+                else
+                {
+                    dayOfWeek++;
+                }
+            } 
+
+            // // Console write whole daysofweek
+            // foreach (var kvp in daysOfWeek)
+            // {
+            //     Console.WriteLine("Day: " + kvp.Key + " Day of Week: " + kvp.Value);
+            // }
+            
+
+            foreach (var employee in sortedEmployees)
+            {
+                while(employee.minHours > employee.realHoursUsed())
+                {
+                    //Console.WriteLine("Employee: " + employee.name + " " + employee.minHoursUsed);
+                    List<int> randomDaysUsed = new List<int>();
+                    Random random = new Random();
+
+                    int randomDay = random.Next(1, numberOfDays + 1);
+                    int randomDayOfWeekInt = daysOfWeek[randomDay];
+                    string randomDayOfWeek = GetDayOfWeekName(randomDayOfWeekInt);
+
+                    List<string> positions = new List<string>(company.positionsPerDay[randomDayOfWeek]);
+
+                    //Console.WriteLine("randomday" + randomDay + "day of week" + randomDayOfWeek);
+
+                    int employeeIdx = EmployeeIndexByName(employee.name, employees);
+                                        
+                    //Console.WriteLine("Employee: " + employee.name + " " + employeeIdx + " " + employee.positions.Count + " " + string.Join(", ", employee.positions) + " " + string.Join(", ", positions) + " " + randomDay + " " + randomDayOfWeek + " " + randomDayOfWeekInt + " " + schedule[randomDay, employeeIdx + 1] + " " + employee.daysOff.Contains(randomDay) + " " + employee.positions.Intersect(positions).Any() + " " + employee.minHoursUsed + " " + company.CountWorkingHours(randomDayOfWeek) + " " + employee.minHours + " " + employee.realHoursUsed());
+
+                    if(schedule[randomDay - 1, employeeIdx + 1] == "x" && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positions).Any())
+                    {
+                        int workingHours = company.CountWorkingHours(randomDayOfWeek);
+                        employee.minHoursUsed -= workingHours;
+                        foreach(var employeePosition in employee.positions)
+                        {
+                            if(positions.Contains(employeePosition))
+                            {
+                                schedule[randomDay - 1, employeeIdx + 1] = employeePosition;
+                                //teraz usunac ta pozycje z listy i dodac break
+                                positions.Remove(employeePosition);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private int EmployeeIndexByName(string name, List<Employee> employees)
+        {
+            int index = employees.FindIndex(e => e.name == name);
+            return index;
+        }
+
         private void ThirdLayerOfSchedule(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company)
         {
             int actualDay = firstDayOfMonth;
@@ -178,8 +262,8 @@ namespace BlazorSchedule
             if (!(schedule[i, 0] == "#"))  //if day is working day
             {
                 string day = GetDayOfWeekName(actualDay);
-                positions = new List<string>(company.positionsPerDay[day]); // ***Użycie kopii listy***
-                //Console.WriteLine($"Created copy of positions for day {day}: {string.Join(", ", positions)}");
+                positions = new List<string>(company.positionsPerDay[day]); 
+                                                                            //Console.WriteLine($"Created copy of positions for day {day}: {string.Join(", ", positions)}");
 
                 List<int> randomEmployeesUsed = new List<int>();
                 Random random = new Random();
@@ -199,12 +283,12 @@ namespace BlazorSchedule
                     {
                         int workingHours = company.CountWorkingHours(day);
                         Console.WriteLine("Working hours: " + workingHours + " for " + day);
-                        if (employees[randomEmployee].minHoursUsed >= (workingHours - 1))
+                        if (employees[randomEmployee].minHoursUsed >= (workingHours - 10))
                         {
                             employees[randomEmployee].minHoursUsed -= workingHours;
                             schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
                             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                            //Console.WriteLine($"Removing position {positions[x]} for employee {employees[randomEmployee].name} on day {actualDate} ({day})");
+                                                                     //Console.WriteLine($"Removing position {positions[x]} for employee {employees[randomEmployee].name} on day {actualDate} ({day})");
                             positions.RemoveAt(x); // remove the position from the list
                         }
                     }

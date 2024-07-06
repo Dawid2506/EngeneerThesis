@@ -27,10 +27,13 @@
     </select>
 </div>
 
-<div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div>
+<div class="scheduleContainer">
+    <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div>
+    @* <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div> *@
+</div>
 
 <div class="scheduleContainer">
-        @if (scheduleIsVisible)
+    @if (scheduleIsVisible)
     {
         <div class="schedule">
             <table>
@@ -50,7 +53,7 @@
                         <th class="cell">@day</th>
                         @for (int j = 0; j < appState.EmployeesRepository.employees.Count; j++)
                         {
-                            <td class="cell">@appState.schedule.schedule[i,j+1]</td>
+                            <td class="cell">@appState.schedule.schedule[i, j + 1]</td>
                             //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
                         }
                     </tr>
@@ -117,17 +120,17 @@
 
         daysToColor = appState.schedule.brokenDays;
 
-        Console.WriteLine("broken days");
-        foreach(var day in daysToColor)
+        @* Console.WriteLine("broken days");
+        foreach (var day in daysToColor)
         {
             Console.WriteLine(day);
         }
 
         foreach (var employee in employees)
-            {
-                Console.WriteLine(employee.name);
-                Console.WriteLine(employee.realHoursUsed());
-            }
+        {
+            Console.WriteLine(employee.name);
+            Console.WriteLine(employee.realHoursUsed());
+        } *@
     }
 
     private List<int> MakeNumberOfDaysDictionary()

@@ -20,29 +20,41 @@
         {
             var worksheet = package.Workbook.Worksheets.Add("Arkusz1");
 
-            // Tutaj możesz dodać zawartość do pliku Excel
             @* worksheet.Cells["A1"].Value = "Hello";
             worksheet.Cells["B1"].Value = "World"; *@
 
             string[,] schedule = appState.schedule.schedule;
+            List<Employee> employees = appState.EmployeesRepository.employees;
+
+            for(int i = 0; i < employees.Count; i++)
+            {
+                string cellAddress = $"{(char)('A' + i + 1)}{1}";
+                worksheet.Cells[cellAddress].Value = employees[i].name;
+            }
+
+            for(int i = 0; i < schedule.GetLength(0); i++)
+            {
+                string cellAddress = $"{"A"}{i + 2}";
+                worksheet.Cells[cellAddress].Value = i + 1;
+            }
 
             for (int i = 0; i < schedule.GetLength(0); i++)
             {
-                for (int j = 0; j < schedule.GetLength(1); j++)
+                for (int j = 1; j < schedule.GetLength(1); j++)
                 {
-                    // Indeksy Excel (A1, B1, itd.)
-                    string cellAddress = $"{(char)('A' + j)}{i + 1}";
+                    // Indeks Excel (A1, B1, etc.)
+                    string cellAddress = $"{(char)('A' + j)}{i + 2}";
                     worksheet.Cells[cellAddress].Value = schedule[i, j];
                 }
             }
 
-            // Zapisz plik Excel do pamięci
+            // Save file to memory
             var excelBytes = package.GetAsByteArray();
 
-            // Utwórz nazwę pliku
+            // Create file name
             var fileName = "example.xlsx";
 
-            // Pobierz plik Excel
+            // Dwonload file
             await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes),
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }

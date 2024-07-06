@@ -65,14 +65,17 @@
                         </div>
                     </div>
                     <div class="displayPositions">
-                        @foreach (var position in positionsPerDay[workingDaysList[i]])
+                        @if (positionsPerDay.ContainsKey(workingDaysList[i]))
                         {
-                            <div class="align-this">
-                                <p>@position</p>
-                                <div class="add-position-button" @onclick='() => RemovePosition(iIndex)'>
-                                    <Icon Name="IconName.FileMinus" />
+                            @foreach (var position in positionsPerDay[workingDaysList[i]])
+                            {
+                                <div class="align-this">
+                                    <p>@position</p>
+                                    <div class="add-position-button" @onclick='() => RemovePosition(iIndex)'>
+                                        <Icon Name="IconName.FileMinus" />
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                     </div>
                 </div>

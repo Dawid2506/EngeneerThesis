@@ -202,10 +202,11 @@
 
     private void RemovePosition(int iIndex)
     {
+        Console.WriteLine("index: " + iIndex);
         if (position != null)
         {
             positionsPerDay[workingDaysList[iIndex]].Remove(position);
-            Console.WriteLine("---------------------------------------");
+            @* Console.WriteLine("---------------------------------------");
             Console.WriteLine("Positions per day:");
             foreach (var day in positionsPerDay)
             {
@@ -214,7 +215,7 @@
                 {
                     Console.WriteLine($"Position: {position}");
                 }
-            }
+            } *@
         }
     }
 

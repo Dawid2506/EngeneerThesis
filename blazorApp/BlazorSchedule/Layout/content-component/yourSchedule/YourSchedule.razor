@@ -1,5 +1,6 @@
 @page "/your-schedule"
 @inject AppState appState;
+@using Blazorise.Extensions;
 
 @if (errorMessage != null)
 {
@@ -27,8 +28,32 @@
     </select>
 </div>
 
+<div class="particular-information">
+    <p class="add-employee-text">Święta</p>
+    <input type="text" class="add-employee-textbox" @bind="holiday">
+    <div class="holiday-button" @onclick='() => AddHoliday(holiday)'>Dodaj</div>
+    @if (holidays != null)
+    {
+        @for (int i = 0; i < holidays.Count; i++)
+        {
+            <div>
+                @if (i == 0)
+                {
+                    <p class="list-days">&nbsp;&nbsp;@holidays[i]</p>
+                    //&nbsp; - non-breaking space
+                }
+                else if (i > 0)
+                {
+                    <p class="list-days">, @holidays[i]</p>
+                }
+            </div>
+
+        }
+    }
+</div>
+
 <div class="scheduleContainer">
-    <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div>
+    <div class="show-schedule-button" @onclick="MakeScheduleGenerator">Pokaż grafik</div>
     @* <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div> *@
 </div>
 
@@ -44,6 +69,7 @@
                     {
                         <th class="cell">@employee.name</th>
                     }
+                    <th class="cell">Brakuje</th>
                 </tr>
 
                 @for (int i = 0; i < NumOfDays; i++)
@@ -57,6 +83,15 @@
                             <td class="cell">@appState.schedule.schedule[i, j + 1]</td>
                             //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
                         }
+                        <td class="cell">@GetListAsString(i + 1, appState.schedule.brokenDaysPositions)</td>
+                        @* @if (!appState.schedule.brokenDaysPositions[i].IsNullOrEmpty())
+                {
+                <td class="cell">hey</td>
+                }
+                else
+                {
+                <td class="cell">hoo</td>
+                } *@
                     </tr>
                 }
             </table>
@@ -79,6 +114,8 @@
 
 
 @code {
+    private int holiday;
+    private List<int> holidays;
     private string errorMessage;
     private int month;
     private int year;
@@ -86,7 +123,44 @@
     private bool scheduleIsVisible = false;
     private int NumOfDays;
     private List<int> daysToColor;
-    private void MakeSchedule()
+
+    protected override void OnInitialized()
+    {
+        holidays = new List<int>();
+    }
+
+    private void AddHoliday(int holiday)
+    {
+        if (holiday > 0 && holiday < 32)
+        {
+            holidays.Add(holiday);
+            holiday = 0;
+        }
+    }
+
+    private void MakeScheduleGenerator()
+    {
+        DateTime date = new DateTime(year, month, 1);
+        int NumOfDaysInApril = DateTime.DaysInMonth(date.Year, date.Month);
+        List<Employee> employees = appState.EmployeesRepository.employees;
+
+        int tryCount = 0;
+        int maxTryCount = 2; //numer of try
+        int minBrokenDays = 0;
+        string[,] bestSchedule = new string[NumOfDaysInApril, employees.Count + 2];
+        while (tryCount < maxTryCount)
+        {
+            tryCount++;
+            MakeSchedule(NumOfDaysInApril, employees);
+            if (minBrokenDays < appState.schedule.brokenDays.Count())
+            {
+                minBrokenDays = appState.schedule.brokenDays.Count();
+                bestSchedule = appState.schedule.schedule;
+            }
+        }
+        appState.schedule.schedule = bestSchedule;
+    }
+    private void MakeSchedule(int NumOfDaysInApril, List<Employee> employees)
     {
         if (month == 0 || year == 0)
         {
@@ -102,14 +176,20 @@
         //Console.WriteLine(month);
 
         DateTime date = new DateTime(year, month, 1);
-        int NumOfDaysInApril = DateTime.DaysInMonth(date.Year, date.Month);
         DateTime firstDayOfApril = new DateTime(date.Year, date.Month, 1);
         DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
         int FirstDayOfMonth = (int)startDayOfWeek;
 
         List<int> workingDaysInt = MakeNumberOfDaysDictionary();
-        List<Employee> employees = appState.EmployeesRepository.employees;
         Company company = appState.CompanyInstance;
+
+        foreach (var employee in employees)
+        {
+            foreach (var day in holidays)
+            {
+                employee.daysOff.Add(day);
+            }
+        }
 
         appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees, company);
 
@@ -125,16 +205,25 @@
         daysToColor = appState.schedule.brokenDays;
 
         @* Console.WriteLine("broken days");
-        foreach (var day in daysToColor)
-        {
-            Console.WriteLine(day);
-        }
+foreach (var day in daysToColor)
+{
+Console.WriteLine(day);
+}
 
-        foreach (var employee in employees)
+foreach (var employee in employees)
+{
+Console.WriteLine(employee.name);
+Console.WriteLine(employee.realHoursUsed());
+} *@
+    }
+
+    private string GetListAsString(int key, Dictionary<int, List<string>> brokenDaysPositions)
+    {
+        if (brokenDaysPositions.TryGetValue(key, out var list))
         {
-            Console.WriteLine(employee.name);
-            Console.WriteLine(employee.realHoursUsed());
-        } *@
+            return string.Join(", ", list);
+        }
+        return string.Empty;
     }
 
     private List<int> MakeNumberOfDaysDictionary()

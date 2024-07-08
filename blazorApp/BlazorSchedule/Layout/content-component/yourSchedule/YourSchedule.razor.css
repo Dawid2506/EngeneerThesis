@@ -67,3 +67,21 @@
 .hoursInfo{
     padding-left: 2em;
 }
+
+.holiday-button{
+    margin-left: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 5em;
+    height: 2em;
+    background-color: #661D15;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.holiday-button:hover{
+    background-color: #551811;
+    cursor: pointer;
+}

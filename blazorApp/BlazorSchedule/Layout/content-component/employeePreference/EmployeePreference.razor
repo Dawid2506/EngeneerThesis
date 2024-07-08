@@ -20,15 +20,16 @@
             {
                 @for (int i = 0; i < employee.daysOff.Count; i++)
                 {
+                    int iIndex = i;
                     <div>
                         @if (i == 0)
                         {
-                            <p class="list-days">&nbsp;&nbsp;@employee.daysOff[i]</p>
+                            <div class="subtract-day"><p class="list-days">&nbsp;&nbsp;@employee.daysOff[i]</p> <div class="add-day" style="width: 30px;" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
                             //&nbsp; - non-breaking space
                         }
                         else if (i > 0)
                         {
-                            <p class="list-days">, @employee.daysOff[i]</p>
+                            <div class="subtract-day"><p class="list-days">, @employee.daysOff[i]</p> <div class="add-day" style="width: 30px;" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
                         }
                     </div>
 
@@ -64,6 +65,15 @@
         else
         {
             errorMessage = "Niepoprawny format daty";
+        }
+    }
+
+    private void SubtractDay(Employee employee, int index)
+    {
+        Console.WriteLine(index);
+        if (employee.daysOff != null && index >= 0 && index < employee.daysOff.Count)
+        {
+            employee.daysOff.RemoveAt(index);
         }
     }
 }

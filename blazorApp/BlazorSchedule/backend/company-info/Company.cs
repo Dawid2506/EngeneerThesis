@@ -4,6 +4,7 @@ namespace BlazorSchedule{
         private static Company instance;
         private static readonly object lockObject = new object();
 
+        public string shift { get; set; }
         public string name { get; set; }
         public List<string> workingDays { get; set; }
         public Dictionary<string, Dictionary<string, string>> workingHoursDay { get; set; }

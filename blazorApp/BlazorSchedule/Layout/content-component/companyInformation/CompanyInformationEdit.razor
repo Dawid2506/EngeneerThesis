@@ -59,6 +59,8 @@
     @code {
         [Parameter]
         public string name { get; set; }
+        [Parameter]
+        public string shift { get; set; }
 
         [Parameter]
         public List<string> workingDaysList { get; set; } = new List<string>();
@@ -71,6 +73,8 @@
 
         protected override void OnInitialized()
         {
+            shift = "first";
+
             if (appState.CompanyInstance.name != null)
             {
                 name = appState.CompanyInstance.name;
@@ -115,7 +119,7 @@
                 var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
                 var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
                 var encodedName = Uri.EscapeDataString(name);
-                NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}");
+                NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
             }
             else
             {

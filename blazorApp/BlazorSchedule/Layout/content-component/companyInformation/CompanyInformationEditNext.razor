@@ -1,4 +1,4 @@
-@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}";
+@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}/{shift}";
 @inject NavigationManager NavigationManager;
 @using BlazorBootstrap
 @using System.Text.Json;
@@ -84,13 +84,19 @@
     </div>
 
     <div class="save-company-info-buttons">
-        <button class="save-company-info-button" @onclick="SaveData">Zapisz</button>
+        @if(shift == "first")
+        {
+            <button class="save-company-info-button" @onclick="AddShift">Dodaj druga zmianę</button>
+        }
+        <button class="save-company-info-button" style="margin-left: 1em;" @onclick="SaveData">Zapisz</button>
     </div>
 </div>
 
 @code {
     [Parameter]
     public string name { get; set; }
+    [Parameter]
+    public string shift { get; set; }
     public List<string> positions { get; set; }
     public List<string> workingDaysList { get; set; }
 
@@ -108,10 +114,19 @@
     private string position { get; set; }
     public DateTime startHourForAll { get; set; }
     public DateTime endHourForAll { get; set; }
-    Company companyInstance;
+    public Company companyInstance;
 
     protected override void OnInitialized()
     {
+        if(shift == "first")
+        {
+            companyInstance = appState.CompanyInstance;
+        }
+        else if(shift == "second")
+        {
+            companyInstance = appState.CompanySecondShift;
+        }
+
         //Decode the encoded strings
         positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
         workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
@@ -217,6 +232,18 @@
                 }
             } *@
         }
+    }
+
+    private void AddShift()
+    {
+        SaveData();
+
+        // Przekazanie danych poprzez adres URL
+        var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
+        var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
+        var encodedName = Uri.EscapeDataString(name);
+        shift = "second";
+        NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
     }
 
 

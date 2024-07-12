@@ -9,10 +9,10 @@ namespace BlazorSchedule
 
         public AppState()
         {
-            CompanyInstance = Company.Instance;
+            CompanyInstance = new Company();
             EmployeesRepository = new EmployeesRepository();
             schedule = Schedule.Instance;
-            CompanySecondShift = Company.Instance;
+            CompanySecondShift = new Company();
         }
     }
 }

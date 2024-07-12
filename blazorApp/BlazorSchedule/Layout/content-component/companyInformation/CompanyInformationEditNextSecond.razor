@@ -1,4 +1,4 @@
-@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}/{shift}";
+@page "/company-information-edit-next-second/{encodedPositions}/{encodedWorkingDaysList}/{name}/{shift}";
 @inject NavigationManager NavigationManager;
 @using BlazorBootstrap
 @using System.Text.Json;
@@ -84,7 +84,7 @@
     </div>
 
     <div class="save-company-info-buttons">
-        @if (shift == "first")
+        @if(shift == "first")
         {
             <button class="save-company-info-button" @onclick="AddShift">Dodaj druga zmianę</button>
         }
@@ -114,19 +114,12 @@
     private string position { get; set; }
     public DateTime startHourForAll { get; set; }
     public DateTime endHourForAll { get; set; }
-    public Company companyInstance;
+    public Company companySecondShift;
 
     protected override void OnInitialized()
     {
-        if (shift == "first")
-        {
-            companyInstance = appState.CompanyInstance;
-        }
-        else if (shift == "second")
-        {
-            companyInstance = appState.CompanySecondShift;
-        }
-
+        companySecondShift = appState.CompanySecondShift;
+        
 
         //Decode the encoded strings
         positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
@@ -149,35 +142,7 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        if (shift == "first")
-        {
-            await base.OnInitializedAsync();
-            if (appState.CompanyInstance.workingHoursDay != null)
-            {
-                positionsPerDay = appState.CompanyInstance.positionsPerDay;
-            }
 
-            if (appState.CompanyInstance.workingHoursDay != null)
-            {
-                if (appState.CompanyInstance.isCheckboxChecked)
-                {
-                    startHourForAll = DateTime.Parse(appState.CompanyInstance.workingHoursDay.Values.First().Keys.First());
-                    endHourForAll = DateTime.Parse(appState.CompanyInstance.workingHoursDay.Values.First().Values.First());
-                }
-                else
-                {
-                    foreach (var day in appState.CompanyInstance.workingHoursDay)
-                    {
-                        startHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Keys.First());
-                        endHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Values.First());
-                    }
-                }
-            }
-        }
-
-    }
 
 
     private void ToggleCheckbox()
@@ -227,15 +192,15 @@
         {
             positionsPerDay[workingDaysList[iIndex]].Remove(position);
             @* Console.WriteLine("---------------------------------------");
-Console.WriteLine("Positions per day:");
-foreach (var day in positionsPerDay)
-{
-Console.WriteLine($"Day: {day.Key}");
-foreach (var position in day.Value)
-{
-Console.WriteLine($"Position: {position}");
-}
-} *@
+            Console.WriteLine("Positions per day:");
+            foreach (var day in positionsPerDay)
+            {
+                Console.WriteLine($"Day: {day.Key}");
+                foreach (var position in day.Value)
+                {
+                    Console.WriteLine($"Position: {position}");
+                }
+            } *@
         }
     }
 
@@ -284,30 +249,23 @@ Console.WriteLine($"Position: {position}");
             }
         }
 
-        //companyInstance = appState.CompanyInstance;
+        
 
-        companyInstance.workingDays = workingDaysList;
+        companySecondShift.workingDays = workingDaysList;
 
-        companyInstance.workingHoursDay = myWorkingHoursDay;
+        companySecondShift.workingHoursDay = myWorkingHoursDay;
 
         //save the positions per day
-        companyInstance.positionsPerDay = positionsPerDay;
+        companySecondShift.positionsPerDay = positionsPerDay;
 
         //save the name of the company
-        companyInstance.name = name;
+        companySecondShift.name = name;
 
-        companyInstance.positionsList = positions;
+        companySecondShift.positionsList = positions;
 
-        companyInstance.isCheckboxChecked = isChecked;
+        companySecondShift.isCheckboxChecked = isChecked;
 
-        if(shift == "first")
-        {
-            appState.CompanyInstance = companyInstance;
-        }
-        else if(shift == "second")
-        {
-            appState.CompanySecondShift = companyInstance;
-        }
+        appState.CompanySecondShift = companySecondShift;
 
         //check if the data is saved correctly
         Console.WriteLine("-------------------first shift--------------------");
@@ -320,8 +278,8 @@ Console.WriteLine($"Position: {position}");
                 Console.WriteLine($"Position: {position}");
             }
         }
-
-
+        
+        
         Console.WriteLine("-------------------second shift--------------------");
         Console.WriteLine("Positions per day:");
         foreach (var day in appState.CompanySecondShift.positionsPerDay)
@@ -334,20 +292,20 @@ Console.WriteLine($"Position: {position}");
         }
 
         @* //check if the data is saved correctly
-foreach (var day in myWorkingHoursDay)
-{
-Console.WriteLine($"Day: {day.Key}");
-foreach (var workingHours in day.Value)
-{
-Console.WriteLine($"Start Hour: {workingHours.Key}");
-Console.WriteLine($"End Hour: {workingHours.Value}");
-}
-}
+        foreach (var day in myWorkingHoursDay)
+        {
+            Console.WriteLine($"Day: {day.Key}");
+            foreach (var workingHours in day.Value)
+            {
+                Console.WriteLine($"Start Hour: {workingHours.Key}");
+                Console.WriteLine($"End Hour: {workingHours.Value}");
+            }
+        }
 
-foreach (var positon in companyInstance.positionsList)
-{
-Console.WriteLine($"Position: {positon}");
-} *@
+        foreach (var positon in companyInstance.positionsList)
+        {
+            Console.WriteLine($"Position: {positon}");
+        } *@
 
         NavigationManager.NavigateTo($"/company-information");
     }

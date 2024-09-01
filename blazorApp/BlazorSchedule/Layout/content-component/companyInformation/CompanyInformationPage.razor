@@ -37,10 +37,10 @@
 </div>
 
 @code {
-    Company companyInstance;
-    private string companyName;
-    private Dictionary<string, Dictionary<string, string>> workingHoursDay;
-    private Dictionary<string, List<string>> positionsPerDay;
+    Company companyInstance = new Company();
+    private string? companyName { get; set; }
+    private Dictionary<string, Dictionary<string, string>>? workingHoursDay;
+    private Dictionary<string, List<string>>? positionsPerDay;
 
     protected override void OnInitialized()
     {

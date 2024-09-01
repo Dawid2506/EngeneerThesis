@@ -8,6 +8,9 @@
 `normal-red-#661D15;`
 `dark-red#551811`
 
+## State management
+[[State]]
+
 ## Plans
 **Fully refactor code**
 

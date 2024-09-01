@@ -3,3 +3,4 @@
 - { get; set; } 
 - We use Guard Clause in functions
 - Console Writeline is acceptable only for a while
+- Logic of application should be implemented in @code section. 

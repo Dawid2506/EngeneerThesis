@@ -1,27 +1,29 @@
 @page "/company-information";
 @using BlazorBootstrap
+@using YourBlazorProject.Models
 @inject NavigationManager NavigationManager;
 @inject AppState appState;
 
 <div>
     <div class="company-info-container">
-        <p class="company-info-text" style="font-size: 24px;">Nazwa: @companyName</p>
-        <br>
-        @if (companyName != null && workingHoursDay != null && positionsPerDay != null)
+        @if (!IsNotNullCompanyInfo())
         {
-            @for (int i = 0; i < workingHoursDay.Count; i++)
+            <p class="company-info-text" style="font-size: 24px;">Brak informacji o firmie</p>
+        }
+        else
+        {
+            <p class="company-info-text" style="font-size: 24px;">Nazwa: @companyName</p>
+            <br>
+            @foreach (var dayInfo in GetWorkingHoursWithPositions())
             {
-                Dictionary<string, string> workingHours = workingHoursDay.ElementAt(i).Value;
-                List<string> positions = positionsPerDay.ElementAt(i).Value;
-                Console.WriteLine(workingHoursDay.Count);
-                <p class="company-info-text" style="font-size: 24px;">Dzien: @workingHoursDay.ElementAt(i).Key</p>
+                <p class="company-info-text" style="font-size: 24px;">Dzień: @dayInfo.Day</p>
                 <p class="company-info-text">
-                    <Icon Name="IconName.Clock" /> @workingHours.ElementAt(0).Key - @workingHours.ElementAt(0).Value
+                    <Icon Name="IconName.Clock" /> @dayInfo.WorkingHours
                 </p>
-                @for (int j = 0; j < positions.Count; j++)
+                @foreach (var position in dayInfo.Positions)
                 {
                     <p class="company-info-text">
-                        <Icon Name="IconName.Person" /> @positions[j]
+                        <Icon Name="IconName.Person" /> @position
                     </p>
                 }
             }
@@ -29,7 +31,7 @@
     </div>
 
     <div class="company-info-buttons">
-        <button class="company-info-button" @onclick="ChangeInformation">Edytuj informacje</button>
+        <button class="company-info-button" @onclick="EditInformation">Edytuj informacje</button>
     </div>
 
 
@@ -39,25 +41,45 @@
 @code {
     Company companyInstance = new Company();
     private string? companyName { get; set; }
-    private Dictionary<string, Dictionary<string, string>>? workingHoursDay;
-    private Dictionary<string, List<string>>? positionsPerDay;
+    private Dictionary<string, Dictionary<string, string>> workingHoursDay = new();
+    private Dictionary<string, List<string>> positionsPerDay = new();
 
     protected override void OnInitialized()
     {
-            companyInstance = appState.CompanyInstance;
-            companyName = companyInstance.name;
-            workingHoursDay = companyInstance.workingHoursDay;
-            positionsPerDay = companyInstance.positionsPerDay;
-            Console.WriteLine("companyName:");  
-            Console.WriteLine(companyName);
-            Console.WriteLine(companyInstance.name);
+        companyInstance = appState.CompanyInstance;
+        companyName = companyInstance.name;
+        workingHoursDay = companyInstance.workingHoursDay;
+        positionsPerDay = companyInstance.positionsPerDay;
     }
 
-    private void ChangeInformation()
+    private void EditInformation()
     {
-            Console.WriteLine("companyInstance.name");
-            Console.WriteLine(companyInstance.name);
         NavigationManager.NavigateTo("/company-information-edit");
     }
 
+    private bool IsNotNullCompanyInfo()
+    {
+        return companyName != null && workingHoursDay != null && positionsPerDay != null;
+    }
+
+    private List<DayInfo> GetWorkingHoursWithPositions()
+    {
+        List<DayInfo> dayInfoList = new List<DayInfo>();
+
+        foreach (var workingHoursEntry in workingHoursDay)
+        {
+            string day = workingHoursEntry.Key;
+            string workingHours = $"{workingHoursEntry.Value.First().Key} - {workingHoursEntry.Value.First().Value}";
+            List<string> positions = positionsPerDay[day];
+
+            dayInfoList.Add(new DayInfo
+            {
+                Day = day,
+                WorkingHours = workingHours,
+                Positions = positions
+            });
+        }
+
+        return dayInfoList;
+    }
 }

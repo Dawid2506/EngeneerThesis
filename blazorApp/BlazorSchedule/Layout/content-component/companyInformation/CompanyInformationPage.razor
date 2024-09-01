@@ -1,8 +1,8 @@
-@page "/company-information";
+@page "/company-information"
 @using BlazorBootstrap
 @using YourBlazorProject.Models
-@inject NavigationManager NavigationManager;
-@inject AppState appState;
+@inject NavigationManager NavigationManager
+@inject AppState appState
 
 <div>
     <div class="company-info-container">
@@ -14,13 +14,13 @@
         {
             <p class="company-info-text" style="font-size: 24px;">Nazwa: @companyName</p>
             <br>
-            @foreach (var dayInfo in GetWorkingHoursWithPositions())
+            @foreach (DayInfo dayInfo in GetWorkingHoursWithPositions())
             {
                 <p class="company-info-text" style="font-size: 24px;">Dzień: @dayInfo.Day</p>
                 <p class="company-info-text">
                     <Icon Name="IconName.Clock" /> @dayInfo.WorkingHours
                 </p>
-                @foreach (var position in dayInfo.Positions)
+                @foreach (string position in dayInfo.Positions)
                 {
                     <p class="company-info-text">
                         <Icon Name="IconName.Person" /> @position
@@ -33,13 +33,10 @@
     <div class="company-info-buttons">
         <button class="company-info-button" @onclick="EditInformation">Edytuj informacje</button>
     </div>
-
-
-
 </div>
 
 @code {
-    Company companyInstance = new Company();
+    private Company companyInstance = new Company();
     private string? companyName { get; set; }
     private Dictionary<string, Dictionary<string, string>> workingHoursDay = new();
     private Dictionary<string, List<string>> positionsPerDay = new();
@@ -59,18 +56,18 @@
 
     private bool IsNotNullCompanyInfo()
     {
-        return companyName != null && workingHoursDay != null && positionsPerDay != null;
+        return !string.IsNullOrEmpty(companyName) && workingHoursDay != null && positionsPerDay != null;
     }
 
     private List<DayInfo> GetWorkingHoursWithPositions()
     {
         List<DayInfo> dayInfoList = new List<DayInfo>();
 
-        foreach (var workingHoursEntry in workingHoursDay)
+        foreach (KeyValuePair<string, Dictionary<string, string>> workingHoursEntry in workingHoursDay)
         {
             string day = workingHoursEntry.Key;
             string workingHours = $"{workingHoursEntry.Value.First().Key} - {workingHoursEntry.Value.First().Value}";
-            List<string> positions = positionsPerDay[day];
+            List<string> positions = positionsPerDay.ContainsKey(day) ? positionsPerDay[day] : new List<string>();
 
             dayInfoList.Add(new DayInfo
             {

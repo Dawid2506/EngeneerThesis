@@ -151,32 +151,28 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (shift == "first")
+        await base.OnInitializedAsync();
+        if (companyInstance.workingHoursDay != null)
         {
-            await base.OnInitializedAsync();
-            if (appState.CompanyInstance.workingHoursDay != null)
-            {
-                positionsPerDay = appState.CompanyInstance.positionsPerDay;
-            }
+            positionsPerDay = companyInstance.positionsPerDay;
+        }
 
-            if (appState.CompanyInstance.workingHoursDay != null)
+        if (companyInstance.workingHoursDay != null)
+        {
+            if (companyInstance.isCheckboxChecked)
             {
-                if (appState.CompanyInstance.isCheckboxChecked)
+                startHourForAll = DateTime.Parse(companyInstance.workingHoursDay.Values.First().Keys.First());
+                endHourForAll = DateTime.Parse(companyInstance.workingHoursDay.Values.First().Values.First());
+            }
+            else
+            {
+                foreach (var day in companyInstance.workingHoursDay)
                 {
-                    startHourForAll = DateTime.Parse(appState.CompanyInstance.workingHoursDay.Values.First().Keys.First());
-                    endHourForAll = DateTime.Parse(appState.CompanyInstance.workingHoursDay.Values.First().Values.First());
-                }
-                else
-                {
-                    foreach (var day in appState.CompanyInstance.workingHoursDay)
-                    {
-                        startHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Keys.First());
-                        endHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Values.First());
-                    }
+                    startHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Keys.First());
+                    endHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Values.First());
                 }
             }
         }
-
     }
 
 
@@ -300,11 +296,11 @@ Console.WriteLine($"Position: {position}");
 
         companyInstance.isCheckboxChecked = isChecked;
 
-        if(shift == "first")
+        if (shift == "first")
         {
             appState.CompanyInstance = companyInstance;
         }
-        else if(shift == "second")
+        else if (shift == "second")
         {
             appState.CompanySecondShift = companyInstance;
         }

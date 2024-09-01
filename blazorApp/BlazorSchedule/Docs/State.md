@@ -1,3 +1,3 @@
 # State of our application
-We use Singleton pattern witch is build in the blazor framework.
-We have added AppState class to singleton and this class contain another classes.
+We use the Singleton pattern, which is built into the Blazor framework.
+We have added an `AppState` class as a singleton, and this class contains other classes.

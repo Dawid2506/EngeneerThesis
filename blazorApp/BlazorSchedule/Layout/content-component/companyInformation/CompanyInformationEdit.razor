@@ -15,11 +15,11 @@
 
     <div class="input-field">
         <div class="particular-information">
-            <p class="add-employee-text">Nazwa firmy</p>
+            <p class="add-employee-text">Company Name</p>
             <input type="text" class="add-employee-textbox" @bind="name">
         </div>
         <div class="particular-information">
-            <p class="add-employee-text">Dni pracujące</p>
+            <p class="add-employee-text">Working Days</p>
             <div class="working-days-container">
                 @foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
                 {
@@ -29,9 +29,9 @@
             </div>
         </div>
         <div class="particular-information">
-            <p class="add-employee-text">Stanowisko</p>
+            <p class="add-employee-text">Position</p>
             <input type="text" id="position" class="add-employee-textbox" @bind="position">
-            <button class="add-position-button" @onclick="AddPosition">Dodaj stanowisko</button>
+            <button class="add-position-button" @onclick="AddPosition">Add Position</button>
         </div>
         <div class="displayPositions">
             @foreach (string position in positions)
@@ -43,7 +43,7 @@
         </div>
 
         <div class="company-info-buttons">
-            <button class="company-info-button" @onclick="NextPage">Przejdź dalej </button>
+            <button class="company-info-button" @onclick="NextPage">Proceed</button>
         </div>
     </div>
 </div>
@@ -63,77 +63,74 @@
     private int mintHours;
     private string? errorMessage;
 
-    @code {
-        protected override void OnInitialized()
-        {
-            shift = "first";
+    protected override void OnInitialized()
+    {
+        shift = "first";
 
-            if (appState.CompanyInstance.name != null)
-            {
-                name = appState.CompanyInstance.name;
-                workingDaysList = appState.CompanyInstance.workingDays;
-                positions = appState.CompanyInstance.positionsList;
-            }
+        if (appState.CompanyInstance.name != null)
+        {
+            name = appState.CompanyInstance.name;
+            workingDaysList = appState.CompanyInstance.workingDays;
+            positions = appState.CompanyInstance.positionsList;
+        }
+    }
+
+    private void AddDay(string day)
+    {
+        if (string.IsNullOrEmpty(day))
+        {
+            return;
         }
 
-        private void AddDay(string day)
+        if (workingDaysList.Contains(day))
         {
-            if (string.IsNullOrEmpty(day))
-            {
-                return;
-            }
+            workingDaysList.Remove(day);
+        }
+        else
+        {
+            workingDaysList.Add(day);
+        }
+    }
 
-            if (workingDaysList.Contains(day))
-            {
-                workingDaysList.Remove(day);
-            }
-            else
-            {
-                workingDaysList.Add(day);
-            }
+    private void AddPosition()
+    {
+        if (string.IsNullOrEmpty(position))
+        {
+            errorMessage = "Position cannot be empty";
+            return;
         }
 
-        private void AddPosition()
+        if (positions.Contains(position))
         {
-            if (string.IsNullOrEmpty(position))
-            {
-                errorMessage = "Stanowisko nie może być puste";
-                return;
-            }
-
-            if (positions.Contains(position))
-            {
-                errorMessage = "Stanowisko już istnieje";
-                return;
-            }
-
-            positions.Add(position);
-            position = string.Empty;
+            errorMessage = "Position already exists";
+            return;
         }
 
-        private void NextPage()
-        {
-            if (!AreParametersNotEmpty() || name == null)
-            {
-                errorMessage = "Wypełnij wszystkie pola";
-                return;
-            }
+        positions.Add(position);
+        position = string.Empty;
+    }
 
-            // Przekazanie danych poprzez adres URL
-            string encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
-            string encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
-            string encodedName = Uri.EscapeDataString(name);
-            NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
+    private void NextPage()
+    {
+        if (!AreParametersNotEmpty() || name == null)
+        {
+            errorMessage = "Fill in all fields";
+            return;
         }
 
-        private bool AreParametersNotEmpty()
-        {
-            return !string.IsNullOrEmpty(name) && workingDaysList.Count > 0 && positions.Count > 0;
-        }
+        string encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
+        string encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
+        string encodedName = Uri.EscapeDataString(name);
+        NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
+    }
 
-        private void GoBack()
-        {
-            NavigationManager.NavigateTo("/add-employee-menu");
-        }
+    private bool AreParametersNotEmpty()
+    {
+        return !string.IsNullOrEmpty(name) && workingDaysList.Count > 0 && positions.Count > 0;
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/add-employee-menu");
     }
 }

@@ -8,15 +8,15 @@
     <div class="company-info-container">
         @if (!IsNotNullCompanyInfo())
         {
-            <p class="company-info-text" style="font-size: 24px;">Brak informacji o firmie</p>
+            <p class="company-info-text" style="font-size: 24px;">No company information available</p>
         }
         else
         {
-            <p class="company-info-text" style="font-size: 24px;">Nazwa: @companyName</p>
+            <p class="company-info-text" style="font-size: 24px;">Name: @companyName</p>
             <br>
             @foreach (DayInfo dayInfo in GetWorkingHoursWithPositions())
             {
-                <p class="company-info-text" style="font-size: 24px;">Dzień: @dayInfo.Day</p>
+                <p class="company-info-text" style="font-size: 24px;">Day: @dayInfo.Day</p>
                 <p class="company-info-text">
                     <Icon Name="IconName.Clock" /> @dayInfo.WorkingHours
                 </p>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="company-info-buttons">
-        <button class="company-info-button" @onclick="EditInformation">Edytuj informacje</button>
+        <button class="company-info-button" @onclick="EditInformation">Edit information</button>
     </div>
 </div>
 

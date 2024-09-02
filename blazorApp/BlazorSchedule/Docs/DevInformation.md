@@ -16,3 +16,6 @@
 
 ### We have standard how should look every component in our app
 [[Component Standard]]
+
+## Data models and structures
+[[Models and structures]]

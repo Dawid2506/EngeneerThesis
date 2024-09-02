@@ -2,6 +2,7 @@
 @inject NavigationManager NavigationManager;
 @using System.Text.Json;
 @using System.Web;
+@using YourBlazorProject.Models;
 @inject AppState appState;
 
 <div class="add-employee-container">
@@ -20,20 +21,11 @@
         <div class="particular-information">
             <p class="add-employee-text">Dni pracujące</p>
             <div class="working-days-container">
-                <div class="particular-day @(workingDaysList.Contains("poniedziałek") ? "working-day" : "")"
-                    @onclick='() => AddDay("poniedziałek")'>Poniedziałek</div>
-                <div class="particular-day @(workingDaysList.Contains("wtorek") ? "working-day" : "")"
-                    @onclick='() => AddDay("wtorek")'>Wtorek</div>
-                <div class="particular-day @(workingDaysList.Contains("środa") ? "working-day" : "")"
-                    @onclick='() => AddDay("środa")'>Środa</div>
-                <div class="particular-day @(workingDaysList.Contains("czwartek") ? "working-day" : "")"
-                    @onclick='() => AddDay("czwartek")'>Czwartek</div>
-                <div class="particular-day @(workingDaysList.Contains("piątek") ? "working-day" : "")"
-                    @onclick='() => AddDay("piątek")'>Piątek</div>
-                <div class="particular-day @(workingDaysList.Contains("sobota") ? "working-day" : "")"
-                    @onclick='() => AddDay("sobota")'>Sobota</div>
-                <div class="particular-day @(workingDaysList.Contains("niedziela") ? "working-day" : "")"
-                    @onclick='() => AddDay("niedziela")'>Niedziela</div>
+                @foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
+                {
+                    <div class="particular-day @(workingDaysList.Contains(day.ToString()) ? "working-day" : "")"
+                        @onclick='() => AddDay(day.ToString())'>@day</div>
+                }
             </div>
         </div>
         <div class="particular-information">
@@ -42,7 +34,7 @@
             <button class="add-position-button" @onclick="AddPosition">Dodaj stanowisko</button>
         </div>
         <div class="displayPositions">
-            @foreach (var position in positions)
+            @foreach (string position in positions)
             {
                 <div class="align-this" style="margin-left: 5em;">
                     <p>@position</p>
@@ -56,21 +48,22 @@
     </div>
 </div>
 
+@code {
+    [Parameter]
+    public string? name { get; set; }
+    [Parameter]
+    public string? shift { get; set; }
+
+    [Parameter]
+    public List<string> workingDaysList { get; set; } = new List<string>();
+
+    [Parameter]
+    public List<string> positions { get; set; } = new List<string>();
+    private string? position;
+    private int mintHours;
+    private string? errorMessage;
+
     @code {
-        [Parameter]
-        public string? name { get; set; }
-        [Parameter]
-        public string? shift { get; set; }
-
-        [Parameter]
-        public List<string> workingDaysList { get; set; } = new List<string>();
-
-        [Parameter]
-        public List<string> positions { get; set; } = new List<string>();
-        private string? position;
-        private int mintHours;
-        private string? errorMessage;
-
         protected override void OnInitialized()
         {
             shift = "first";
@@ -85,6 +78,11 @@
 
         private void AddDay(string day)
         {
+            if (string.IsNullOrEmpty(day))
+            {
+                return;
+            }
+
             if (workingDaysList.Contains(day))
             {
                 workingDaysList.Remove(day);
@@ -97,34 +95,35 @@
 
         private void AddPosition()
         {
+            if (string.IsNullOrEmpty(position))
+            {
+                errorMessage = "Stanowisko nie może być puste";
+                return;
+            }
+
             if (positions.Contains(position))
             {
                 errorMessage = "Stanowisko już istnieje";
+                return;
             }
-            else
-            {
-                positions.Add(position);
-                position = string.Empty;
-                Console.WriteLine(positions[0]);
-            }
+
+            positions.Add(position);
+            position = string.Empty;
         }
-
-
 
         private void NextPage()
         {
-            if (AreParametersNotEmpty())
-            {
-                // Przekazanie danych poprzez adres URL
-                var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
-                var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
-                var encodedName = Uri.EscapeDataString(name);
-                NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
-            }
-            else
+            if (!AreParametersNotEmpty() || name == null)
             {
                 errorMessage = "Wypełnij wszystkie pola";
+                return;
             }
+
+            // Przekazanie danych poprzez adres URL
+            string encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
+            string encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
+            string encodedName = Uri.EscapeDataString(name);
+            NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
         }
 
         private bool AreParametersNotEmpty()
@@ -132,10 +131,9 @@
             return !string.IsNullOrEmpty(name) && workingDaysList.Count > 0 && positions.Count > 0;
         }
 
-
-
         private void GoBack()
         {
             NavigationManager.NavigateTo("/add-employee-menu");
         }
     }
+}

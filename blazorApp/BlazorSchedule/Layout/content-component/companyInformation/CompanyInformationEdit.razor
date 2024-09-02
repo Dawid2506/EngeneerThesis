@@ -5,7 +5,7 @@
 @inject AppState appState;
 
 <div class="add-employee-container">
-    @if (errorMessage != null)
+    @if (!string.IsNullOrEmpty(errorMessage))
     {
         <div class="error-message">
             <p>@errorMessage</p>
@@ -58,18 +58,18 @@
 
     @code {
         [Parameter]
-        public string name { get; set; }
+        public string? name { get; set; }
         [Parameter]
-        public string shift { get; set; }
+        public string? shift { get; set; }
 
         [Parameter]
         public List<string> workingDaysList { get; set; } = new List<string>();
 
         [Parameter]
         public List<string> positions { get; set; } = new List<string>();
-        private string position;
+        private string? position;
         private int mintHours;
-        private string errorMessage;
+        private string? errorMessage;
 
         protected override void OnInitialized()
         {

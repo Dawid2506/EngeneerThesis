@@ -5,3 +5,4 @@
 - `Console.WriteLine` is acceptable only temporarily.
 - The logic of the application should be implemented in the `@code` section.
 - Replace `var` with explicit types for better readability.
+- Operations can't be relay of strings

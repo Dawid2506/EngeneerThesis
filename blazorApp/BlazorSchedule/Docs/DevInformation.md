@@ -19,3 +19,6 @@
 
 ## Data models and structures
 [[Models and structures]]
+
+## Company structure
+[[Company]]

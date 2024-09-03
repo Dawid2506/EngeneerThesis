@@ -14,29 +14,29 @@
 
     <div class="input-field">
         <div class="particular-information">
-            <p class="add-employee-text">Imię</p>
+            <p class="add-employee-text">Name</p>
             <input type="text" id="name" class="add-employee-textbox" @bind="name">
         </div>
         <div class="particular-information">
-            <p class="add-employee-text">Rodzaj umowy</p>
+            <p class="add-employee-text">Type of Agreement</p>
             <select id="type-of-agreement" class="add-employee-textbox" @bind="typeOfAgreement">
-                <option value="contract">Umowa o pracę</option>
-                <option value="mandate">Umowa zlecenie</option>
+                <option value="contract">Employment Contract</option>
+                <option value="mandate">Mandate Contract</option>
             </select>
         </div>
         <div class="particular-information">
-            <p class="add-employee-text">Minimalna liczba godzin</p>
+            <p class="add-employee-text">Minimum Hours</p>
             <input type="text" id="min-hours" class="add-employee-textbox" @bind="minHours">
         </div>
         <div class="particular-information">
-            <p class="add-employee-text">Stanowisko</p>
+            <p class="add-employee-text">Position</p>
             <select id="type-of-agreement" class="add-employee-textbox" @bind="position">
                 @foreach (var position in appState.CompanyInstance.positionsList)
                 {
                     <option value="@position">@position</option>
                 }
             </select>
-            <button class="add-position-button" @onclick="AddPosition">Dodaj stanowisko</button>
+            <button class="add-position-button" @onclick="AddPosition">Add Position</button>
         </div>
         <div class="displayPositions">
             @foreach (var position in positions)
@@ -47,11 +47,9 @@
             }
         </div>
 
-
-
         <div class="add-employee-buttons">
-            <button class="add-employee-button" @onclick="AddEmployeeMethod">Dodaj pracownika</button>
-            <button class="add-employee-button" @onclick="GoBack">Anuluj</button>
+            <button class="add-employee-button" @onclick="AddEmployeeMethod">Add Employee</button>
+            <button class="add-employee-button" @onclick="GoBack">Cancel</button>
         </div>
     </div>
 </div>
@@ -78,7 +76,7 @@
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("editByName");
-            Console.WriteLine(editByName);
+        Console.WriteLine(editByName);
         await base.OnInitializedAsync();
         if (editByName != null)
         {
@@ -106,7 +104,6 @@
 
             if (appState.EmployeesRepository.GetEmployees().Any(e => e.name == name))
             {
-                //throw new Exception("Pracownik o takim imieniu już istnieje!");
                 Employee particularEmployee = appState.EmployeesRepository.GetEmployeeByName(name);
                 particularEmployee.typeOfAgreement = typeOfAgreement;
                 particularEmployee.minHours = mintHours;
@@ -128,7 +125,7 @@
         }
         catch (Exception e)
         {
-            errorMessage = $"Wprowadzono niepoprawne dane! {e.Message}";
+            errorMessage = $"Invalid data entered! {e.Message}";
         }
     }
 
@@ -136,7 +133,7 @@
     {
         if (positions.Contains(position))
         {
-            errorMessage = "Stanowisko już istnieje";
+            errorMessage = "Position already exists";
         }
         else
         {

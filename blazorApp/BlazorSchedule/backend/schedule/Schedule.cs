@@ -158,6 +158,7 @@ namespace BlazorSchedule
 
         private void ThirdLayerOfScheduleEmployee(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int numberOfEmployees)
         {
+            
             // Sort employees by typeOfAgreement
             List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == "contract").ToList();
             List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != "contract").ToList();
@@ -210,6 +211,7 @@ namespace BlazorSchedule
             dayOfWeek = firstDayOfMonth;
             for (int i = 1; i <= numberOfDays; i++)
             {
+                
                 string DayOfWeekString = GetDayOfWeekName(dayOfWeek);
                 positionsPerDay[i].AddRange(company.positionsPerDay[DayOfWeekString]);
 
@@ -442,19 +444,19 @@ namespace BlazorSchedule
             switch (dayOfWeek)
             {
                 case 0:
-                    return "niedziela";
+                    return "Sunday";
                 case 1:
-                    return "poniedziałek";
+                    return "Monday";
                 case 2:
-                    return "wtorek";
+                    return "Tuesday";
                 case 3:
-                    return "środa";
+                    return "Wednesday";
                 case 4:
-                    return "czwartek";
+                    return "Thursday";
                 case 5:
-                    return "piątek";
+                    return "Friday";
                 case 6:
-                    return "sobota";
+                    return "Saturday";
                 default:
                     return "error";
             }

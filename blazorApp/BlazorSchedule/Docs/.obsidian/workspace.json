@@ -32,6 +32,18 @@
             }
           },
           {
+            "id": "0dd53df84d9d9f8f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Company.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "a6662503c4059e38",
             "type": "leaf",
             "state": {
@@ -122,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Models and structures.md",
+                "file": "Company.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Models and structures.md",
+                "file": "Company.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Models and structures.md"
+                "file": "Company.md"
               }
             }
           }
@@ -183,11 +195,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a6662503c4059e38",
+  "active": "0dd53df84d9d9f8f",
   "lastOpenFiles": [
     "DevInformation.md",
-    "Models and structures.md",
+    "Company.md",
     "Component Standard.md",
+    "Models and structures.md",
     "State.md"
   ]
 }

@@ -3,19 +3,19 @@
 @inject AppState appState;
 
 @if (errorMessage != null)
-    {
-        <div class="error-message">
-            <p>@errorMessage</p>
-        </div>
-    }
+{
+    <div class="error-message">
+        <p>@errorMessage</p>
+    </div>
+}
 @foreach (var employee in employees)
 {
     <div class="particular-employee">
         <h3 class="name">@employee.name</h3>
         <div class="particular-information">
-            <p class="add-employee-text">Dni wolne</p>
+            <p class="add-employee-text">Days Off</p>
             <input type="text" id="date" class="add-employee-textbox" @bind="employee.SelectedDayOff">
-            <div class="add-day" @onclick='() => AddDate(employee)'>Dodaj</div>
+            <div class="add-day" @onclick='() => AddDate(employee)'>Add</div>
             @if (employee.daysOff != null)
             {
                 @for (int i = 0; i < employee.daysOff.Count; i++)
@@ -32,11 +32,9 @@
                             <div class="subtract-day"><p class="list-days">, @employee.daysOff[i]</p> <div class="add-day" style="width: 30px;" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
                         }
                     </div>
-
                 }
             }
         </div>
-
     </div>
 }
 
@@ -44,6 +42,7 @@
     private string errorMessage;
     private List<Employee> employees;
     private IEmployeesRepository employeesRepository;
+
     protected override void OnInitialized()
     {
         employeesRepository = appState.EmployeesRepository;
@@ -64,7 +63,7 @@
         }
         else
         {
-            errorMessage = "Niepoprawny format daty";
+            errorMessage = "Invalid date format";
         }
     }
 

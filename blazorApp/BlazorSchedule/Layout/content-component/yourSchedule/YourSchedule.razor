@@ -9,7 +9,7 @@
     </div>
 }
 <div class="particular-information">
-    <p class="add-employee-text">Miesiąc</p>
+    <p class="add-employee-text">Month</p>
     <select id="type-of-agreement" class="add-employee-textbox" @bind="month">
         @for (int i = 1; i <= 12; i++)
         {
@@ -19,7 +19,7 @@
 </div>
 
 <div class="particular-information">
-    <p class="add-employee-text">Rok</p>
+    <p class="add-employee-text">Year</p>
     <select id="type-of-agreement" class="add-employee-textbox" @bind="year">
         @for (int i = 2020; i <= 2050; i++)
         {
@@ -29,9 +29,9 @@
 </div>
 
 <div class="particular-information">
-    <p class="add-employee-text">Święta</p>
+    <p class="add-employee-text">Holidays</p>
     <input type="text" class="add-employee-textbox" @bind="holiday">
-    <div class="holiday-button" @onclick='() => AddHoliday(holiday)'>Dodaj</div>
+    <div class="holiday-button" @onclick='() => AddHoliday(holiday)'>Add</div>
     @if (holidays != null)
     {
         @for (int i = 0; i < holidays.Count; i++)
@@ -47,14 +47,13 @@
                     <p class="list-days">, @holidays[i]</p>
                 }
             </div>
-
         }
     }
 </div>
 
 <div class="scheduleContainer">
-    <div class="show-schedule-button" @onclick="MakeScheduleGenerator">Pokaż grafik</div>
-    @* <div class="show-schedule-button" @onclick="MakeSchedule">Pokaż grafik</div> *@
+    <div class="show-schedule-button" @onclick="MakeScheduleGenerator">Show Schedule</div>
+    @* <div class="show-schedule-button" @onclick="MakeSchedule">Show Schedule</div> *@
 </div>
 
 <div class="scheduleContainer">
@@ -69,7 +68,7 @@
                     {
                         <th class="cell">@employee.name</th>
                     }
-                    <th class="cell">Brakuje</th>
+                    <th class="cell">Missing</th>
                 </tr>
 
                 @for (int i = 0; i < NumOfDays; i++)
@@ -98,7 +97,7 @@
         </div>
     }
 
-    @* zrobic zeby bylo widac kto ma ile godzin *@
+    @* make it visible who has how many hours *@
 
     <div class="hoursInfo">
         @foreach (var employee in appState.EmployeesRepository.employees)
@@ -145,7 +144,7 @@
         List<Employee> employees = appState.EmployeesRepository.employees;
 
         int tryCount = 0;
-        int maxTryCount = 2; //numer of try
+        int maxTryCount = 2; //number of tries
         int minBrokenDays = 0;
         string[,] bestSchedule = new string[NumOfDaysInApril, employees.Count + 2];
         while (tryCount < maxTryCount)
@@ -164,7 +163,7 @@
     {
         if (month == 0 || year == 0)
         {
-            errorMessage = "Podaj miesiąc oraz rok";
+            errorMessage = "Provide month and year";
             return;
         }
         else
@@ -231,13 +230,13 @@ Console.WriteLine(employee.realHoursUsed());
         List<int> workingDaysInt = new List<int>();
 
         workingDaysToInt = new Dictionary<string, int>();
-        workingDaysToInt.Add("niedziela", 0);
-        workingDaysToInt.Add("poniedziałek", 1);
-        workingDaysToInt.Add("wtorek", 2);
-        workingDaysToInt.Add("środa", 3);
-        workingDaysToInt.Add("czwartek", 4);
-        workingDaysToInt.Add("piątek", 5);
-        workingDaysToInt.Add("sobota", 6);
+        workingDaysToInt.Add("Sunday", 0);
+        workingDaysToInt.Add("Monday", 1);
+        workingDaysToInt.Add("Tuesday", 2);
+        workingDaysToInt.Add("Wednesday", 3);
+        workingDaysToInt.Add("Thursday", 4);
+        workingDaysToInt.Add("Friday", 5);
+        workingDaysToInt.Add("Saturday", 6);
 
         foreach (var day in appState.CompanyInstance.workingDays)
         {

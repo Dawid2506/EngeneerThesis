@@ -7,23 +7,22 @@
     @if (isPersonInfoVisible)
     {
         <div class="person-info-container">
-            <p class="person-info-text">Imie: @actualEmployee.name</p>
-            <p class="person-info-text">Rodzaj umowy: @actualEmployee.typeOfAgreement</p>
-            <p class="person-info-text">Minimalna ilość godzin: @actualEmployee.minHours</p>
+            <p class="person-info-text">Name: @actualEmployee.name</p>
+            <p class="person-info-text">Type of Agreement: @actualEmployee.typeOfAgreement</p>
+            <p class="person-info-text">Minimum Hours: @actualEmployee.minHours</p>
             <p class="person-info-text">
-                Stanowiska: 
+                Positions: 
                 @foreach (var position in actualEmployee.positions)
                 {
                     <p>@position</p>
                 }
                 </p>
             <div class="manage-person-buttons">
-                <button class="manage-person-button" @onclick="EditPerson">Edytuj</button>
-                <button class="manage-person-button" @onclick="DeletePerson">Usuń</button>
+                <button class="manage-person-button" @onclick="EditPerson">Edit</button>
+                <button class="manage-person-button" @onclick="DeletePerson">Delete</button>
             </div>
         </div>
     }
-
 
     <div class="block-field" @attributes="@BlockRight">
         <div class="particular-block" @onclick="ChangeToAddEmployee">
@@ -31,7 +30,7 @@
                 <Icon Name="IconName.PersonPlus" />
             </div>
             <div>
-                <h2>Dodaj <br> pracownika</h2>
+                <h2>Add <br> Employee</h2>
             </div>
         </div>
         @foreach (var employee in employeeList)

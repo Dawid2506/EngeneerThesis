@@ -8,11 +8,11 @@
 <div>
     <div class="input-field">
         <div class="particular-information">
-            <p class="add-employee-text">Godziny pracy</p>
+            <p class="add-employee-text">Working Hours</p>
             <input type="time" class="choose-hour" @bind="startHourForAll" />
             <input type="time" class="choose-hour" @bind="endHourForAll" />
             <div class="every-day">
-                <p>Dla wszystkich dni</p>
+                <p>For all days</p>
                 <div class="checkbox" @onclick="ToggleCheckbox">
                     @if (isCheckboxChecked)
                     {
@@ -41,10 +41,9 @@
         }
     </div>
 
-    @* <div style="margin-top: 110px;"></div> *@
     <div class="input-field">
         <div class="particular-information">
-            <p class="add-employee-text">Dostosuj stanowiska dla każdego dnia</p>
+            <p class="add-employee-text">Adjust positions for each day</p>
         </div>
         <div class="adjust-hours-per-day">
             @for (int i = 0; i < workingDaysList.Count; i++)
@@ -52,7 +51,7 @@
                 int iIndex = i; // Assign a default value to jIndex
                 <div class="adjust-particular-day-position">
                     <p class="add-employee-text">@workingDaysList[i]</p>
-                    <p class="add-position-text">Dodaj stanowisko</p>
+                    <p class="add-position-text">Add position</p>
                     <div class="align-this">
                         <select class="choose-hour" @bind="position">
                             @for (int j = 0; j < positions.Count; j++)
@@ -86,9 +85,9 @@
     <div class="save-company-info-buttons">
         @if (shift == "first")
         {
-            <button class="save-company-info-button" @onclick="AddShift">Dodaj druga zmianę</button>
+            <button class="save-company-info-button" @onclick="AddShift">Add second shift</button>
         }
-        <button class="save-company-info-button" style="margin-left: 1em;" @onclick="SaveData">Zapisz</button>
+        <button class="save-company-info-button" style="margin-left: 1em;" @onclick="SaveData">Save</button>
     </div>
 </div>
 
@@ -127,8 +126,7 @@
             companyInstance = appState.CompanySecondShift;
         }
 
-
-        //Decode the encoded strings
+        // Decode the encoded strings
         positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
         workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
         position = positions[0];
@@ -174,7 +172,6 @@
             }
         }
     }
-
 
     private void ToggleCheckbox()
     {
@@ -222,16 +219,6 @@
         if (position != null)
         {
             positionsPerDay[workingDaysList[iIndex]].Remove(position);
-            @* Console.WriteLine("---------------------------------------");
-Console.WriteLine("Positions per day:");
-foreach (var day in positionsPerDay)
-{
-Console.WriteLine($"Day: {day.Key}");
-foreach (var position in day.Value)
-{
-Console.WriteLine($"Position: {position}");
-}
-} *@
         }
     }
 
@@ -239,18 +226,17 @@ Console.WriteLine($"Position: {position}");
     {
         SaveData();
 
-        // Przekazanie danych poprzez adres URL
-        var encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
-        var encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
-        var encodedName = Uri.EscapeDataString(name);
+        // Passing data via URL
+        string encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
+        string encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
+        string encodedName = Uri.EscapeDataString(name);
         shift = "second";
         NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
     }
 
-
     private void SaveData()
     {
-        //save the working hours per day
+        // Save the working hours per day
         int iteration = 0;
         bool isChecked = false;
         Dictionary<string, Dictionary<string, string>> myWorkingHoursDay = new Dictionary<string, Dictionary<string, string>>();
@@ -280,20 +266,11 @@ Console.WriteLine($"Position: {position}");
             }
         }
 
-        //companyInstance = appState.CompanyInstance;
-
         companyInstance.workingDays = workingDaysList;
-
         companyInstance.workingHoursDay = myWorkingHoursDay;
-
-        //save the positions per day
         companyInstance.positionsPerDay = positionsPerDay;
-
-        //save the name of the company
         companyInstance.name = name;
-
         companyInstance.positionsList = positions;
-
         companyInstance.isCheckboxChecked = isChecked;
 
         if (shift == "first")
@@ -305,7 +282,7 @@ Console.WriteLine($"Position: {position}");
             appState.CompanySecondShift = companyInstance;
         }
 
-        //check if the data is saved correctly
+        // Check if the data is saved correctly
         Console.WriteLine("-------------------first shift--------------------");
         Console.WriteLine("Positions per day:");
         foreach (var day in appState.CompanyInstance.positionsPerDay)
@@ -317,7 +294,6 @@ Console.WriteLine($"Position: {position}");
             }
         }
 
-
         Console.WriteLine("-------------------second shift--------------------");
         Console.WriteLine("Positions per day:");
         foreach (var day in appState.CompanySecondShift.positionsPerDay)
@@ -328,22 +304,6 @@ Console.WriteLine($"Position: {position}");
                 Console.WriteLine($"Position: {position}");
             }
         }
-
-        @* //check if the data is saved correctly
-foreach (var day in myWorkingHoursDay)
-{
-Console.WriteLine($"Day: {day.Key}");
-foreach (var workingHours in day.Value)
-{
-Console.WriteLine($"Start Hour: {workingHours.Key}");
-Console.WriteLine($"End Hour: {workingHours.Value}");
-}
-}
-
-foreach (var positon in companyInstance.positionsList)
-{
-Console.WriteLine($"Position: {positon}");
-} *@
 
         NavigationManager.NavigateTo($"/company-information");
     }

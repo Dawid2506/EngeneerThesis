@@ -1,9 +1,9 @@
-@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}/{shift}";
-@inject NavigationManager NavigationManager;
+@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}/{shift}"
+@inject NavigationManager NavigationManager
 @using BlazorBootstrap
-@using System.Text.Json;
-@using System.Collections.Generic;
-@inject AppState appState;
+@using System.Text.Json
+@using System.Collections.Generic
+@inject AppState appState
 
 <div>
     <div class="input-field">
@@ -48,7 +48,7 @@
         <div class="adjust-hours-per-day">
             @for (int i = 0; i < workingDaysList.Count; i++)
             {
-                int iIndex = i; // Assign a default value to jIndex
+                int iIndex = i;
                 <div class="adjust-particular-day-position">
                     <p class="add-employee-text">@workingDaysList[i]</p>
                     <p class="add-position-text">Add position</p>
@@ -83,7 +83,7 @@
     </div>
 
     <div class="save-company-info-buttons">
-        @if (shift == "first")
+        @if (shift == ShiftType.First)
         {
             <button class="save-company-info-button" @onclick="AddShift">Add second shift</button>
         }
@@ -93,82 +93,80 @@
 
 @code {
     [Parameter]
-    public string name { get; set; }
+    public string? name { get; set; }
     [Parameter]
-    public string shift { get; set; }
-    public List<string> positions { get; set; }
-    public List<string> workingDaysList { get; set; }
+    public ShiftType shift { get; set; } = ShiftType.First;
+    public List<string> positions { get; set; } = new List<string>();
+    public List<string> workingDaysList { get; set; } = new List<string>();
 
     [Parameter]
-    public string encodedPositions { get; set; }
+    public string? encodedPositions { get; set; }
 
     [Parameter]
-    public string encodedWorkingDaysList { get; set; }
+    public string? encodedWorkingDaysList { get; set; }
 
     private bool isCheckboxChecked = true;
     private List<DateTime> startHours { get; set; } = new List<DateTime>();
     private List<DateTime> endHours { get; set; } = new List<DateTime>();
-    private Dictionary<DateTime, DateTime> workingHours { get; set; }
-    private Dictionary<string, List<string>> positionsPerDay { get; set; }
-    private string position { get; set; }
+    private Dictionary<DateTime, DateTime> workingHours { get; set; } = new Dictionary<DateTime, DateTime>();
+    private Dictionary<string, List<string>> positionsPerDay { get; set; } = new Dictionary<string, List<string>>();
+    private string? position { get; set; }
     public DateTime startHourForAll { get; set; }
     public DateTime endHourForAll { get; set; }
-    public Company companyInstance;
+    public Company? companyInstance;
+
+    public enum ShiftType
+    {
+        First,
+        Second
+    }
 
     protected override void OnInitialized()
     {
-        if (shift == "first")
+        if (shift == ShiftType.First)
         {
             companyInstance = appState.CompanyInstance;
         }
-        else if (shift == "second")
+        else if (shift == ShiftType.Second)
         {
             companyInstance = appState.CompanySecondShift;
         }
 
-        // Decode the encoded strings
-        positions = JsonSerializer.Deserialize<List<string>>(encodedPositions);
-        workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList);
-        position = positions[0];
+        positions = JsonSerializer.Deserialize<List<string>>(encodedPositions ?? "[]") ?? new List<string>();
+        workingDaysList = JsonSerializer.Deserialize<List<string>>(encodedWorkingDaysList ?? "[]") ?? new List<string>();
+        position = positions.FirstOrDefault();
 
-        // Initialize startHours and endHours lists with default values
+        positionsPerDay = new Dictionary<string, List<string>>();
+
         for (int i = 0; i < workingDaysList.Count; i++)
         {
             startHours.Add(DateTime.MinValue);
             endHours.Add(DateTime.MinValue);
-        }
-
-        positionsPerDay = new Dictionary<string, List<string>>();
-
-        // Initialize the dictionary with empty lists for each working day
-        foreach (var day in workingDaysList)
-        {
-            positionsPerDay.Add(day, new List<string>());
+            positionsPerDay.Add(workingDaysList[i], new List<string>());
         }
     }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        if (companyInstance.workingHoursDay != null)
-        {
-            positionsPerDay = companyInstance.positionsPerDay;
-        }
 
-        if (companyInstance.workingHoursDay != null)
+        if (companyInstance?.workingHoursDay == null) return;
+
+        positionsPerDay = companyInstance.positionsPerDay;
+
+        if (companyInstance.isCheckboxChecked)
         {
-            if (companyInstance.isCheckboxChecked)
+            startHourForAll = DateTime.Parse(companyInstance.workingHoursDay.Values.First().Keys.First());
+            endHourForAll = DateTime.Parse(companyInstance.workingHoursDay.Values.First().Values.First());
+        }
+        else
+        {
+            foreach (var day in companyInstance.workingHoursDay)
             {
-                startHourForAll = DateTime.Parse(companyInstance.workingHoursDay.Values.First().Keys.First());
-                endHourForAll = DateTime.Parse(companyInstance.workingHoursDay.Values.First().Values.First());
-            }
-            else
-            {
-                foreach (var day in companyInstance.workingHoursDay)
-                {
-                    startHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Keys.First());
-                    endHours[workingDaysList.IndexOf(day.Key)] = DateTime.Parse(day.Value.Values.First());
-                }
+                var index = workingDaysList.IndexOf(day.Key);
+
+                startHours[index] = DateTime.Parse(day.Value.Keys.First());
+                endHours[index] = DateTime.Parse(day.Value.Values.First());
             }
         }
     }
@@ -182,129 +180,86 @@
     {
         if (isStartTime)
         {
-            // Update the startHour list with the selected start time for the specified day
             startHours[workingDaysList.IndexOf(day)] = startHour;
-            Console.WriteLine(startHours[workingDaysList.IndexOf(day)].TimeOfDay);
         }
         else
         {
-            // Update the endHour list with the selected end time for the specified day
             endHours[workingDaysList.IndexOf(day)] = endHour;
-            Console.WriteLine(endHours[workingDaysList.IndexOf(day)].TimeOfDay);
         }
     }
 
     private void AddPosition(int iIndex)
     {
-        Console.WriteLine(iIndex);
-        if (position != null)
-        {
-            positionsPerDay[workingDaysList[iIndex]].Add(position);
-            Console.WriteLine("---------------------------------------");
-            Console.WriteLine("Positions per day:");
-            foreach (var day in positionsPerDay)
-            {
-                Console.WriteLine($"Day: {day.Key}");
-                foreach (var position in day.Value)
-                {
-                    Console.WriteLine($"Position: {position}");
-                }
-            }
-        }
+        if (position == null) return;
+
+        positionsPerDay[workingDaysList[iIndex]].Add(position);
     }
 
     private void RemovePosition(int iIndex)
     {
-        Console.WriteLine("index: " + iIndex);
-        if (position != null)
-        {
-            positionsPerDay[workingDaysList[iIndex]].Remove(position);
-        }
+        if (position == null) return;
+        positionsPerDay[workingDaysList[iIndex]].Remove(position);
     }
 
     private void AddShift()
     {
         SaveData();
 
-        // Passing data via URL
-        string encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions));
-        string encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList));
-        string encodedName = Uri.EscapeDataString(name);
-        shift = "second";
+        string encodedPositions = Uri.EscapeDataString(JsonSerializer.Serialize(positions ?? new List<string>()));
+        string encodedWorkingDaysList = Uri.EscapeDataString(JsonSerializer.Serialize(workingDaysList ?? new List<string>()));
+        string encodedName = Uri.EscapeDataString(name ?? string.Empty);
+        shift = ShiftType.Second;
         NavigationManager.NavigateTo($"/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{encodedName}/{shift}");
     }
 
     private void SaveData()
     {
         // Save the working hours per day
-        int iteration = 0;
-        bool isChecked = false;
         Dictionary<string, Dictionary<string, string>> myWorkingHoursDay = new Dictionary<string, Dictionary<string, string>>();
+
         if (isCheckboxChecked)
         {
+            string startHour = startHourForAll.TimeOfDay.ToString();
+            string endHour = endHourForAll.TimeOfDay.ToString();
+
             foreach (var day in workingDaysList)
             {
                 Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
-                string startHour = startHourForAll.TimeOfDay.ToString();
-                string endHour = endHourForAll.TimeOfDay.ToString();
                 myWorkingHours.Add(startHour, endHour);
                 myWorkingHoursDay.Add(day, myWorkingHours);
-                isChecked = true;
             }
         }
         else
         {
-            foreach (var day in workingDaysList)
+            for (int i = 0; i < workingDaysList.Count; i++)
             {
+                string startHour = startHours[i].TimeOfDay.ToString();
+                string endHour = endHours[i].TimeOfDay.ToString();
+
                 Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
-                string startHour = startHours[iteration].TimeOfDay.ToString();
-                string endHour = endHours[iteration].TimeOfDay.ToString();
                 myWorkingHours.Add(startHour, endHour);
-                myWorkingHoursDay.Add(day, myWorkingHours);
-                iteration++;
-                isChecked = false;
+                myWorkingHoursDay.Add(workingDaysList[i], myWorkingHours);
             }
         }
+
+        if(companyInstance == null || name == null) return;
 
         companyInstance.workingDays = workingDaysList;
         companyInstance.workingHoursDay = myWorkingHoursDay;
         companyInstance.positionsPerDay = positionsPerDay;
         companyInstance.name = name;
         companyInstance.positionsList = positions;
-        companyInstance.isCheckboxChecked = isChecked;
+        companyInstance.isCheckboxChecked = isCheckboxChecked;
 
-        if (shift == "first")
+        if (shift == ShiftType.First)
         {
             appState.CompanyInstance = companyInstance;
         }
-        else if (shift == "second")
+        else if (shift == ShiftType.Second)
         {
             appState.CompanySecondShift = companyInstance;
         }
 
-        // Check if the data is saved correctly
-        Console.WriteLine("-------------------first shift--------------------");
-        Console.WriteLine("Positions per day:");
-        foreach (var day in appState.CompanyInstance.positionsPerDay)
-        {
-            Console.WriteLine($"Day: {day.Key}");
-            foreach (var position in day.Value)
-            {
-                Console.WriteLine($"Position: {position}");
-            }
-        }
-
-        Console.WriteLine("-------------------second shift--------------------");
-        Console.WriteLine("Positions per day:");
-        foreach (var day in appState.CompanySecondShift.positionsPerDay)
-        {
-            Console.WriteLine($"Day: {day.Key}");
-            foreach (var position in day.Value)
-            {
-                Console.WriteLine($"Position: {position}");
-            }
-        }
-
-        NavigationManager.NavigateTo($"/company-information");
+        NavigationManager.NavigateTo("/company-information");
     }
 }

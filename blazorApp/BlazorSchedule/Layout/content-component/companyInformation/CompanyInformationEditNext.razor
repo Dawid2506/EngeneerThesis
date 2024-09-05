@@ -1,19 +1,20 @@
-@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}/{shift}"
+@page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}"
 @inject NavigationManager NavigationManager
 @using BlazorBootstrap
 @using System.Text.Json
 @using System.Collections.Generic
+@using YourBlazorProject.Models
 @inject AppState appState
 
 <div>
-    <div class="input-field">
-        <div class="particular-information">
-            <p class="add-employee-text">Working Hours</p>
-            <input type="time" class="choose-hour" @bind="startHourForAll" />
-            <input type="time" class="choose-hour" @bind="endHourForAll" />
-            <div class="every-day">
+    <div class="w-[600px]">
+        <div class="flex p-8 justify-start items-center">
+            <p class="text-xl ml-auto pt-2">Working Hours</p>
+            <input type="time" class="ml-4 bg-[#661D15] border border-black shadow-md text-white" @bind="startHourForAll" />
+            <input type="time" class="ml-4 bg-[#661D15] border border-black shadow-md text-white" @bind="endHourForAll" />
+            <div class="flex flex-col ml-4 justify-start items-center">
                 <p>For all days</p>
-                <div class="checkbox" @onclick="ToggleCheckbox">
+                <div class="w-5 h-5 bg-[#661D15] border border-black flex items-center justify-center text-lg" @onclick="ToggleCheckbox">
                     @if (isCheckboxChecked)
                     {
                         <Icon Name="IconName.Check" />
@@ -23,16 +24,16 @@
         </div>
         @if (!isCheckboxChecked)
         {
-            <div class="adjust-hours-per-day">
+            <div class="flex items-center w-auto overflow-x-auto pr-4">
                 @for (int i = 0; i < workingDaysList.Count; i++)
                 {
                     int index = i;
-                    <div class="adjust-particular-day-hour">
-                        <p class="add-employee-text">@workingDaysList[i]</p>
-                        <div style="display: flex;">
-                            <input type="time" class="choose-hour" @bind="startHours[index]"
+                    <div class="w-[230px] h-[100px] bg-[#661D15] ml-4 text-center rounded-lg shadow-md mb-4 pr-4">
+                        <p class="text-xl ml-auto pt-2">@workingDaysList[i]</p>
+                        <div class="flex">
+                            <input type="time" class="ml-4 bg-[#661D15] border border-black shadow-md text-white" @bind="startHours[index]"
                                 @oninput="@(e => UpdateWorkingHours(workingDaysList[index], startHours[index], endHours[index], true))" />
-                            <input type="time" class="choose-hour" @bind="endHours[index]"
+                            <input type="time" class="ml-4 bg-[#661D15] border border-black shadow-md text-white" @bind="endHours[index]"
                                 @oninput="@(e => UpdateWorkingHours(workingDaysList[index], startHours[index], endHours[index], false))" />
                         </div>
                     </div>
@@ -41,36 +42,36 @@
         }
     </div>
 
-    <div class="input-field">
-        <div class="particular-information">
-            <p class="add-employee-text">Adjust positions for each day</p>
+    <div class="">
+        <div class="flex p-8 justify-start items-center">
+            <p class="text-xl ml-auto pt-2">Adjust positions for each day</p>
         </div>
-        <div class="adjust-hours-per-day">
+        <div class="flex items-center w-auto overflow-x-auto pr-4">
             @for (int i = 0; i < workingDaysList.Count; i++)
             {
                 int iIndex = i;
-                <div class="adjust-particular-day-position">
-                    <p class="add-employee-text">@workingDaysList[i]</p>
-                    <p class="add-position-text">Add position</p>
-                    <div class="align-this">
-                        <select class="choose-hour" @bind="position">
+                <div class="min-w-[200px] bg-[#661D15] ml-4 text-center p-4 rounded-lg shadow-md mb-4">
+                    <p class="text-xl ml-auto pt-2">@workingDaysList[i]</p>
+                    <p class="text-xs">Add position</p>
+                    <div class="flex justify-center items-center">
+                        <select class="ml-4 bg-[#661D15] border border-black shadow-md text-white" @bind="position">
                             @for (int j = 0; j < positions.Count; j++)
                             {
                                 <option value="@positions[j]">@positions[j]</option>
                             }
                         </select>
-                        <div class="add-position-button" @onclick='() => AddPosition(iIndex)'>
+                        <div class="w-8 h-8 bg-[#661D15] ml-1 flex justify-center items-center text-white text-base rounded border border-black shadow-md cursor-pointer pt-1" @onclick='() => AddPosition(iIndex)'>
                             <Icon Name="IconName.FilePlus" />
                         </div>
                     </div>
-                    <div class="displayPositions">
+                    <div>
                         @if (positionsPerDay.ContainsKey(workingDaysList[i]))
                         {
                             @foreach (var position in positionsPerDay[workingDaysList[i]])
                             {
-                                <div class="align-this">
+                                <div class="flex justify-center items-center">
                                     <p>@position</p>
-                                    <div class="add-position-button" @onclick='() => RemovePosition(iIndex)'>
+                                    <div class="w-8 h-8 bg-[#661D15] ml-1 flex justify-center items-center text-white text-base rounded border border-black shadow-md cursor-pointer pt-1" @onclick='() => RemovePosition(iIndex)'>
                                         <Icon Name="IconName.FileMinus" />
                                     </div>
                                 </div>
@@ -82,12 +83,12 @@
         </div>
     </div>
 
-    <div class="save-company-info-buttons">
-        @if (shift == ShiftType.First)
+    <div class="flex justify-end pr-12 pb-12 w-full">
+        @* @if (shift == ShiftType.First)
         {
-            <button class="save-company-info-button" @onclick="AddShift">Add second shift</button>
-        }
-        <button class="save-company-info-button" style="margin-left: 1em;" @onclick="SaveData">Save</button>
+            <button class="text-white w-[10em] h-[4em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="AddShift">Add second shift</button>
+        } *@
+        <button class="text-white w-[10em] h-[4em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95 ml-4" @onclick="SaveData">Save</button>
     </div>
 </div>
 
@@ -95,7 +96,7 @@
     [Parameter]
     public string? name { get; set; }
     [Parameter]
-    public ShiftType shift { get; set; } = ShiftType.First;
+    public ShiftType shift { get; set; }
     public List<string> positions { get; set; } = new List<string>();
     public List<string> workingDaysList { get; set; } = new List<string>();
 
@@ -114,12 +115,6 @@
     public DateTime startHourForAll { get; set; }
     public DateTime endHourForAll { get; set; }
     public Company? companyInstance;
-
-    public enum ShiftType
-    {
-        First,
-        Second
-    }
 
     protected override void OnInitialized()
     {

@@ -3,27 +3,19 @@
 @using Microsoft.AspNetCore.Components;
 @inject AppState appState;
 
-<div class="buttons">
-    <div class="button" @onclick="SavaAllData">Save data</div>
-    <div class="button" @onclick="LoadAllData">Load data</div>
-    <div class="button" @onclick="ReadData">read</div>
-    <input type="text" id="date" class="add-employee-textbox" @bind="employeeData">
-    <input type="text" id="date" class="add-employee-textbox" @bind="companyData">
+<div class="flex items-center mt-8">
+    <div class="ml-4 flex justify-center items-center text-white w-40 h-16 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="SavaAllData">Save data</div>
+    <div class="ml-4 flex justify-center items-center text-white w-40 h-16 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="LoadAllData">Load data</div>
+    <div class="ml-4 flex justify-center items-center text-white w-40 h-16 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="ReadData">read</div>
+    <input type="text" id="date" class="ml-4 rounded-lg text-black" @bind="employeeData">
+    <input type="text" id="date" class="ml-4 rounded-lg text-black" @bind="companyData">
 </div>
-
 
 @code {
     string employeeData;
     string companyData;
     Company companyInstance;
     EmployeesRepository employeesRepository;
-
-    @* protected void OnInitialized()
-{
-companyInstance = appState.CompanyInstance;
-employeesRepository = appState.EmployeesRepository;
-Console.WriteLine(companyInstance.name);
-} *@
 
     protected override async Task OnInitializedAsync()
     {

@@ -3,30 +3,30 @@
 @inject NavigationManager NavigationManager
 @inject AppState appState;
 
-<div class="add-employee-menu-container">
+<div class="flex flex-col">
     @if (isPersonInfoVisible)
     {
-        <div class="person-info-container">
-            <p class="person-info-text">Name: @actualEmployee.name</p>
-            <p class="person-info-text">Type of Agreement: @actualEmployee.typeOfAgreement</p>
-            <p class="person-info-text">Minimum Hours: @actualEmployee.minHours</p>
-            <p class="person-info-text">
+        <div class="h-screen w-[350px] bg-[#551811] flex flex-col fixed pt-4">
+            <p class="px-4">Name: @actualEmployee.name</p>
+            <p class="px-4">Type of Agreement: @actualEmployee.typeOfAgreement</p>
+            <p class="px-4">Minimum Hours: @actualEmployee.minHours</p>
+            <p class="px-4">
                 Positions: 
                 @foreach (var position in actualEmployee.positions)
                 {
                     <p>@position</p>
                 }
-                </p>
-            <div class="manage-person-buttons">
-                <button class="manage-person-button" @onclick="EditPerson">Edit</button>
-                <button class="manage-person-button" @onclick="DeletePerson">Delete</button>
+            </p>
+            <div class="flex flex-row justify-around mt-4">
+                <button class="bg-[#661D15] text-white border-none px-4 py-2 rounded-lg text-base cursor-pointer" @onclick="EditPerson">Edit</button>
+                <button class="bg-[#661D15] text-white border-none px-4 py-2 rounded-lg text-base cursor-pointer" @onclick="DeletePerson">Delete</button>
             </div>
         </div>
     }
 
-    <div class="block-field" @attributes="@BlockRight">
-        <div class="particular-block" @onclick="ChangeToAddEmployee">
-            <div class="add-employee-icon">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 @(isPersonInfoVisible ? "pl-[350px]" : "")">
+        <div class="w-[300px] h-[200px] bg-[#661D15] mt-6 ml-6 rounded-2xl shadow-md flex flex-row justify-center items-center transition-transform duration-300 ease-in-out hover:bg-[#551811] hover:scale-110" @onclick="ChangeToAddEmployee">
+            <div class="text-4xl pr-2">
                 <Icon Name="IconName.PersonPlus" />
             </div>
             <div>
@@ -35,8 +35,8 @@
         </div>
         @foreach (var employee in employeeList)
         {
-            <div class="particular-block" @onclick="() => TogglePersonInfoContainer(employee.name)">
-                <p class="employee-name-block">@employee.name</p>
+            <div class="w-[300px] h-[200px] bg-[#661D15] mt-6 ml-6 rounded-2xl shadow-md flex flex-row justify-center items-center transition-transform duration-300 ease-in-out hover:bg-[#551811] hover:scale-110" @onclick="() => TogglePersonInfoContainer(employee.name)">
+                <p class="text-4xl">@employee.name</p>
             </div>
         }
     </div>
@@ -87,3 +87,11 @@
         isPersonInfoVisible = false;
     }
 }
+
+<style>
+.block-field{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+}
+</style>

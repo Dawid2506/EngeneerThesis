@@ -4,13 +4,13 @@
 
 @if (errorMessage != null)
 {
-    <div class="error-message">
+    <div class="bg-[#661D15] text-red-500 text-2xl w-[1000px] h-[100px] flex items-center justify-center ml-8 mt-8">
         <p>@errorMessage</p>
     </div>
 }
-<div class="particular-information">
-    <p class="add-employee-text">Month</p>
-    <select id="type-of-agreement" class="add-employee-textbox" @bind="month">
+<div class="flex p-8 justify-start items-center">
+    <p class="text-xl">Month</p>
+    <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="month">
         @for (int i = 1; i <= 12; i++)
         {
             <option value="@i">@i</option>
@@ -18,9 +18,9 @@
     </select>
 </div>
 
-<div class="particular-information">
-    <p class="add-employee-text">Year</p>
-    <select id="type-of-agreement" class="add-employee-textbox" @bind="year">
+<div class="flex p-8 justify-start items-center">
+    <p class="text-xl">Year</p>
+    <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="year">
         @for (int i = 2020; i <= 2050; i++)
         {
             <option value="@i">@i</option>
@@ -28,10 +28,10 @@
     </select>
 </div>
 
-<div class="particular-information">
-    <p class="add-employee-text">Holidays</p>
-    <input type="text" class="add-employee-textbox" @bind="holiday">
-    <div class="holiday-button" @onclick='() => AddHoliday(holiday)'>Add</div>
+<div class="flex p-8 justify-start items-center">
+    <p class="text-xl">Holidays</p>
+    <input type="text" class="ml-4 rounded-lg text-black" @bind="holiday">
+    <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => AddHoliday(holiday)'>Add</div>
     @if (holidays != null)
     {
         @for (int i = 0; i < holidays.Count; i++)
@@ -39,36 +39,35 @@
             <div>
                 @if (i == 0)
                 {
-                    <p class="list-days">&nbsp;&nbsp;@holidays[i]</p>
+                    <p class="text-lg">&nbsp;&nbsp;@holidays[i]</p>
                     //&nbsp; - non-breaking space
                 }
                 else if (i > 0)
                 {
-                    <p class="list-days">, @holidays[i]</p>
+                    <p class="text-lg">, @holidays[i]</p>
                 }
             </div>
         }
     }
 </div>
 
-<div class="scheduleContainer">
-    <div class="show-schedule-button" @onclick="MakeScheduleGenerator">Show Schedule</div>
-    @* <div class="show-schedule-button" @onclick="MakeSchedule">Show Schedule</div> *@
+<div class="flex flex-row">
+    <div class="ml-4 mt-4 flex justify-center items-center text-white w-40 h-16 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="MakeScheduleGenerator">Show Schedule</div>
 </div>
 
-<div class="scheduleContainer">
+<div class="flex flex-row">
     @if (scheduleIsVisible)
     {
-        <div class="schedule">
-            <table>
+        <div class="m-4">
+            <table class="border-collapse border border-black">
                 <tr>
-                    <th class="cell"></th>
-                    <th class="cell">@month.@year</th>
+                    <th class="text-center border border-black"></th>
+                    <th class="text-center border border-black">@month.@year</th>
                     @foreach (var employee in appState.EmployeesRepository.employees)
                     {
-                        <th class="cell">@employee.name</th>
+                        <th class="text-center border border-black">@employee.name</th>
                     }
-                    <th class="cell">Missing</th>
+                    <th class="text-center border border-black">Missing</th>
                 </tr>
 
                 @for (int i = 0; i < NumOfDays; i++)
@@ -76,30 +75,19 @@
                     int day = i + 1;
                     string rowStyle = daysToColor.Contains(day) ? "background-color: red;" : "";
                     <tr style="@rowStyle">
-                        <th class="cell">@day</th>
+                        <th class="text-center border border-black">@day</th>
                         @for (int j = 0; j < appState.EmployeesRepository.employees.Count + 1; j++)
                         {
-                            <td class="cell">@appState.schedule.schedule[i, j + 1]</td>
-                            //Console.WriteLine(i + "," + numOfEmployee + "="+appState.schedule.schedule[i, numOfEmployee]);
+                            <td class="text-center border border-black">@appState.schedule.schedule[i, j + 1]</td>
                         }
-                        <td class="cell">@GetListAsString(i + 1, appState.schedule.brokenDaysPositions)</td>
-                        @* @if (!appState.schedule.brokenDaysPositions[i].IsNullOrEmpty())
-                {
-                <td class="cell">hey</td>
-                }
-                else
-                {
-                <td class="cell">hoo</td>
-                } *@
+                        <td class="text-center border border-black">@GetListAsString(i + 1, appState.schedule.brokenDaysPositions)</td>
                     </tr>
                 }
             </table>
         </div>
     }
 
-    @* make it visible who has how many hours *@
-
-    <div class="hoursInfo">
+    <div class="pl-8">
         @foreach (var employee in appState.EmployeesRepository.employees)
         {
             string stylee = employee.realHoursUsed() < employee.minHours ? "background-color: red;" : "";
@@ -110,7 +98,6 @@
         }
     </div>
 </div>
-
 
 @code {
     private int holiday;
@@ -171,9 +158,6 @@
             errorMessage = null;
         }
 
-        //Console.WriteLine("month");
-        //Console.WriteLine(month);
-
         DateTime date = new DateTime(year, month, 1);
         DateTime firstDayOfApril = new DateTime(date.Year, date.Month, 1);
         DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
@@ -195,25 +179,10 @@
         appState.schedule.month = month.ToString();
         appState.schedule.year = year.ToString();
 
-        //Console.WriteLine("printing");
-        //appState.schedule.PrintAllSchedule();
-
         scheduleIsVisible = true;
         NumOfDays = NumOfDaysInApril;
 
         daysToColor = appState.schedule.brokenDays;
-
-        @* Console.WriteLine("broken days");
-foreach (var day in daysToColor)
-{
-Console.WriteLine(day);
-}
-
-foreach (var employee in employees)
-{
-Console.WriteLine(employee.name);
-Console.WriteLine(employee.realHoursUsed());
-} *@
     }
 
     private string GetListAsString(int key, Dictionary<int, List<string>> brokenDaysPositions)

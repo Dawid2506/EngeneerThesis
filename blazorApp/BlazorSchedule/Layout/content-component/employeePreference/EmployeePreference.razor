@@ -4,18 +4,18 @@
 
 @if (errorMessage != null)
 {
-    <div class="error-message">
+    <div class="bg-[#661D15] text-red-500 text-2xl w-[1000px] h-[100px] flex items-center justify-center ml-8 mt-8">
         <p>@errorMessage</p>
     </div>
 }
 @foreach (var employee in employees)
 {
     <div class="particular-employee">
-        <h3 class="name">@employee.name</h3>
-        <div class="particular-information">
-            <p class="add-employee-text">Days Off</p>
-            <input type="text" id="date" class="add-employee-textbox" @bind="employee.SelectedDayOff">
-            <div class="add-day" @onclick='() => AddDate(employee)'>Add</div>
+        <h3 class="ml-4 mt-4 font-bold">@employee.name</h3>
+        <div class="flex justify-start items-center p-8">
+            <p class="text-xl">Days Off</p> <!-- Removed ml-auto -->
+            <input type="text" id="date" class="w-16 ml-4 rounded-lg text-black" @bind="employee.SelectedDayOff">
+            <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => AddDate(employee)'>Add</div>
             @if (employee.daysOff != null)
             {
                 @for (int i = 0; i < employee.daysOff.Count; i++)
@@ -24,12 +24,12 @@
                     <div>
                         @if (i == 0)
                         {
-                            <div class="subtract-day"><p class="list-days">&nbsp;&nbsp;@employee.daysOff[i]</p> <div class="add-day" style="width: 30px;" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
+                            <div class="flex justify-center items-center flex-row"><p class="text-lg">&nbsp;&nbsp;@employee.daysOff[i]</p> <div class="ml-4 flex justify-center items-center text-white w-8 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
                             //&nbsp; - non-breaking space
                         }
                         else if (i > 0)
                         {
-                            <div class="subtract-day"><p class="list-days">, @employee.daysOff[i]</p> <div class="add-day" style="width: 30px;" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
+                            <div class="flex justify-center items-center flex-row"><p class="text-lg">, @employee.daysOff[i]</p> <div class="ml-4 flex justify-center items-center text-white w-8 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
                         }
                     </div>
                 }

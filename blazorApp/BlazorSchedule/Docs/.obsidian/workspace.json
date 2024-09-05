@@ -67,8 +67,7 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -134,7 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Company.md",
+                "file": "Component Standard.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +150,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Company.md",
+                "file": "Component Standard.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +173,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Company.md"
+                "file": "Component Standard.md"
               }
             }
           }
@@ -195,10 +194,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0dd53df84d9d9f8f",
+  "active": "6d872f95905cfca0",
   "lastOpenFiles": [
-    "Component Standard.md",
     "Company.md",
+    "Component Standard.md",
     "Models and structures.md",
     "State.md",
     "DevInformation.md"

@@ -22,3 +22,6 @@
 
 ## Company structure
 [[Company]]
+
+## General principles
+[[GeneralGuidelines]]

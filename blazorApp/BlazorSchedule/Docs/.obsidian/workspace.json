@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Company.md",
+                "file": "GeneralGuidelines.md",
                 "mode": "source",
                 "source": false
               }
@@ -68,7 +68,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -195,12 +195,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "98c55befdff8507e",
+  "active": "0dd53df84d9d9f8f",
   "lastOpenFiles": [
     "DevInformation.md",
-    "Component Standard.md",
-    "Company.md",
+    "GeneralGuidelines.md",
     "Models and structures.md",
-    "State.md"
+    "Company.md",
+    "State.md",
+    "Component Standard.md"
   ]
 }

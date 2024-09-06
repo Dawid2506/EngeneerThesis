@@ -3,6 +3,7 @@
 @using YourBlazorProject.Models
 @inject NavigationManager NavigationManager
 @inject AppState appState
+@using System.Collections.Generic;
 
 <div>
     <div class="h-screen w-[350px] bg-[#551811] flex flex-col fixed pt-4 overflow-y-auto">
@@ -34,49 +35,3 @@
         <button class="common-button" @onclick="EditInformation">Edit information</button>
     </div>
 </div>
-
-@code {
-    private Company companyInstance = new Company();
-    private string? companyName { get; set; }
-    private Dictionary<string, Dictionary<string, string>> workingHoursDay = new();
-    private Dictionary<string, List<string>> positionsPerDay = new();
-
-    protected override void OnInitialized()
-    {
-        companyInstance = appState.CompanyInstance;
-        companyName = companyInstance.name;
-        workingHoursDay = companyInstance.workingHoursDay;
-        positionsPerDay = companyInstance.positionsPerDay;
-    }
-
-    private void EditInformation()
-    {
-        NavigationManager.NavigateTo("/company-information-edit");
-    }
-
-    private bool IsNotNullCompanyInfo()
-    {
-        return !string.IsNullOrEmpty(companyName) && workingHoursDay != null && positionsPerDay != null;
-    }
-
-    private List<DayInfo> GetWorkingHoursWithPositions()
-    {
-        List<DayInfo> dayInfoList = new List<DayInfo>();
-
-        foreach (KeyValuePair<string, Dictionary<string, string>> workingHoursEntry in workingHoursDay)
-        {
-            string day = workingHoursEntry.Key;
-            string workingHours = $"{workingHoursEntry.Value.First().Key} - {workingHoursEntry.Value.First().Value}";
-            List<string> positions = positionsPerDay.ContainsKey(day) ? positionsPerDay[day] : new List<string>();
-
-            dayInfoList.Add(new DayInfo
-            {
-                Day = day,
-                WorkingHours = workingHours,
-                Positions = positions
-            });
-        }
-
-        return dayInfoList;
-    }
-}

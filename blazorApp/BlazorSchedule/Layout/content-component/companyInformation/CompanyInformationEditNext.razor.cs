@@ -74,9 +74,9 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
             }
             else
             {
-                foreach (var day in companyInstance.workingHoursDay)
+                foreach (KeyValuePair<string, Dictionary<string, string>> day in companyInstance.workingHoursDay)
                 {
-                    var index = workingDaysList.IndexOf(day.Key);
+                    int index = workingDaysList.IndexOf(day.Key);
 
                     startHours[index] = DateTime.Parse(day.Value.Keys.First());
                     endHours[index] = DateTime.Parse(day.Value.Values.First());
@@ -135,7 +135,7 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
                 string startHour = startHourForAll.TimeOfDay.ToString();
                 string endHour = endHourForAll.TimeOfDay.ToString();
 
-                foreach (var day in workingDaysList)
+                foreach (string day in workingDaysList)
                 {
                     Dictionary<string, string> myWorkingHours = new Dictionary<string, string>();
                     myWorkingHours.Add(startHour, endHour);

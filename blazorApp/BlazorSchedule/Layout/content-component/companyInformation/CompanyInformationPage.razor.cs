@@ -10,10 +10,10 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
 {
     public partial class CompanyInformationPage
     {
-        private Company companyInstance = new Company();
+        private Company companyInstance { get; set; } = new Company();
         private string? companyName { get; set; }
-        private Dictionary<string, Dictionary<string, string>> workingHoursDay = new();
-        private Dictionary<string, List<string>> positionsPerDay = new();
+        private Dictionary<string, Dictionary<string, string>> workingHoursDay { get; set; } = new();
+        private Dictionary<string, List<string>> positionsPerDay { get; set; } = new();
 
         protected override void OnInitialized()
         {

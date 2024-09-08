@@ -67,7 +67,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -133,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Component Standard.md",
+                "file": "GeneralGuidelines.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Component Standard.md",
+                "file": "GeneralGuidelines.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -173,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Component Standard.md"
+                "file": "GeneralGuidelines.md"
               }
             }
           }
@@ -194,10 +195,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6d872f95905cfca0",
+  "active": "98c55befdff8507e",
   "lastOpenFiles": [
-    "GeneralGuidelines.md",
     "Component Standard.md",
+    "GeneralGuidelines.md",
     "prompt.md",
     "Company.md",
     "State.md",

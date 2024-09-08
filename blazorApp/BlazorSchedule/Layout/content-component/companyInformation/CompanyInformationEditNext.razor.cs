@@ -32,7 +32,7 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
         private string? position { get; set; }
         public DateTime startHourForAll { get; set; }
         public DateTime endHourForAll { get; set; }
-        public Company? companyInstance;
+        public Company? companyInstance { get; set; }
 
         protected override void OnInitialized()
         {

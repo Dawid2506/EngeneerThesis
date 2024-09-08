@@ -9,14 +9,14 @@ namespace BlazorSchedule.Layout.content_component.addEmployee
 {
     public partial class AddEmployee
     {
-        private string? minHours;
-        private AgreementType? typeOfAgreement;
-        private string? name;
-        private int mintHours;
-        private string? errorMessage;
-        private List<Employee> employees = new List<Employee>();
-        private List<string> positions = new List<string>();
-        private string? position;
+        private string? minHours { get; set; }
+        private AgreementType? typeOfAgreement { get; set; }
+        private string? name { get; set; }
+        private int mintHours { get; set; }
+        private string? errorMessage { get; set; }
+        private List<Employee> employees { get; set; } = new List<Employee>();
+        private List<string> positions { get; set; } = new List<string>();
+        private string? position { get; set; }
 
         [Parameter]
         public string? editByName { get; set; }

@@ -1,8 +1,10 @@
+using YourBlazorProject.Models;
+
 namespace BlazorSchedule{
     public class Employee
     {
         public string name { get; set; }
-        public string typeOfAgreement { get; set; }
+        public AgreementType typeOfAgreement { get; set; }
         public int minHours { get; set; }
         public int minHoursUsed { get; set; }
         public List<int> daysOff { get; set; }
@@ -14,7 +16,7 @@ namespace BlazorSchedule{
             return minHours - minHoursUsed;
         }
 
-        public Employee(string name, string typeOfAgreement, int minHours, List<string> positions)
+        public Employee(string name, AgreementType typeOfAgreement, int minHours, List<string> positions)
         {
             this.name = name;
             this.typeOfAgreement = typeOfAgreement;

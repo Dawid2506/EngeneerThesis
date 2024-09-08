@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YourBlazorProject.Models;
 
+//refactored
 namespace BlazorSchedule.Layout.content_component.companyInformation
 {
     public partial class CompanyInformationPage

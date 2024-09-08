@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Blazorise.Extensions;
+using YourBlazorProject.Models;
 
 namespace BlazorSchedule
 {
@@ -160,8 +161,8 @@ namespace BlazorSchedule
         {
             
             // Sort employees by typeOfAgreement
-            List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == "contract").ToList();
-            List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != "contract").ToList();
+            List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == AgreementType.mandate).ToList();
+            List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != AgreementType.contract).ToList();
             List<Employee> sortedEmployees = employeesWithAgreement.Concat(employeesWithoutAgreement).ToList();
 
             // foreach (var employee in sortedEmployees)

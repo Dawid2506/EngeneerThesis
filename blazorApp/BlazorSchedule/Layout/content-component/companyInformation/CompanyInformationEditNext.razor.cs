@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using YourBlazorProject.Models;
 
-
+//refactored
 namespace BlazorSchedule.Layout.content_component.companyInformation
 {
     public partial class CompanyInformationEditNext

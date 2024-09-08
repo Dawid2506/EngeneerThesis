@@ -42,52 +42,6 @@
     </div>
 </div>
 
-@code {
-    private List<Employee> employeeList = new List<Employee>();
-    private bool isPersonInfoVisible = false;
-    private Employee actualEmployee;
-    private EmployeesRepository employeesRepository;
-    
-    [Parameter]
-    public string editByName { get; set; }
-
-    private IDictionary<string, object> BlockRight => new Dictionary<string, object>
-{
-{ "class", isPersonInfoVisible ? "block-field active" : "block-field" }
-};
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        employeesRepository = appState.EmployeesRepository;
-        employeeList = employeesRepository.GetEmployees();
-    }
-
-    private void TogglePersonInfoContainer(string name)
-    {
-        isPersonInfoVisible = !isPersonInfoVisible;
-        actualEmployee = employeesRepository.GetEmployeeByName(name);
-    }
-
-    private void ChangeToAddEmployee()
-    {
-        NavigationManager.NavigateTo("/add-component");
-    }
-
-    private void EditPerson()
-    {
-        editByName = actualEmployee.name;
-        NavigationManager.NavigateTo($"/add-component/{editByName}");
-    }
-
-    private void DeletePerson()
-    {
-        employeesRepository.DeleteEmployee(actualEmployee.name);
-        employeeList = employeesRepository.GetEmployees();
-        isPersonInfoVisible = false;
-    }
-}
-
 <style>
 .block-field{
     display: grid;

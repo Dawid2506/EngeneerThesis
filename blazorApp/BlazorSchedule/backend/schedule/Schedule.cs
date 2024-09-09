@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using Blazorise.Extensions;
 using YourBlazorProject.Models;
 
+// I'm not proud of this code. I wrote this long time ago :)
+// This code should be refactored
 namespace BlazorSchedule
 {
     public class Schedule
     {
-        private static Schedule instance { get; set; }
+        private static Schedule? instance { get; set; }
         private static readonly object lockObject = new object();
 
         private Schedule()
         {
+            schedule = new string[0, 0];
+            brokenDays = new List<int>();
+            brokenDaysPositions = new Dictionary<int, List<string>>();
+            month = string.Empty;
+            year = string.Empty;
         }
 
         public static Schedule Instance
@@ -40,7 +47,7 @@ namespace BlazorSchedule
 
         public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees, Company company)
         {
-            foreach (var employee in employees)
+            foreach (Employee employee in employees)
             {
                 employee.minHoursUsed = employee.minHours;
             }
@@ -71,19 +78,6 @@ namespace BlazorSchedule
 
             // Making fourth layer of schedule witch adjust the broken days
             //FourthLayerOfSchedule(company, employees);
-        }
-
-        public void PrintAllSchedule()
-        {
-            for (int i = 0; i < schedule.GetLength(0); i++)
-            {
-                Console.Write("Day " + (i + 1) + " ");
-                for (int j = 0; j < schedule.GetLength(1); j++)
-                {
-                    Console.Write(schedule[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
         }
 
         private void FirstLayerOfSchedule(int numberOfDays, List<int> workingDaysInt, int actualDay)
@@ -140,13 +134,6 @@ namespace BlazorSchedule
             List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == AgreementType.mandate).ToList();
             List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != AgreementType.contract).ToList();
             List<Employee> sortedEmployees = employeesWithAgreement.Concat(employeesWithoutAgreement).ToList();
-
-            // foreach (var employee in sortedEmployees)
-            // {
-            //     Console.WriteLine("Employee: " + employee.name + " " + employee.typeOfAgreement);
-            // }
-
-            //<number of day of month, mon of day of week>
             Dictionary<int, int> daysOfWeek = new Dictionary<int, int>();
 
             //generate dictionary daysOfWeek
@@ -167,18 +154,8 @@ namespace BlazorSchedule
                 }
             }
 
-            // // Console write whole daysofweek
-            // foreach (var kvp in daysOfWeek)
-            // {
-            //     Console.WriteLine("Day: " + kvp.Key + " Day of Week: " + kvp.Value);
-            // }
-
             //copy positions per day
             Dictionary<int, List<string>> positionsPerDay = new Dictionary<int, List<string>>();
-            // foreach (var entry in company.positionsPerDay)
-            // {
-            //     positionsPerDay[entry.Key] = new List<string>(entry.Value);
-            // }
 
             for (int i = 1; i <= numberOfDays; i++)
             {
@@ -202,7 +179,7 @@ namespace BlazorSchedule
                 }
             }
 
-            foreach (var employee in sortedEmployees)
+            foreach (Employee employee in sortedEmployees)
             {
                 List<int> randomDaysUsed = new List<int>();
                 int attemptCounter = 0;
@@ -211,7 +188,6 @@ namespace BlazorSchedule
                 while (employee.minHours > employee.realHoursUsed() && attemptCounter < maxAttempts)
                 {
                     attemptCounter++;
-                    //Console.WriteLine("Employee: " + employee.name + " " + employee.minHoursUsed);
 
                     Random random = new Random();
 
@@ -233,29 +209,20 @@ namespace BlazorSchedule
 
                     int employeeIdx = EmployeeIndexByName(employee.name, employees);
 
-                    //Console.WriteLine("positionPerDay: " + positionsPerDay["poniedziałek"][0]);
-
-                    //Console.WriteLine("Employee: " + employee.name + "employeeIdx " + employeeIdx + "employee.positions.Count " + employee.positions.Count + "string.Join( , employee.positions) " + string.Join(", ", employee.positions) + "string.Join(, positionsPerDay[randomDayOfWeek]) " + string.Join(", ", positionsPerDay[randomDayOfWeek]) + "randomDay " + randomDay + "randomDayOfWeek " + randomDayOfWeek + "randomDayOfWeekInt " + randomDayOfWeekInt + "schedule[randomDay, employeeIdx + 1] " + schedule[randomDay - 1, employeeIdx + 1] + "employee.daysOff.Contains(randomDay) " + employee.daysOff.Contains(randomDay) + "employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() " + employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() + "employee.minHoursUsed " + employee.minHoursUsed + " " + company.CountWorkingHours(randomDayOfWeek) + " " + employee.minHours + " " + employee.realHoursUsed());
-
                     if (schedule[randomDay - 1, employeeIdx + 2] == ScheduleCellContent.notScheduled.ToSymbol() && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positionsPerDay[randomDay]).Any())
                     {
                         int workingHours = company.CountWorkingHours(randomDayOfWeek);
                         employee.minHoursUsed -= workingHours;
-                        foreach (var employeePosition in employee.positions)
+                        foreach (string employeePosition in employee.positions)
                         {
                             if (positionsPerDay[randomDay].Contains(employeePosition))
                             {
                                 schedule[randomDay - 1, employeeIdx + 2] = employeePosition;
-                                //teraz usunac ta pozycje z listy i dodac break
+                                //delete position from the list and add the break
                                 positionsPerDay[randomDay].Remove(employeePosition);
                                 break;
                             }
                         }
-                    }
-
-                    if (attemptCounter >= maxAttempts)
-                    {
-                        Console.WriteLine("Employee: " + employee.name);
                     }
                 }
             }
@@ -281,7 +248,6 @@ namespace BlazorSchedule
         {
             int actualDay = firstDayOfMonth;
             int actualDate = 1;
-            List<string> positions;
             for (int i = 0; i < numberOfDays; i++)
             {
                 ThirdLayerEngine(numberOfDays, firstDayOfMonth, employees, company, i, actualDay, actualDate);
@@ -304,7 +270,6 @@ namespace BlazorSchedule
             {
                 string day = GetDayOfWeekName(actualDay);
                 positions = new List<string>(company.positionsPerDay[day]);
-                //Console.WriteLine($"Created copy of positions for day {day}: {string.Join(", ", positions)}");
 
                 List<int> randomEmployeesUsed = new List<int>();
                 Random random = new Random();
@@ -328,7 +293,6 @@ namespace BlazorSchedule
                             employees[randomEmployee].minHoursUsed -= workingHours;
                             schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
                             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                                                                     //Console.WriteLine($"Removing position {positions[x]} for employee {employees[randomEmployee].name} on day {actualDate} ({day})");
                             positions.RemoveAt(x); // remove the position from the list
                         }
                     }
@@ -350,7 +314,7 @@ namespace BlazorSchedule
         {
             Employee employeeWithBiggestHoursDifference = SearchEmployeeWithBiggestDiffrence(employees);
 
-            foreach (var brokenDay in brokenDays)
+            foreach (int brokenDay in brokenDays)
             {
                 List<string> positions = brokenDaysPositions[brokenDay];
                 // List<int> randomEmployeesUsed = new List<int>();
@@ -375,7 +339,6 @@ namespace BlazorSchedule
                 //             employees[randomEmployee].minHoursUsed -= workingHours;
                 //             schedule[brokenDay - 1, randomEmployee + 1] = positions[x]; // assign position to employee
                 //             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                //             //Console.WriteLine($"Removing position {positions[x]} for employee {employees[randomEmployee].name} on day {brokenDay}");
                 //             positions.RemoveAt(x); // remove the position from the list
                 //         }
                 //     }
@@ -394,12 +357,13 @@ namespace BlazorSchedule
         private Employee SearchEmployeeWithBiggestDiffrence(List<Employee> employees)
         {
             int biggestHourDiffrence = 0;
-            Employee employeeWithBiggestHoursDifference = null;
-            foreach (var employee in employees)
+            Employee employeeWithBiggestHoursDifference = employees[0]; // Assume the first employee has the biggest difference
+            foreach (Employee employee in employees)
             {
-                if ((employee.minHours - employee.realHoursUsed()) > biggestHourDiffrence)
+                int hourDifference = employee.minHours - employee.realHoursUsed();
+                if (hourDifference > biggestHourDiffrence)
                 {
-                    biggestHourDiffrence = employee.minHours - employee.realHoursUsed();
+                    biggestHourDiffrence = hourDifference;
                     employeeWithBiggestHoursDifference = employee;
                 }
             }

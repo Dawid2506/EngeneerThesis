@@ -7,7 +7,7 @@ namespace BlazorSchedule
 {
     public class Schedule
     {
-        private static Schedule instance;
+        private static Schedule instance { get; set; }
         private static readonly object lockObject = new object();
 
         private Schedule()
@@ -32,24 +32,14 @@ namespace BlazorSchedule
             }
         }
 
-        public string[,] schedule;
-        public List<int> brokenDays;
-        public Dictionary<int, List<string>> brokenDaysPositions;
-        public string month;
-        public string year;
+        public string[,] schedule { get; set; }
+        public List<int> brokenDays { get; set; }
+        public Dictionary<int, List<string>> brokenDaysPositions { get; set; }
+        public string month { get; set; }
+        public string year { get; set; }
 
         public void InitializeSchedule(int numberOfDays, List<int> workingDaysInt, int firstDayOfMonth, List<Employee> employees, Company company)
         {
-            // Console.WriteLine("-------------------------------");
-            // foreach (var kvp in company.positionsPerDay)
-            // {
-            //     Console.WriteLine("Day: " + kvp.Key);
-            //     foreach (var position in kvp.Value)
-            //     {
-            //         Console.WriteLine("Position: " + position);
-            //     }
-            // }
-            // Console.WriteLine("-------------------------------");
             foreach (var employee in employees)
             {
                 employee.minHoursUsed = employee.minHours;
@@ -65,7 +55,7 @@ namespace BlazorSchedule
             {
                 for (int j = 0; j < schedule.GetLength(1); j++)
                 {
-                    schedule[i, j] = "#";
+                    schedule[i, j] = ScheduleCellContent.holiday.ToSymbol();
                 }
             }
 
@@ -81,37 +71,23 @@ namespace BlazorSchedule
 
             // Making fourth layer of schedule witch adjust the broken days
             //FourthLayerOfSchedule(company, employees);
-
-
-            // Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
-            // foreach (var kvp in company.positionsPerDay)
-            // {
-            //     Console.WriteLine("Day: " + kvp.Key);
-            //     foreach (var position in kvp.Value) 
-            //     {
-            //         Console.WriteLine("Position: " + position);
-            //     }
-            // }
-            // Console.WriteLine("iiiiiiiiiiiiiiiiiiiiiiiiiiii");
-
         }
 
         public void PrintAllSchedule()
         {
-            // for (int i = 0; i < schedule.GetLength(0); i++)
-            // {
-            //     Console.Write("Day " + (i + 1) + " ");
-            //     for (int j = 0; j < schedule.GetLength(1); j++)
-            //     {
-            //         Console.Write(schedule[i, j] + " ");
-            //     }
-            //     Console.WriteLine();
-            // }
+            for (int i = 0; i < schedule.GetLength(0); i++)
+            {
+                Console.Write("Day " + (i + 1) + " ");
+                for (int j = 0; j < schedule.GetLength(1); j++)
+                {
+                    Console.Write(schedule[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
         }
 
         private void FirstLayerOfSchedule(int numberOfDays, List<int> workingDaysInt, int actualDay)
         {
-            // Making first layer of schedule with information about working days
             for (int i = 0; i < numberOfDays; i++)
             {
                 for (int j = 0; j < workingDaysInt.Count; j++)
@@ -139,17 +115,17 @@ namespace BlazorSchedule
             {
                 for (int j = 0; j < numberOfDays; j++)
                 {
-                    if (schedule[j, 0] == "#")
+                    if (schedule[j, 0] == ScheduleCellContent.holiday.ToSymbol())
                     {
-                        schedule[j, i + 2] = "#";
+                        schedule[j, i + 2] = ScheduleCellContent.holiday.ToSymbol();
                     }
                     else if (employees[i].daysOff.Contains(actualDate))
                     {
-                        schedule[j, i + 2] = "/";
+                        schedule[j, i + 2] = ScheduleCellContent.dayOff.ToSymbol();
                     }
                     else
                     {
-                        schedule[j, i + 2] = "x";
+                        schedule[j, i + 2] = ScheduleCellContent.notScheduled.ToSymbol();
                     }
                     actualDate++;
                 }
@@ -159,7 +135,7 @@ namespace BlazorSchedule
 
         private void ThirdLayerOfScheduleEmployee(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int numberOfEmployees)
         {
-            
+
             // Sort employees by typeOfAgreement
             List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == AgreementType.mandate).ToList();
             List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != AgreementType.contract).ToList();
@@ -212,7 +188,7 @@ namespace BlazorSchedule
             dayOfWeek = firstDayOfMonth;
             for (int i = 1; i <= numberOfDays; i++)
             {
-                
+
                 string DayOfWeekString = GetDayOfWeekName(dayOfWeek);
                 positionsPerDay[i].AddRange(company.positionsPerDay[DayOfWeekString]);
 
@@ -255,16 +231,13 @@ namespace BlazorSchedule
 
                     List<string> positions = positionsPerDay[randomDay];
 
-                    Console.WriteLine("randomday" + randomDay + "name:" + employee.name);
-
                     int employeeIdx = EmployeeIndexByName(employee.name, employees);
 
                     //Console.WriteLine("positionPerDay: " + positionsPerDay["poniedziałek"][0]);
 
                     //Console.WriteLine("Employee: " + employee.name + "employeeIdx " + employeeIdx + "employee.positions.Count " + employee.positions.Count + "string.Join( , employee.positions) " + string.Join(", ", employee.positions) + "string.Join(, positionsPerDay[randomDayOfWeek]) " + string.Join(", ", positionsPerDay[randomDayOfWeek]) + "randomDay " + randomDay + "randomDayOfWeek " + randomDayOfWeek + "randomDayOfWeekInt " + randomDayOfWeekInt + "schedule[randomDay, employeeIdx + 1] " + schedule[randomDay - 1, employeeIdx + 1] + "employee.daysOff.Contains(randomDay) " + employee.daysOff.Contains(randomDay) + "employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() " + employee.positions.Intersect(positionsPerDay[randomDayOfWeek]).Any() + "employee.minHoursUsed " + employee.minHoursUsed + " " + company.CountWorkingHours(randomDayOfWeek) + " " + employee.minHours + " " + employee.realHoursUsed());
 
-                    Console.WriteLine("positions" + string.Join(", ", positionsPerDay[randomDay]) + "day of week: " + randomDayOfWeek);
-                    if (schedule[randomDay - 1, employeeIdx + 2] == "x" && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positionsPerDay[randomDay]).Any())
+                    if (schedule[randomDay - 1, employeeIdx + 2] == ScheduleCellContent.notScheduled.ToSymbol() && !employee.daysOff.Contains(randomDay) && employee.positions.Intersect(positionsPerDay[randomDay]).Any())
                     {
                         int workingHours = company.CountWorkingHours(randomDayOfWeek);
                         employee.minHoursUsed -= workingHours;
@@ -327,7 +300,7 @@ namespace BlazorSchedule
         private void ThirdLayerEngine(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int i, int actualDay, int actualDate)
         {
             List<string> positions;
-            if (!(schedule[i, 0] == "#"))  //if day is working day
+            if (!(schedule[i, 0] == ScheduleCellContent.holiday.ToSymbol()))  //if day is working day
             {
                 string day = GetDayOfWeekName(actualDay);
                 positions = new List<string>(company.positionsPerDay[day]);
@@ -347,10 +320,9 @@ namespace BlazorSchedule
 
                     int x;
                     x = random.Next(0, positions.Count);
-                    if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == "x") // if employee has this position and is working
+                    if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == ScheduleCellContent.notScheduled.ToSymbol()) // if employee has this position and is working
                     {
                         int workingHours = company.CountWorkingHours(day);
-                        Console.WriteLine("Working hours: " + workingHours + " for " + day);
                         if (employees[randomEmployee].minHoursUsed >= (workingHours - 10))
                         {
                             employees[randomEmployee].minHoursUsed -= workingHours;
@@ -377,13 +349,10 @@ namespace BlazorSchedule
         private void FourthLayerOfSchedule(Company company, List<Employee> employees)
         {
             Employee employeeWithBiggestHoursDifference = SearchEmployeeWithBiggestDiffrence(employees);
-            Console.WriteLine("Employee with biggest hours difference: " + employeeWithBiggestHoursDifference.name);
 
             foreach (var brokenDay in brokenDays)
             {
-                Console.WriteLine("Broken day: " + brokenDay);
                 List<string> positions = brokenDaysPositions[brokenDay];
-                Console.WriteLine("Positions: " + string.Join(", ", positions));
                 // List<int> randomEmployeesUsed = new List<int>();
                 // Random random = new Random();
 
@@ -442,25 +411,19 @@ namespace BlazorSchedule
 
         public string GetDayOfWeekName(int dayOfWeek)
         {
-            switch (dayOfWeek)
+            DaysOfWeek day = dayOfWeek switch
             {
-                case 0:
-                    return "Sunday";
-                case 1:
-                    return "Monday";
-                case 2:
-                    return "Tuesday";
-                case 3:
-                    return "Wednesday";
-                case 4:
-                    return "Thursday";
-                case 5:
-                    return "Friday";
-                case 6:
-                    return "Saturday";
-                default:
-                    return "error";
-            }
+                0 => DaysOfWeek.Sunday,
+                1 => DaysOfWeek.Monday,
+                2 => DaysOfWeek.Tuesday,
+                3 => DaysOfWeek.Wednesday,
+                4 => DaysOfWeek.Thursday,
+                5 => DaysOfWeek.Friday,
+                6 => DaysOfWeek.Saturday,
+                _ => throw new ArgumentOutOfRangeException(nameof(dayOfWeek), "Invalid day of the week")
+            };
+
+            return day.ToFriendlyString();
         }
     }
 }

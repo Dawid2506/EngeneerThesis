@@ -27,7 +27,6 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
         private bool isCheckboxChecked = true;
         private List<DateTime> startHours { get; set; } = new List<DateTime>();
         private List<DateTime> endHours { get; set; } = new List<DateTime>();
-        private Dictionary<DateTime, DateTime> workingHours { get; set; } = new Dictionary<DateTime, DateTime>();
         private Dictionary<string, List<string>> positionsPerDay { get; set; } = new Dictionary<string, List<string>>();
         private string? position { get; set; }
         public DateTime startHourForAll { get; set; }

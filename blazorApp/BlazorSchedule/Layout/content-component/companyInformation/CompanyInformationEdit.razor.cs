@@ -22,7 +22,6 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
         [Parameter]
         public List<string> positions { get; set; } = new List<string>();
         private string? position { get; set; }
-        private int mintHours { get; set; }
         private string? errorMessage { get; set; }
 
         protected override void OnInitialized()

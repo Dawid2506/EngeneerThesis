@@ -14,6 +14,10 @@ namespace BlazorSchedule{
         {
             workingDays = new List<string>();
             positionsPerDay = new Dictionary<string, List<string>>();
+            shift = string.Empty;
+            name = string.Empty;
+            workingHoursDay = new Dictionary<string, Dictionary<string, string>>();
+            positionsList = new List<string>();
         }
 
         public void SetWorkingHoursDay(Dictionary<string, Dictionary<string, string>> workingHoursDay)

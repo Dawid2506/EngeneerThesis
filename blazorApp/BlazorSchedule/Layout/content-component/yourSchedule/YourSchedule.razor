@@ -10,7 +10,7 @@
 }
 <div class="flex p-8 justify-start items-center">
     <p class="text-xl">Month</p>
-    <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="month">
+    <select data-test-id="choose-month" id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="month">
         @for (int i = 1; i <= 12; i++)
         {
             <option value="@i">@i</option>
@@ -20,7 +20,7 @@
 
 <div class="flex p-8 justify-start items-center">
     <p class="text-xl">Year</p>
-    <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="year">
+    <select data-test-id="choose-year" id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="year">
         @for (int i = 2020; i <= 2050; i++)
         {
             <option value="@i">@i</option>
@@ -52,7 +52,7 @@
 </div>
 
 <div class="flex flex-row">
-    <div class="ml-4 mt-4 flex justify-center items-center common-button" @onclick="MakeScheduleGenerator">Show Schedule</div>
+    <div class="ml-4 mt-4 flex justify-center items-center common-button" @onclick="MakeScheduleGenerator" data-test-id="show-schedule-button">Show Schedule</div>
 </div>
 
 <div class="flex flex-row">

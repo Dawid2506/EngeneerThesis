@@ -10,3 +10,5 @@
 /blazorApp/BlazorSchedule/.vscode/
 /blazorApp/BlazorSchedule/.dotnet/
 /blazorApp/BlazorSchedule/*.binlog
+/blazorApp/BlazorSchedule/node_modules
+

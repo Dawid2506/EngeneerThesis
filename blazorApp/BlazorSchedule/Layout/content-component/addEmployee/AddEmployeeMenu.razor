@@ -25,7 +25,7 @@
     }
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 @(isPersonInfoVisible ? "pl-[350px]" : "")">
-        <div class="w-[300px] h-[200px] bg-[#661D15] mt-6 ml-6 rounded-2xl shadow-md flex flex-row justify-center items-center transition-transform duration-300 ease-in-out hover:bg-[#551811] hover:scale-110" @onclick="ChangeToAddEmployee">
+        <div class="w-[300px] h-[200px] bg-[#661D15] mt-6 ml-6 rounded-2xl shadow-md flex flex-row justify-center items-center transition-transform duration-300 ease-in-out hover:bg-[#551811] hover:scale-110" @onclick="ChangeToAddEmployee" data-test-id="add-employee-button">
             <div class="text-4xl pr-2">
                 <Icon Name="IconName.PersonPlus" />
             </div>

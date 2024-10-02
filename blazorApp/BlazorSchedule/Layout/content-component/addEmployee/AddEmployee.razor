@@ -16,28 +16,28 @@
     <div class="w-[600px]">
         <div class="flex p-8 justify-start items-center">
             <p class="text-xl ml-auto">Name</p>
-            <input type="text" id="name" class="ml-4 rounded-lg text-black" @bind="name">
+            <input type="text" id="name" class="ml-4 rounded-lg text-black" @bind="name" data-test-id="employee-name">
         </div>
         <div class="flex p-8 justify-start items-center">
             <p class="text-xl ml-auto">Type of Agreement</p>
-            <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="typeOfAgreement">
+            <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="typeOfAgreement" data-test-id="type-of-agreement">
                 <option value="contract">Employment Contract</option>
                 <option value="mandate">Mandate Contract</option>
             </select>
         </div>
         <div class="flex p-8 justify-start items-center">
             <p class="text-xl ml-auto">Minimum Hours</p>
-            <input type="text" id="min-hours" class="ml-4 rounded-lg text-black" @bind="minHours">
+            <input type="text" id="min-hours" class="ml-4 rounded-lg text-black" @bind="minHours" data-test-id="min-hours">
         </div>
         <div class="flex p-8 justify-start items-center">
             <p class="text-xl ml-auto">Position</p>
-            <select id="type-of-agreement" class="ml-4 rounded-lg text-black" @bind="position">
+            <select id="position" class="ml-4 rounded-lg text-black" @bind="position" data-test-id="position">
                 @foreach (var position in appState.CompanyInstance.positionsList)
                 {
                     <option value="@position">@position</option>
                 }
             </select>
-            <button class="ml-4 text-white w-[10em] h-[2em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="AddPosition">Add Position</button>
+            <button class="ml-4 text-white w-[10em] h-[2em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="AddPosition" data-test-id="add-position">Add Position</button>
         </div>
         <div class="flex justify-center items-center">
             @foreach (var position in positions)
@@ -49,7 +49,7 @@
         </div>
 
         <div class="absolute right-12 bottom-12">
-            <button class="common-button" @onclick="AddEmployeeMethod">Add Employee</button>
+            <button class="common-button" @onclick="AddEmployeeMethod" data-test-id="add-employee-final-button">Add Employee</button>
             <button class="common-button" @onclick="GoBack">Cancel</button>
         </div>
     </div>

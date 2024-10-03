@@ -19,7 +19,7 @@
             </p>
             <div class="flex flex-row justify-around mt-4">
                 <button class="bg-[#661D15] text-white border-none px-4 py-2 rounded-lg text-base cursor-pointer" @onclick="EditPerson">Edit</button>
-                <button class="bg-[#661D15] text-white border-none px-4 py-2 rounded-lg text-base cursor-pointer" @onclick="DeletePerson">Delete</button>
+                <button class="bg-[#661D15] text-white border-none px-4 py-2 rounded-lg text-base cursor-pointer" data-test-id="delete-person" @onclick="DeletePerson">Delete</button>
             </div>
         </div>
     }
@@ -35,7 +35,7 @@
         </div>
         @foreach (var employee in employeeList)
         {
-            <div class="w-[300px] h-[200px] bg-[#661D15] mt-6 ml-6 rounded-2xl shadow-md flex flex-row justify-center items-center transition-transform duration-300 ease-in-out hover:bg-[#551811] hover:scale-110" @onclick="() => TogglePersonInfoContainer(employee.name)">
+            <div class="w-[300px] h-[200px] bg-[#661D15] mt-6 ml-6 rounded-2xl shadow-md flex flex-row justify-center items-center transition-transform duration-300 ease-in-out hover:bg-[#551811] hover:scale-110" data-test-id="particular-person" @onclick="() => TogglePersonInfoContainer(employee.name)">
                 <p class="text-4xl">@employee.name</p>
             </div>
         }

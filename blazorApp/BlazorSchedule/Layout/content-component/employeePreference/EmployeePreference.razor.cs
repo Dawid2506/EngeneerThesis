@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,8 @@ namespace BlazorSchedule.Layout.content_component.employeePreference
         {
             if (employee.SelectedDayOff <= 0 || employee.SelectedDayOff >= 32)
             {
-            errorMessage = "Invalid date format";
-            return;
+                errorMessage = "Invalid date format";
+                return;
             }
 
             errorMessage = null;
@@ -34,10 +35,19 @@ namespace BlazorSchedule.Layout.content_component.employeePreference
         {
             if (employee.daysOff == null || index < 0 || index >= employee.daysOff.Count)
             {
-            return;
+                return;
             }
 
             employee.daysOff.RemoveAt(index);
         }
+
+        private void CheckEnterKey(KeyboardEventArgs e, Employee employee)
+        {
+            if (e.Key == "Enter")
+            {
+                AddDate(employee);
+            }
+        }
+
     }
 }

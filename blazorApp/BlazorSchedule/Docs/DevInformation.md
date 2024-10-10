@@ -2,6 +2,7 @@
 
 `dotnet run --urls "http://localhost:5000"`
 `dotnet watch run`
+`npx cypress open`
 
 ## Colors used in project
 `dark-backgroung-#272727`

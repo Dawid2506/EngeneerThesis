@@ -2,9 +2,9 @@ html,
 body {
     margin: 0;
     padding: 0;
-    color: white;
+    /* color: white; */
     /* background-color */
-    background-color: #333333;
+    /* background-color: #333333; */
     font-family: "Sora", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;

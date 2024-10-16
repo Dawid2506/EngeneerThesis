@@ -1,28 +1,21 @@
 .page {
-    position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.content{
+.content {
     margin: 0;
     padding-left: 0;
-}
-
-main {
-    flex: 1;
 }
 
 .sidebar {
     /* sidebar background-color */
     background-color: #661D15;
+    min-width: 250px;
+    height: 100vh;
 }
 
-article {
-    padding: 0 !important;
-}
-
-@media (min-width: 641px) {
+/* @media (min-width: 641px) {
     .page {
         flex-direction: row;
     }
@@ -45,4 +38,4 @@ article {
         text-align: right;
         width: 0;
     }
-}
+} */

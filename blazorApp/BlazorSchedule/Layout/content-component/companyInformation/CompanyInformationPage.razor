@@ -5,7 +5,7 @@
 @using System.Collections.Generic;
 
 <div>
-    <div class="h-screen w-[350px] bg-[#551811] flex flex-col fixed pt-4 overflow-y-auto">
+    <div class="h-screen w-[350px] bg-[#551811] flex flex-col fixed pt-4 overflow-y-auto text-white">
         @if (!IsNotNullCompanyInfo())
         {
             <p class="text-2xl px-4">No company information available</p>
@@ -32,6 +32,7 @@
 
     <div class="ml-[400px]">
         <button class="bg-primary" @onclick="EditInformation">Edit information</button>
-        <Button Color="Color.Primary">Click me</Button>
+        <Button Class="w-40" Color="Color.Primary">Click me</Button>
+        <CompanyInformationEdit />
     </div>
 </div>

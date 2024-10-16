@@ -1,49 +1,65 @@
-@page "/company-information-edit";
+@* @page "/company-information-edit"; *@
 @inject NavigationManager NavigationManager;
 @using System.Text.Json;
 @using System.Web;
 @using YourBlazorProject.Models;
 @inject AppState appState;
 
-<div class="relative h-screen">
-    @if (!string.IsNullOrEmpty(errorMessage))
-    {
-        <div class="bg-[#661D15] text-red-500 text-2xl w-[1000px] h-[100px] flex justify-center items-center ml-8 mt-8">
-            <p>@errorMessage</p>
-        </div>
-    }
+<div>
+    <div class="bg-black w-[20%] h-12">
+        <Card class="max-w-[50%]">
+            <CardBody>
+                <CardTitle Size="3">
+                    Card title
+                </CardTitle>
 
-    <div class="w-[600px]">
-        <div class="flex p-8 justify-start items-center">
-            <p class="text-xl ml-auto pt-2">Company Name</p>
-            <input type="text" class="ml-4 rounded-lg text-black" @bind="name">
-        </div>
-        <div class="flex flex-col justify-center items-center p-8">
-            <p class="text-xl ml-auto pt-2">Working Days</p>
-            <div class="flex flex-row justify-start items-center ml-[300px]">
-                @foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
+                @if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    <div class="flex justify-center items-center ml-4 w-[7em] h-[3em] cursor-pointer @(workingDaysList.Contains(day.ToString()) ? "bg-[#551811]" : "bg-[#661D15]")"
-    @onclick='() => AddDay(day.ToString())'>@day</div>
+                    <div
+                        class="bg-[#661D15] text-red-500 text-2xl w-[100px] h-[100px] flex justify-center items-center ml-8 mt-8">
+                        <p>@errorMessage</p>
+                    </div>
                 }
-            </div>
-        </div>
-        <div class="flex p-8 justify-start items-center">
-            <p class="text-xl ml-auto pt-2">Position</p>
-            <input type="text" id="position" class="ml-4 rounded-lg text-black" @bind="position">
-            <button class="ml-4 mt-4 text-white w-[7em] h-[3em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="AddPosition">Add Position</button>
-        </div>
-        <div class="ml-[5em]">
-            @foreach (string position in positions)
-            {
-                <div class="flex justify-start items-center">
-                    <p>@position</p>
-                </div>
-            }
-        </div>
 
-        <div class="ml-[400px]">
-            <button class="common-button" @onclick="NextPage">Proceed</button>
-        </div>
+                <div>
+                    <div class="flex p-8 justify-start items-center">
+                        <p class="text-xl ml-auto pt-2">Company Name</p>
+                        @* <input type="text" class="ml-4 rounded-lg text-black" @bind="name"> *@
+                        <TextEdit Class="" @bind-Text="@name" />
+                        <input type="text" class="ml-4 rounded-lg text-black" @bind="name">
+                    </div>
+                    <div class="flex flex-col justify-center items-center p-8">
+                        <p class="text-xl ml-auto pt-2">Working Days</p>
+                        <div class="flex flex-row justify-start items-center ml-[300px]">
+                            @foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
+                            {
+                                <div class="flex justify-center items-center ml-4 w-[7em] h-[3em] cursor-pointer @(workingDaysList.Contains(day.ToString()) ? "bg-[#551811]" : "bg-[#661D15]")"
+                                    @onclick='() => AddDay(day.ToString())'>@day</div>
+                            }
+                        </div>
+                    </div>
+                    <div class="flex p-8 justify-start items-center">
+                        <p class="text-xl ml-auto pt-2">Position</p>
+                        <input type="text" id="position" class="ml-4 rounded-lg text-black" @bind="position">
+                        <button
+                            class="ml-4 mt-4 text-white w-[7em] h-[3em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95"
+                            @onclick="AddPosition">Add Position</button>
+                    </div>
+                    <div class="ml-[5em]">
+                        @foreach (string position in positions)
+                        {
+                            <div class="flex justify-start items-center">
+                                <p>@position</p>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="ml-[400px]">
+                        <button class="common-button" @onclick="NextPage">Proceed</button>
+                    </div>
+                </div>
+
+            </CardBody>
+        </Card>
     </div>
 </div>

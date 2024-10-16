@@ -10,11 +10,11 @@
 }
 @foreach (var employee in employees)
 {
-    <div class="particular-employee">
+    <div>
         <h3 class="ml-4 mt-4 font-bold">@employee.name</h3>
         <div class="flex justify-start items-center p-8">
             <p class="text-xl">Days Off</p>
-            <input type="text" id="date" class="w-16 ml-4 rounded-lg text-black" @bind="employee.SelectedDayOff">
+            <input type="text" id="date" class="w-16 ml-4 rounded-lg text-black" @bind="employee.SelectedDayOff" @onkeydown="(e) => CheckEnterKey(e, employee)">
             <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => AddDate(employee)'>Add</div>
             @if (employee.daysOff != null)
             {

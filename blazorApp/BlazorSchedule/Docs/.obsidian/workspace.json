@@ -32,6 +32,16 @@
             }
           },
           {
+            "id": "99106e44026140c5",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.7"
+              }
+            }
+          },
+          {
             "id": "98c55befdff8507e",
             "type": "leaf",
             "state": {
@@ -80,7 +90,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -207,7 +217,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0f7bb8ffc196796d",
+  "active": "99106e44026140c5",
   "lastOpenFiles": [
     "Component Standard.md",
     "Company.md",

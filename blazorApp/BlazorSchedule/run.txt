@@ -4,6 +4,7 @@ dotnet watch run
 elephant bone - #F1E0C5  241, 224, 197
 red - #D31023
 
+npx tailwindcss -i ./wwwroot/css/tailwind.css -o ./wwwroot/css/site.css --watch
 
 dark-backgroung-#272727
 primary-#661D15;

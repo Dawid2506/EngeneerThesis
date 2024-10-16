@@ -5,34 +5,34 @@
 @using System.Collections.Generic;
 
 <div>
-    <div class="h-screen w-[350px] bg-[#551811] flex flex-col fixed pt-4 overflow-y-auto text-white">
-        @if (!IsNotNullCompanyInfo())
-        {
-            <p class="text-2xl px-4">No company information available</p>
-        }
-        else
-        {
-            <p class="text-2xl px-4">Name: @companyName</p>
-            <br>
-            @foreach (DayInfo dayInfo in GetWorkingHoursWithPositions())
+    <div class="flex">
+        <div class="h-screen w-[350px] bg-[#551811] flex flex-col pt-4 overflow-y-auto text-white">
+            @if (!IsNotNullCompanyInfo())
             {
-                <p class="text-2xl px-4">Day: @dayInfo.Day</p>
-                <p class="px-4">
-                    <Icon Name="IconName.Clock" /> @dayInfo.WorkingHours
-                </p>
-                @foreach (string position in dayInfo.Positions)
+                <p class="text-2xl px-4">No company information available</p>
+            }
+            else
+            {
+                <p class="text-2xl px-4">Name: @companyName</p>
+                <br>
+                @foreach (DayInfo dayInfo in GetWorkingHoursWithPositions())
                 {
+                    <p class="text-2xl px-4">Day: @dayInfo.Day</p>
                     <p class="px-4">
-                        <Icon Name="IconName.User" /> @position
+                        <Icon Name="IconName.Clock" /> @dayInfo.WorkingHours
                     </p>
+                    @foreach (string position in dayInfo.Positions)
+                    {
+                        <p class="px-4">
+                            <Icon Name="IconName.User" /> @position
+                        </p>
+                    }
                 }
             }
-        }
-    </div>
+        </div>
 
-    <div class="ml-[400px]">
-        <button class="bg-primary" @onclick="EditInformation">Edit information</button>
-        <Button Class="w-40" Color="Color.Primary">Click me</Button>
-        <CompanyInformationEdit />
+        <div>
+            <CompanyInformationEdit />
+        </div>
     </div>
 </div>

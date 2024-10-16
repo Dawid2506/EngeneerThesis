@@ -6,11 +6,11 @@
 @inject AppState appState;
 
 <div>
-    <div class="bg-black w-[20%] h-12">
-        <Card class="max-w-[50%]">
+    <div class="flex p-2 w-full">
+        <Card>
             <CardBody>
                 <CardTitle Size="3">
-                    Card title
+                    Company Information
                 </CardTitle>
 
                 @if (!string.IsNullOrEmpty(errorMessage))
@@ -21,16 +21,15 @@
                     </div>
                 }
 
-                <div>
+                <div class="flex flex-col items-start">
                     <div class="flex p-8 justify-start items-center">
                         <p class="text-xl ml-auto pt-2">Company Name</p>
                         @* <input type="text" class="ml-4 rounded-lg text-black" @bind="name"> *@
-                        <TextEdit Class="" @bind-Text="@name" />
-                        <input type="text" class="ml-4 rounded-lg text-black" @bind="name">
+                        <TextEdit @bind-Text="@name" />
                     </div>
-                    <div class="flex flex-col justify-center items-center p-8">
-                        <p class="text-xl ml-auto pt-2">Working Days</p>
-                        <div class="flex flex-row justify-start items-center ml-[300px]">
+                    <div class="flex flex-col p-8">
+                        <p class="text-xl pt-2">Working Days</p>
+                        <div class="flex flex-row justify-start items-center">
                             @foreach (DaysOfWeek day in Enum.GetValues(typeof(DaysOfWeek)))
                             {
                                 <div class="flex justify-center items-center ml-4 w-[7em] h-[3em] cursor-pointer @(workingDaysList.Contains(day.ToString()) ? "bg-[#551811]" : "bg-[#661D15]")"
@@ -40,10 +39,12 @@
                     </div>
                     <div class="flex p-8 justify-start items-center">
                         <p class="text-xl ml-auto pt-2">Position</p>
-                        <input type="text" id="position" class="ml-4 rounded-lg text-black" @bind="position">
+                        <TextEdit @bind-Text="@position" />
                         <button
                             class="ml-4 mt-4 text-white w-[7em] h-[3em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95"
                             @onclick="AddPosition">Add Position</button>
+                            <Button @onclick="AddPosition">Add Position</Button>
+                            <Button @onclick="AddPosition" Color="Color.Primary">Click me</Button>
                     </div>
                     <div class="ml-[5em]">
                         @foreach (string position in positions)
@@ -54,7 +55,7 @@
                         }
                     </div>
 
-                    <div class="ml-[400px]">
+                    <div class="pl-[400px]">
                         <button class="common-button" @onclick="NextPage">Proceed</button>
                     </div>
                 </div>

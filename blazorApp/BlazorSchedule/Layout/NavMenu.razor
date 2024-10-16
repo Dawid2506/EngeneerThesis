@@ -2,7 +2,7 @@
     <a class="company-name-text" href="">BlazorSchedule</a>
 </div>
 
-<div class="page-button-container">
+<div>
     <div class="page-button">
         <a class="page-button-text" href="company-information" data-test-id="company-information">Company Information</a>
     </div>
@@ -27,47 +27,46 @@
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@* <div class="top-row ps-3 navbar navbar-dark">
-<div class="container-fluid">
-<a class="navbar-brand" href="">BlazorSchedule</a>
-<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-<span class="navbar-toggler-icon"></span>
-</button>
-</div>
-</div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-<nav class="flex-column">
-<div class="nav-item px-3">
-<NavLink class="nav-link" href="counter">
-<span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-</NavLink>
-</div>
-</nav>
-</div>
-
-@code {
-private bool collapseNavMenu = true;
-
-private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-private void ToggleNavMenu()
-{
-collapseNavMenu = !collapseNavMenu;
+<style>
+.company-name{
+    /* 3 color */
+    width: auto;
+    height: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-} *@
+
+.page-button{
+    margin: 1em 0.5em 0 0.5em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.page-button:hover{
+    background-color: #551811;
+}
+
+.page-button-text{
+    color: white;
+    text-decoration: none;
+}
+
+.company-name-text{
+    text-decoration: none;
+    color: white;
+    font-size: 22px;
+}
+
+.page-button-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+
+</style>

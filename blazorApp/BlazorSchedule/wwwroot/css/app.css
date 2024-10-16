@@ -134,3 +134,11 @@ code {
 .common-buttons{
     margin-left: 400px;
 }
+
+.bg-primary {
+    background-color: #661D15 !important;
+}
+
+.bg-secondary {
+    background-color: #551811 !important;
+}

@@ -1,6 +1,5 @@
 @page "/company-information-edit-next/{encodedPositions}/{encodedWorkingDaysList}/{name}"
 @inject NavigationManager NavigationManager
-@using BlazorBootstrap
 @using System.Text.Json
 @using System.Collections.Generic
 @using YourBlazorProject.Models
@@ -61,7 +60,7 @@
                             }
                         </select>
                         <div class="w-8 h-8 bg-[#661D15] ml-1 flex justify-center items-center text-white text-base rounded border border-black shadow-md cursor-pointer pt-1" @onclick='() => AddPosition(iIndex)'>
-                            <Icon Name="IconName.FilePlus" />
+                            <Icon Name="IconName.PlusCircle" />
                         </div>
                     </div>
                     <div>
@@ -72,7 +71,7 @@
                                 <div class="flex justify-center items-center">
                                     <p>@position</p>
                                     <div class="w-8 h-8 bg-[#661D15] ml-1 flex justify-center items-center text-white text-base rounded border border-black shadow-md cursor-pointer pt-1" @onclick='() => RemovePosition(iIndex)'>
-                                        <Icon Name="IconName.FileMinus" />
+                                        <Icon Name="IconName.MinusCircle" />
                                     </div>
                                 </div>
                             }

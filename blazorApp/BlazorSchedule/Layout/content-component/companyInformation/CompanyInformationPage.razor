@@ -1,5 +1,4 @@
 @page "/company-information"
-@using BlazorBootstrap
 @using YourBlazorProject.Models
 @inject NavigationManager NavigationManager
 @inject AppState appState
@@ -24,7 +23,7 @@
                 @foreach (string position in dayInfo.Positions)
                 {
                     <p class="px-4">
-                        <Icon Name="IconName.Person" /> @position
+                        <Icon Name="IconName.User" /> @position
                     </p>
                 }
             }
@@ -32,6 +31,7 @@
     </div>
 
     <div class="ml-[400px]">
-        <button class="common-button" @onclick="EditInformation">Edit information</button>
+        <button class="bg-primary" @onclick="EditInformation">Edit information</button>
+        <Button Color="Color.Primary">Click me</Button>
     </div>
 </div>

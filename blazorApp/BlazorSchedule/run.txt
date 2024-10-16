@@ -6,8 +6,8 @@ red - #D31023
 
 
 dark-backgroung-#272727
-normal-red-#661D15;
-dark-red#551811
+primary-#661D15;
+secondary#551811
 
 
 {"employees":[{"name":"Denis","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[21,22],"SelectedDayOff":22,"personalSchedule":null},{"name":"Brygida","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[3],"SelectedDayOff":3,"personalSchedule":null},{"name":"Asia","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[7,9,3],"SelectedDayOff":3,"personalSchedule":null},{"name":"Beniamin","typeOfAgreement":"Umowa o pracę","minHours":160,"daysOff":[12],"SelectedDayOff":12,"personalSchedule":null},{"name":"Dawid","typeOfAgreement":"Umowa zlecenie","minHours":75,"daysOff":[16],"SelectedDayOff":16,"personalSchedule":null},{"name":"Ania","typeOfAgreement":"Umowa zlecenie","minHours":70,"daysOff":[21,28],"SelectedDayOff":28,"personalSchedule":null},{"name":"Weronika","typeOfAgreement":"Umowa zlecenie","minHours":140,"daysOff":[2,6,9],"SelectedDayOff":9,"personalSchedule":null}]}

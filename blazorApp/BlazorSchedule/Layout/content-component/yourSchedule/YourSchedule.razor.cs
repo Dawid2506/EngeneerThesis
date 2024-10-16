@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using YourBlazorProject.Models;
+using OfficeOpenXml;
+using Microsoft.JSInterop;
+
 
 namespace BlazorSchedule.Layout.content_component.yourSchedule
 {
@@ -120,5 +123,53 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
 
             return workingDaysInt;
         }
+
+        private async Task GenerateExcel()
+    {
+        using (var package = new ExcelPackage())
+        {
+            var worksheet = package.Workbook.Worksheets.Add("Arkusz1");
+
+            string[,] schedule = appState.schedule.schedule;
+            List<Employee> employees = appState.EmployeesRepository.employees;
+
+            string year = appState.schedule.year;
+            string month = appState.schedule.month;
+            string monthYear = $"{month}.{year}";
+            worksheet.Cells["B1"].Value = monthYear;
+
+            for(int i = 0; i < employees.Count; i++)
+            {
+                string cellAddress = $"{(char)('A' + i + 2)}{1}";
+                worksheet.Cells[cellAddress].Value = employees[i].name;
+            }
+
+            for(int i = 0; i < schedule.GetLength(0); i++)
+            {
+                string cellAddress = $"{"A"}{i + 2}";
+                worksheet.Cells[cellAddress].Value = i + 1;
+            }
+
+            for (int i = 0; i < schedule.GetLength(0); i++)
+            {
+                for (int j = 1; j < schedule.GetLength(1); j++)
+                {
+                    // Indeks Excel (A1, B1, etc.)
+                    string cellAddress = $"{(char)('A' + j)}{i + 2}";
+                    worksheet.Cells[cellAddress].Value = schedule[i, j];
+                }
+            }
+
+            // Save file to memory
+            var excelBytes = package.GetAsByteArray();
+
+            // Create file name
+            var fileName = "example.xlsx";
+
+            // Dwonload file
+            await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes),
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+    }
     }
 }

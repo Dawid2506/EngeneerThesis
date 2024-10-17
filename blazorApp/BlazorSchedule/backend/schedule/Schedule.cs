@@ -74,7 +74,8 @@ namespace BlazorSchedule
 
             // Making third layer of schedule with information about positions
             //ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company);
-            ThirdLayerOfScheduleEmployee(numberOfDays, firstDayOfMonth, employees, company, numberOfEmployees);
+            //ThirdLayerOfScheduleEmployee(numberOfDays, firstDayOfMonth, employees, company, numberOfEmployees);
+            ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company, numberOfEmployees);
 
             // Making fourth layer of schedule witch adjust the broken days
             //FourthLayerOfSchedule(company, employees);
@@ -125,6 +126,64 @@ namespace BlazorSchedule
                 }
                 actualDate = 1;
             }
+        }
+
+        private void ThirdLayerOfSchedule(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int numberOfEmployees)
+        {
+            int actualDate = 1;
+            for (int i = 0; i < numberOfEmployees; i++)
+            {
+                for (int j = 0; j < numberOfDays; j++)
+                {
+                    Console.WriteLine("symbol: " + schedule[j, i + 2]);
+                    actualDate++;
+                }
+                actualDate = 1;
+            }
+        }
+
+        
+
+        private int EmployeeIndexByName(string name, List<Employee> employees)
+        {
+            int index = employees.FindIndex(e => e.name == name);
+            return index;
+        }
+
+        private Employee SearchEmployeeWithBiggestDiffrence(List<Employee> employees)
+        {
+            int biggestHourDiffrence = 0;
+            Employee employeeWithBiggestHoursDifference = employees[0]; // Assume the first employee has the biggest difference
+            foreach (Employee employee in employees)
+            {
+                int hourDifference = employee.minHours - employee.realHoursUsed();
+                if (hourDifference > biggestHourDiffrence)
+                {
+                    biggestHourDiffrence = hourDifference;
+                    employeeWithBiggestHoursDifference = employee;
+                }
+            }
+            return employeeWithBiggestHoursDifference;
+        }
+
+
+
+
+        public string GetDayOfWeekName(int dayOfWeek)
+        {
+            DaysOfWeek day = dayOfWeek switch
+            {
+                0 => DaysOfWeek.Sunday,
+                1 => DaysOfWeek.Monday,
+                2 => DaysOfWeek.Tuesday,
+                3 => DaysOfWeek.Wednesday,
+                4 => DaysOfWeek.Thursday,
+                5 => DaysOfWeek.Friday,
+                6 => DaysOfWeek.Saturday,
+                _ => throw new ArgumentOutOfRangeException(nameof(dayOfWeek), "Invalid day of the week")
+            };
+
+            return day.ToFriendlyString();
         }
 
         private void ThirdLayerOfScheduleEmployee(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int numberOfEmployees)
@@ -239,158 +298,6 @@ namespace BlazorSchedule
                     brokenDaysPositions.Add(i, positionsPerDay[i]);
                 }
             }
-        }
-
-        private int EmployeeIndexByName(string name, List<Employee> employees)
-        {
-            int index = employees.FindIndex(e => e.name == name);
-            return index;
-        }
-
-        // private void ThirdLayerOfSchedule(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company)
-        // {
-        //     int actualDay = firstDayOfMonth;
-        //     int actualDate = 1;
-        //     for (int i = 0; i < numberOfDays; i++)
-        //     {
-        //         ThirdLayerEngine(numberOfDays, firstDayOfMonth, employees, company, i, actualDay, actualDate);
-        //         actualDate++;
-        //         if (actualDay == 6)
-        //         {
-        //             actualDay = 0;
-        //         }
-        //         else
-        //         {
-        //             actualDay++;
-        //         }
-        //     }
-        // }
-
-        // private void ThirdLayerEngine(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int i, int actualDay, int actualDate)
-        // {
-        //     List<string> positions;
-        //     if (!(schedule[i, 0] == ScheduleCellContent.holiday.ToSymbol()))  //if day is working day
-        //     {
-        //         string day = GetDayOfWeekName(actualDay);
-        //         positions = new List<string>(company.positionsPerDay[day]);
-
-        //         List<int> randomEmployeesUsed = new List<int>();
-        //         Random random = new Random();
-
-        //         int tryCount = 0;
-        //         while (positions.Count > 0)
-        //         {
-        //             int randomEmployee;
-        //             do
-        //             {
-        //                 randomEmployee = random.Next(0, employees.Count); // get random employee int
-        //             } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
-
-        //             int x;
-        //             x = random.Next(0, positions.Count);
-        //             if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == ScheduleCellContent.notScheduled.ToSymbol()) // if employee has this position and is working
-        //             {
-        //                 int workingHours = company.CountWorkingHours(day);
-        //                 if (employees[randomEmployee].minHoursUsed >= (workingHours - 10))
-        //                 {
-        //                     employees[randomEmployee].minHoursUsed -= workingHours;
-        //                     schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
-        //                     randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-        //                     positions.RemoveAt(x); // remove the position from the list
-        //                 }
-        //             }
-        //             tryCount++;
-        //             if (tryCount > 20)
-        //             {
-        //                 brokenDays.Add(actualDate);
-        //                 brokenDaysPositions.Add(actualDate, positions);
-        //                 break;
-        //             }
-        //         }
-
-        //         positions.Clear();
-        //         randomEmployeesUsed.Clear();
-        //     }
-        // }
-
-        // private void FourthLayerOfSchedule(Company company, List<Employee> employees)
-        // {
-        //     Employee employeeWithBiggestHoursDifference = SearchEmployeeWithBiggestDiffrence(employees);
-
-        //     foreach (int brokenDay in brokenDays)
-        //     {
-        //         List<string> positions = brokenDaysPositions[brokenDay];
-        //         // List<int> randomEmployeesUsed = new List<int>();
-        //         // Random random = new Random();
-
-        //         // int tryCount = 0;
-        //         // while (positions.Count > 0)
-        //         // {
-        //         //     int randomEmployee;
-        //         //     do
-        //         //     {
-        //         //         randomEmployee = random.Next(0, employees.Count); // get random employee int
-        //         //     } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
-
-        //         //     int x;
-        //         //     x = random.Next(0, positions.Count);
-        //         //     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[brokenDay - 1, randomEmployee + 1] == "x") // if employee has this position and is working
-        //         //     {
-        //         //         int workingHours = company.CountWorkingHours(GetDayOfWeekName(brokenDay - 1));
-        //         //         if (employees[randomEmployee].minHoursUsed >= (workingHours - 1))
-        //         //         {
-        //         //             employees[randomEmployee].minHoursUsed -= workingHours;
-        //         //             schedule[brokenDay - 1, randomEmployee + 1] = positions[x]; // assign position to employee
-        //         //             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-        //         //             positions.RemoveAt(x); // remove the position from the list
-        //         //         }
-        //         //     }
-        //         //     tryCount++;
-        //         //     if (tryCount > 20)
-        //         //     {
-        //         //         break;
-        //         //     }
-        //         // }
-
-        //         // positions.Clear();
-        //         // randomEmployeesUsed.Clear();
-        //     }
-        // }
-
-        private Employee SearchEmployeeWithBiggestDiffrence(List<Employee> employees)
-        {
-            int biggestHourDiffrence = 0;
-            Employee employeeWithBiggestHoursDifference = employees[0]; // Assume the first employee has the biggest difference
-            foreach (Employee employee in employees)
-            {
-                int hourDifference = employee.minHours - employee.realHoursUsed();
-                if (hourDifference > biggestHourDiffrence)
-                {
-                    biggestHourDiffrence = hourDifference;
-                    employeeWithBiggestHoursDifference = employee;
-                }
-            }
-            return employeeWithBiggestHoursDifference;
-        }
-
-
-
-
-        public string GetDayOfWeekName(int dayOfWeek)
-        {
-            DaysOfWeek day = dayOfWeek switch
-            {
-                0 => DaysOfWeek.Sunday,
-                1 => DaysOfWeek.Monday,
-                2 => DaysOfWeek.Tuesday,
-                3 => DaysOfWeek.Wednesday,
-                4 => DaysOfWeek.Thursday,
-                5 => DaysOfWeek.Friday,
-                6 => DaysOfWeek.Saturday,
-                _ => throw new ArgumentOutOfRangeException(nameof(dayOfWeek), "Invalid day of the week")
-            };
-
-            return day.ToFriendlyString();
         }
     }
 }

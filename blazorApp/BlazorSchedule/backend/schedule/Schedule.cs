@@ -132,8 +132,11 @@ namespace BlazorSchedule
 
             // Sort employees by typeOfAgreement
             List<Employee> employeesWithAgreement = employees.Where(employee => employee.typeOfAgreement == AgreementType.mandate).ToList();
-            List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement != AgreementType.contract).ToList();
-            List<Employee> sortedEmployees = employeesWithAgreement.Concat(employeesWithoutAgreement).ToList();
+            List<Employee> employeesWithoutAgreement = employees.Where(employee => employee.typeOfAgreement == AgreementType.contract).ToList();
+            List<Employee> sortedEmployees = employeesWithoutAgreement.Concat(employeesWithAgreement).ToList();
+            Console.WriteLine("employeesWithAgreement: " + string.Join(", ", employeesWithAgreement.Select(e => e.name)));
+            Console.WriteLine("employeesWithoutAgreement: " + string.Join(", ", employeesWithoutAgreement.Select(e => e.name)));
+            Console.WriteLine("Sorted employees: " + string.Join(", ", sortedEmployees.Select(e => e.name)));
             Dictionary<int, int> daysOfWeek = new Dictionary<int, int>();
 
             //generate dictionary daysOfWeek
@@ -244,115 +247,115 @@ namespace BlazorSchedule
             return index;
         }
 
-        private void ThirdLayerOfSchedule(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company)
-        {
-            int actualDay = firstDayOfMonth;
-            int actualDate = 1;
-            for (int i = 0; i < numberOfDays; i++)
-            {
-                ThirdLayerEngine(numberOfDays, firstDayOfMonth, employees, company, i, actualDay, actualDate);
-                actualDate++;
-                if (actualDay == 6)
-                {
-                    actualDay = 0;
-                }
-                else
-                {
-                    actualDay++;
-                }
-            }
-        }
+        // private void ThirdLayerOfSchedule(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company)
+        // {
+        //     int actualDay = firstDayOfMonth;
+        //     int actualDate = 1;
+        //     for (int i = 0; i < numberOfDays; i++)
+        //     {
+        //         ThirdLayerEngine(numberOfDays, firstDayOfMonth, employees, company, i, actualDay, actualDate);
+        //         actualDate++;
+        //         if (actualDay == 6)
+        //         {
+        //             actualDay = 0;
+        //         }
+        //         else
+        //         {
+        //             actualDay++;
+        //         }
+        //     }
+        // }
 
-        private void ThirdLayerEngine(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int i, int actualDay, int actualDate)
-        {
-            List<string> positions;
-            if (!(schedule[i, 0] == ScheduleCellContent.holiday.ToSymbol()))  //if day is working day
-            {
-                string day = GetDayOfWeekName(actualDay);
-                positions = new List<string>(company.positionsPerDay[day]);
+        // private void ThirdLayerEngine(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int i, int actualDay, int actualDate)
+        // {
+        //     List<string> positions;
+        //     if (!(schedule[i, 0] == ScheduleCellContent.holiday.ToSymbol()))  //if day is working day
+        //     {
+        //         string day = GetDayOfWeekName(actualDay);
+        //         positions = new List<string>(company.positionsPerDay[day]);
 
-                List<int> randomEmployeesUsed = new List<int>();
-                Random random = new Random();
+        //         List<int> randomEmployeesUsed = new List<int>();
+        //         Random random = new Random();
 
-                int tryCount = 0;
-                while (positions.Count > 0)
-                {
-                    int randomEmployee;
-                    do
-                    {
-                        randomEmployee = random.Next(0, employees.Count); // get random employee int
-                    } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
+        //         int tryCount = 0;
+        //         while (positions.Count > 0)
+        //         {
+        //             int randomEmployee;
+        //             do
+        //             {
+        //                 randomEmployee = random.Next(0, employees.Count); // get random employee int
+        //             } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
 
-                    int x;
-                    x = random.Next(0, positions.Count);
-                    if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == ScheduleCellContent.notScheduled.ToSymbol()) // if employee has this position and is working
-                    {
-                        int workingHours = company.CountWorkingHours(day);
-                        if (employees[randomEmployee].minHoursUsed >= (workingHours - 10))
-                        {
-                            employees[randomEmployee].minHoursUsed -= workingHours;
-                            schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
-                            randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                            positions.RemoveAt(x); // remove the position from the list
-                        }
-                    }
-                    tryCount++;
-                    if (tryCount > 20)
-                    {
-                        brokenDays.Add(actualDate);
-                        brokenDaysPositions.Add(actualDate, positions);
-                        break;
-                    }
-                }
+        //             int x;
+        //             x = random.Next(0, positions.Count);
+        //             if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[i, randomEmployee + 1] == ScheduleCellContent.notScheduled.ToSymbol()) // if employee has this position and is working
+        //             {
+        //                 int workingHours = company.CountWorkingHours(day);
+        //                 if (employees[randomEmployee].minHoursUsed >= (workingHours - 10))
+        //                 {
+        //                     employees[randomEmployee].minHoursUsed -= workingHours;
+        //                     schedule[i, randomEmployee + 1] = positions[x]; // assign position to employee
+        //                     randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
+        //                     positions.RemoveAt(x); // remove the position from the list
+        //                 }
+        //             }
+        //             tryCount++;
+        //             if (tryCount > 20)
+        //             {
+        //                 brokenDays.Add(actualDate);
+        //                 brokenDaysPositions.Add(actualDate, positions);
+        //                 break;
+        //             }
+        //         }
 
-                positions.Clear();
-                randomEmployeesUsed.Clear();
-            }
-        }
+        //         positions.Clear();
+        //         randomEmployeesUsed.Clear();
+        //     }
+        // }
 
-        private void FourthLayerOfSchedule(Company company, List<Employee> employees)
-        {
-            Employee employeeWithBiggestHoursDifference = SearchEmployeeWithBiggestDiffrence(employees);
+        // private void FourthLayerOfSchedule(Company company, List<Employee> employees)
+        // {
+        //     Employee employeeWithBiggestHoursDifference = SearchEmployeeWithBiggestDiffrence(employees);
 
-            foreach (int brokenDay in brokenDays)
-            {
-                List<string> positions = brokenDaysPositions[brokenDay];
-                // List<int> randomEmployeesUsed = new List<int>();
-                // Random random = new Random();
+        //     foreach (int brokenDay in brokenDays)
+        //     {
+        //         List<string> positions = brokenDaysPositions[brokenDay];
+        //         // List<int> randomEmployeesUsed = new List<int>();
+        //         // Random random = new Random();
 
-                // int tryCount = 0;
-                // while (positions.Count > 0)
-                // {
-                //     int randomEmployee;
-                //     do
-                //     {
-                //         randomEmployee = random.Next(0, employees.Count); // get random employee int
-                //     } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
+        //         // int tryCount = 0;
+        //         // while (positions.Count > 0)
+        //         // {
+        //         //     int randomEmployee;
+        //         //     do
+        //         //     {
+        //         //         randomEmployee = random.Next(0, employees.Count); // get random employee int
+        //         //     } while (randomEmployeesUsed.Contains(randomEmployee)); // check if randomEmployee is already used
 
-                //     int x;
-                //     x = random.Next(0, positions.Count);
-                //     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[brokenDay - 1, randomEmployee + 1] == "x") // if employee has this position and is working
-                //     {
-                //         int workingHours = company.CountWorkingHours(GetDayOfWeekName(brokenDay - 1));
-                //         if (employees[randomEmployee].minHoursUsed >= (workingHours - 1))
-                //         {
-                //             employees[randomEmployee].minHoursUsed -= workingHours;
-                //             schedule[brokenDay - 1, randomEmployee + 1] = positions[x]; // assign position to employee
-                //             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
-                //             positions.RemoveAt(x); // remove the position from the list
-                //         }
-                //     }
-                //     tryCount++;
-                //     if (tryCount > 20)
-                //     {
-                //         break;
-                //     }
-                // }
+        //         //     int x;
+        //         //     x = random.Next(0, positions.Count);
+        //         //     if (employees[randomEmployee].positions.Contains(positions[x]) && schedule[brokenDay - 1, randomEmployee + 1] == "x") // if employee has this position and is working
+        //         //     {
+        //         //         int workingHours = company.CountWorkingHours(GetDayOfWeekName(brokenDay - 1));
+        //         //         if (employees[randomEmployee].minHoursUsed >= (workingHours - 1))
+        //         //         {
+        //         //             employees[randomEmployee].minHoursUsed -= workingHours;
+        //         //             schedule[brokenDay - 1, randomEmployee + 1] = positions[x]; // assign position to employee
+        //         //             randomEmployeesUsed.Add(randomEmployee); // add randomEmployee to used list
+        //         //             positions.RemoveAt(x); // remove the position from the list
+        //         //         }
+        //         //     }
+        //         //     tryCount++;
+        //         //     if (tryCount > 20)
+        //         //     {
+        //         //         break;
+        //         //     }
+        //         // }
 
-                // positions.Clear();
-                // randomEmployeesUsed.Clear();
-            }
-        }
+        //         // positions.Clear();
+        //         // randomEmployeesUsed.Clear();
+        //     }
+        // }
 
         private Employee SearchEmployeeWithBiggestDiffrence(List<Employee> employees)
         {

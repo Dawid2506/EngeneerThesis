@@ -56,6 +56,8 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
                 endHours.Add(DateTime.MinValue);
                 positionsPerDay.Add(workingDaysList[i], new List<string>());
             }
+
+            isCheckboxChecked = appState.CompanyInstance.isCheckboxChecked;
         }
 
         protected override async Task OnInitializedAsync()

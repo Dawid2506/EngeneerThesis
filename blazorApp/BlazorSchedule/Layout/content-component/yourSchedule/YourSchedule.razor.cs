@@ -25,6 +25,8 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
         protected override void OnInitialized()
         {
             holidays = new List<int>();
+            month = 4;
+            year = 2024;
         }
 
         private void AddHoliday(int holiday)
@@ -42,7 +44,7 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
             List<Employee> employees = appState.EmployeesRepository.employees;
 
             int tryCount = 0;
-            int maxTryCount = 2;
+            int maxTryCount = 1;
             int minBrokenDays = 0;
             string[,] bestSchedule = new string[NumOfDaysInApril, employees.Count + 2];
             while (tryCount < maxTryCount)

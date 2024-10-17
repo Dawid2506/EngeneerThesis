@@ -11,28 +11,32 @@
 @foreach (var employee in employees)
 {
     <div class="particular-employee">
-        <h3 class="ml-4 mt-4 font-bold">@employee.name</h3>
-        <div class="flex justify-start items-center p-8">
-            <p class="text-xl">Days Off</p>
-            <input type="text" id="date" class="w-16 ml-4 rounded-lg text-black" @bind="employee.SelectedDayOff">
-            <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => AddDate(employee)'>Add</div>
-            @if (employee.daysOff != null)
-            {
-                @for (int i = 0; i < employee.daysOff.Count; i++)
-                {
-                    int iIndex = i;
-                    <div>
-                        @if (i == 0)
+        <Card Class="bg-[#333333] border-[#661D15] text-white border-4 m-2">
+            <CardBody>
+                <CardTitle>@employee.name</CardTitle>
+                <div class="flex justify-start items-center p-8 flex-wrap w-[w-calc-minus-250]">
+                    <p class="text-xl">Days Off</p>
+                    <input type="text" id="date" class="w-16 ml-4 rounded-lg text-black" @bind="employee.SelectedDayOff"
+                        @onkeydown="(e) => OnEnterKeyPress(e, employee)" />
+                    <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95 "
+                        @onclick='() => AddDate(employee)'>Add</div>
+                    @if (employee.daysOff != null)
+                    {
+                        @for (int i = 0; i < employee.daysOff.Count; i++)
                         {
-                            <div class="flex justify-center items-center flex-row"><p class="text-lg">&nbsp;&nbsp;@employee.daysOff[i]</p> <div class="ml-4 flex justify-center items-center text-white w-8 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
+                            int iIndex = i;
+                            <div>
+                                <div class="flex justify-center items-center flex-row py-2  bg-[#3e3e3e] m-2 rounded-md">
+                                    <p class="text-lg ml-2"> @employee.daysOff[i]</p>
+                                    <div class="mx-2 flex justify-center items-center text-white w-8 h-4 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95"
+                                        @onclick='() => SubtractDay(employee, iIndex)'>-</div>
+                                </div>
+                            </div>
                         }
-                        else if (i > 0)
-                        {
-                            <div class="flex justify-center items-center flex-row"><p class="text-lg">, @employee.daysOff[i]</p> <div class="ml-4 flex justify-center items-center text-white w-8 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => SubtractDay(employee, iIndex)'>-</div></div>
-                        }
-                    </div>
-                }
-            }
-        </div>
+                    }
+                </div>
+            </CardBody>
+        </Card>
+
     </div>
 }

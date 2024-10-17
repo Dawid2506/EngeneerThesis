@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,5 +40,13 @@ namespace BlazorSchedule.Layout.content_component.employeePreference
 
             employee.daysOff.RemoveAt(index);
         }
+
+        private void OnEnterKeyPress(KeyboardEventArgs e, Employee employee)
+    {
+        if (e.Key == "Enter")
+        {
+            AddDate(employee);
+        }
+    }
     }
 }

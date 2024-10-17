@@ -130,19 +130,71 @@ namespace BlazorSchedule
 
         private void ThirdLayerOfSchedule(int numberOfDays, int firstDayOfMonth, List<Employee> employees, Company company, int numberOfEmployees)
         {
-            int actualDate = 1;
-            for (int i = 0; i < numberOfEmployees; i++)
+            Dictionary<int, int> daysOfWeek = new Dictionary<int, int>();
+
+            int dayOfWeek = firstDayOfMonth;
+            for (int i = 1; i <= numberOfDays; i++)
             {
-                for (int j = 0; j < numberOfDays; j++)
+                schedule[i - 1, 1] = GetDayOfWeekName(dayOfWeek);
+                daysOfWeek.Add(i, dayOfWeek);
+
+                if (dayOfWeek == 6)
                 {
-                    Console.WriteLine("symbol: " + schedule[j, i + 2]);
-                    actualDate++;
+                    dayOfWeek = 0;
                 }
-                actualDate = 1;
+                else
+                {
+                    dayOfWeek++;
+                }
+            }
+
+            for (int i = 1; i <= numberOfDays; i++)
+            {
+                string dayString = GetDayOfWeekName(daysOfWeek[i]);
+                int dayInt = i;
+                if (company.workingDays.Contains(dayString))
+                {
+                    continue;
+                }
+
+                List<string> positionsToFill = new List<string>(company.positionsPerDay[dayString]);
+
+                Console.WriteLine($"Day {i}, positions to fill: {string.Join(", ", positionsToFill)}");
+
+                foreach (string position in positionsToFill)
+                {
+                    List<Employee> availableEmployees = employees.Where(e =>
+                        e.positions.Contains(position) &&
+                        e.IsAvailableOn(dayInt) &&
+                        e.minHoursUsed < e.minHours
+                    ).OrderBy(e => e.minHoursUsed).ToList();
+
+                    Console.WriteLine("availableEmployees: " + string.Join(", ", availableEmployees.Select(e => e.name)));
+
+                    if (availableEmployees.Any())
+                    {
+                        Console.WriteLine($"Day {i}, position {position}, available employees: {string.Join(", ", availableEmployees.Select(e => e.name))}");
+                        Employee employee = availableEmployees.First();
+                        int employeeIndex = employees.IndexOf(employee);
+                        schedule[i - 1, employeeIndex + 2] = position;
+                        employee.minHoursUsed += company.CountWorkingHours(GetDayOfWeekName(daysOfWeek[i]));
+                    }
+                }
+            }
+
+            // Log the entire schedule 2D table
+            Console.WriteLine("Schedule:");
+            for (int i = 0; i < schedule.GetLength(0); i++)
+            {
+                for (int j = 0; j < schedule.GetLength(1); j++)
+                {
+                    Console.Write(schedule[i, j] + "\t");
+                }
+                Console.WriteLine();
             }
         }
 
-        
+
 
         private int EmployeeIndexByName(string name, List<Employee> employees)
         {

@@ -1,6 +1,7 @@
 using YourBlazorProject.Models;
 
-namespace BlazorSchedule{
+namespace BlazorSchedule
+{
     public class Employee
     {
         public string name { get; set; }
@@ -14,6 +15,11 @@ namespace BlazorSchedule{
         public int realHoursUsed()
         {
             return minHours - minHoursUsed;
+        }
+
+        public bool IsAvailableOn(int date)
+        {
+            return !daysOff.Contains(date);
         }
 
         public Employee(string name, AgreementType typeOfAgreement, int minHours, List<string> positions)

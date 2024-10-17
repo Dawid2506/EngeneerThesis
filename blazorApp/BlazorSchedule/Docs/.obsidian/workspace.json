@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DevInformation.md",
+                "file": "Algorithm.md",
                 "mode": "preview",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DevInformation.md",
+                "file": "Algorithm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DevInformation.md",
+                "file": "Algorithm.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DevInformation.md"
+                "file": "Algorithm.md"
               }
             }
           }
@@ -209,12 +209,12 @@
   },
   "active": "0f7bb8ffc196796d",
   "lastOpenFiles": [
+    "DevInformation.md",
     "Component Standard.md",
     "Company.md",
     "GeneralGuidelines.md",
     "prompt.md",
     "State.md",
-    "Models and structures.md",
-    "DevInformation.md"
+    "Models and structures.md"
   ]
 }

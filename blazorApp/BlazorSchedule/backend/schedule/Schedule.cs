@@ -152,45 +152,41 @@ namespace BlazorSchedule
             {
                 string dayString = GetDayOfWeekName(daysOfWeek[i]);
                 int dayInt = i;
-                if (company.workingDays.Contains(dayString))
+                if (!company.workingDays.Contains(dayString))
                 {
                     continue;
                 }
 
                 List<string> positionsToFill = new List<string>(company.positionsPerDay[dayString]);
 
-                Console.WriteLine($"Day {i}, positions to fill: {string.Join(", ", positionsToFill)}");
-
                 foreach (string position in positionsToFill)
                 {
                     List<Employee> availableEmployees = employees.Where(e =>
                         e.positions.Contains(position) &&
                         e.IsAvailableOn(dayInt) &&
-                        e.minHoursUsed < e.minHours
-                    ).OrderBy(e => e.minHoursUsed).ToList();
-
-                    Console.WriteLine("availableEmployees: " + string.Join(", ", availableEmployees.Select(e => e.name)));
+                        e.realHoursUsed() < e.minHours
+                    ).OrderBy(e => e.realHoursUsed()).ToList();
 
                     if (availableEmployees.Any())
                     {
-                        Console.WriteLine($"Day {i}, position {position}, available employees: {string.Join(", ", availableEmployees.Select(e => e.name))}");
                         Employee employee = availableEmployees.First();
                         int employeeIndex = employees.IndexOf(employee);
                         schedule[i - 1, employeeIndex + 2] = position;
-                        employee.minHoursUsed += company.CountWorkingHours(GetDayOfWeekName(daysOfWeek[i]));
+                        int workingHours = company.CountWorkingHours(dayString);
+                        employee.minHoursUsed -= workingHours;
+                    }
+                    else{
+                        brokenDays.Add(i);
+                        if (brokenDaysPositions.ContainsKey(i))
+                        {
+                            brokenDaysPositions[i].Add(position);
+                        }
+                        else
+                        {
+                            brokenDaysPositions[i] = new List<string> { position };
+                        }
                     }
                 }
-            }
-
-            // Log the entire schedule 2D table
-            Console.WriteLine("Schedule:");
-            for (int i = 0; i < schedule.GetLength(0); i++)
-            {
-                for (int j = 0; j < schedule.GetLength(1); j++)
-                {
-                    Console.Write(schedule[i, j] + "\t");
-                }
-                Console.WriteLine();
             }
         }
 

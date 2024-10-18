@@ -47,17 +47,18 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
             int maxTryCount = 1;
             int minBrokenDays = 0;
             string[,] bestSchedule = new string[NumOfDaysInApril, employees.Count + 2];
-            while (tryCount < maxTryCount)
-            {
-                tryCount++;
-                MakeSchedule(NumOfDaysInApril, employees);
-                if (minBrokenDays < appState.schedule.brokenDays.Count())
-                {
-                    minBrokenDays = appState.schedule.brokenDays.Count();
-                    bestSchedule = appState.schedule.schedule;
-                }
-            }
-            appState.schedule.schedule = bestSchedule;
+            // while (tryCount < maxTryCount)
+            // {
+            //     tryCount++;
+            //     MakeSchedule(NumOfDaysInApril, employees);
+            //     if (minBrokenDays < appState.schedule.brokenDays.Count())
+            //     {
+            //         minBrokenDays = appState.schedule.brokenDays.Count();
+            //         bestSchedule = appState.schedule.schedule;
+            //     }
+            // }
+            MakeSchedule(NumOfDaysInApril, employees);
+            appState.schedule.schedule = appState.schedule.schedule;
         }
         private void MakeSchedule(int NumOfDaysInApril, List<Employee> employees)
         {

@@ -7,6 +7,7 @@ using YourBlazorProject.Models;
 using OfficeOpenXml;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Web;
+using BlazorBootstrap;
 
 
 namespace BlazorSchedule.Layout.content_component.yourSchedule
@@ -38,30 +39,30 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
             holiday = 0;
         }
 
-        private void MakeScheduleGenerator()
-        {
-            DateTime date = new DateTime(year, month, 1);
-            int NumOfDaysInApril = DateTime.DaysInMonth(date.Year, date.Month);
-            List<Employee> employees = appState.EmployeesRepository.employees;
+        // private void MakeScheduleGenerator()
+        // {
+        //     DateTime date = new DateTime(year, month, 1);
+        //     int NumOfDaysInApril = DateTime.DaysInMonth(date.Year, date.Month);
+        //     List<Employee> employees = appState.EmployeesRepository.employees;
 
-            int tryCount = 0;
-            int maxTryCount = 1;
-            int minBrokenDays = 0;
-            string[,] bestSchedule = new string[NumOfDaysInApril, employees.Count + 2];
-            // while (tryCount < maxTryCount)
-            // {
-            //     tryCount++;
-            //     MakeSchedule(NumOfDaysInApril, employees);
-            //     if (minBrokenDays < appState.schedule.brokenDays.Count())
-            //     {
-            //         minBrokenDays = appState.schedule.brokenDays.Count();
-            //         bestSchedule = appState.schedule.schedule;
-            //     }
-            // }
-            MakeSchedule(NumOfDaysInApril, employees);
-            appState.schedule.schedule = appState.schedule.schedule;
-        }
-        private void MakeSchedule(int NumOfDaysInApril, List<Employee> employees)
+        //     int tryCount = 0;
+        //     int maxTryCount = 1;
+        //     int minBrokenDays = 0;
+        //     string[,] bestSchedule = new string[NumOfDaysInApril, employees.Count + 2];
+        //     // while (tryCount < maxTryCount)
+        //     // {
+        //     //     tryCount++;
+        //     //     MakeSchedule(NumOfDaysInApril, employees);
+        //     //     if (minBrokenDays < appState.schedule.brokenDays.Count())
+        //     //     {
+        //     //         minBrokenDays = appState.schedule.brokenDays.Count();
+        //     //         bestSchedule = appState.schedule.schedule;
+        //     //     }
+        //     // }
+        //     MakeSchedule(NumOfDaysInApril, employees);
+        //     appState.schedule.schedule = appState.schedule.schedule;
+        // }
+        private void MakeSchedule()
         {
             if (month == 0 || year == 0)
             {
@@ -74,14 +75,17 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
             }
 
             DateTime date = new DateTime(year, month, 1);
+            int NumOfDaysInApril = DateTime.DaysInMonth(date.Year, date.Month);
+            List<Employee> employees = appState.EmployeesRepository.employees;
             DateTime firstDayOfApril = new DateTime(date.Year, date.Month, 1);
             DayOfWeek startDayOfWeek = firstDayOfApril.DayOfWeek;
             int FirstDayOfMonth = (int)startDayOfWeek;
 
             List<int> workingDaysInt = MakeNumberOfDaysDictionary();
             Company company = appState.CompanyInstance;
+            ScheduleSymbols scheduleSymbols = appState.scheduleSymbols;
 
-            appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees, company);
+            appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees, company, scheduleSymbols);
 
             appState.schedule.month = month.ToString();
             appState.schedule.year = year.ToString();
@@ -166,6 +170,24 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
                 await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes),
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }
+        }
+
+        private Modal modal = default!;
+
+        private void ResetSymbols()
+        {
+            // Przywróć domyślne wartości symboli
+            appState.scheduleSymbols.ResetToDefault();
+        }
+
+        private async Task OnShowModalClick()
+        {
+            await modal.ShowAsync();
+        }
+
+        private async Task OnHideModalClick()
+        {
+            await modal.HideAsync();
         }
 
         private void OnEnterKeyPress(KeyboardEventArgs e, int holiday)

@@ -1,3 +1,5 @@
+using YourBlazorProject.Models;
+
 namespace BlazorSchedule
 {
     public class AppState
@@ -6,6 +8,7 @@ namespace BlazorSchedule
         public Company CompanySecondShift { get; set; }
         public EmployeesRepository EmployeesRepository { get; set; }
         public Schedule schedule { get; set;}
+        public ScheduleSymbols scheduleSymbols { get; set; }
 
         public AppState()
         {
@@ -13,6 +16,7 @@ namespace BlazorSchedule
             EmployeesRepository = new EmployeesRepository();
             schedule = Schedule.Instance;
             CompanySecondShift = new Company();
+            scheduleSymbols = new ScheduleSymbols();
         }
     }
 }

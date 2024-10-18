@@ -2,6 +2,7 @@
 @page "/add-component"
 @inject NavigationManager NavigationManager;
 @inject AppState appState;
+@using Reusable;
 @using System.Collections.Generic;
 
 <div class="relative h-screen">
@@ -40,12 +41,7 @@
             <button class="ml-4 text-white w-[10em] h-[2em] bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="AddPosition" data-test-id="add-position">Add Position</button>
         </div>
         <div class="flex justify-center items-center">
-            @foreach (var position in positions)
-            {
-                <div class="flex justify-center items-center">
-                    <p>@position</p>
-                </div>
-            }
+            <RemoveFromList Items="positions" />
         </div>
 
         <div class="absolute right-12 bottom-12">

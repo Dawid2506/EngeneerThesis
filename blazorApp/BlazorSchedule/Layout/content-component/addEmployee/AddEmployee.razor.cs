@@ -24,6 +24,15 @@ namespace BlazorSchedule.Layout.content_component.addEmployee
         protected override void OnInitialized()
         {
             positions = new List<string>();
+
+            if (appState.CompanyInstance.positionsList.Count > 0)
+            {
+                position = appState.CompanyInstance.positionsList[0];
+            }
+            else
+            {
+                position = null;
+            }
             position = appState.CompanyInstance.positionsList[0];
         }
 
@@ -37,13 +46,20 @@ namespace BlazorSchedule.Layout.content_component.addEmployee
             Employee? employee = employees.FirstOrDefault(e => e.name == editByName);
             typeOfAgreement = employee?.typeOfAgreement;
             minHours = employee?.minHours.ToString();
-            positions = employee?.positions ?? new List<string>();
+            if (employee != null)
+            {
+                positions = employee.positions ?? new List<string>();
+            }
+            else
+            {
+                positions = new List<string>(); // lub inna wartość domyślna
+            }
 
         }
 
         private void AddEmployeeMethod()
         {
-            if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(minHours))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(minHours))
             {
                 errorMessage = "Please fill all fields";
                 return;

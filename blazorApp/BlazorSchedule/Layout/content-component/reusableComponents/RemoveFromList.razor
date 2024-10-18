@@ -2,7 +2,7 @@
 @namespace Reusable
 
 <div>
-    @if (Items != null)
+    @if (Items != null && Items.Count > 0)
     {
         <div class="flex flex-row">
         @for (int i = 0; i < Items.Count; i++)

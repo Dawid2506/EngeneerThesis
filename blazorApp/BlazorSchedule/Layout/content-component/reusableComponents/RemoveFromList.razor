@@ -1,0 +1,36 @@
+@typeparam TItem
+@namespace Reusable
+
+<div>
+    @if (Items != null)
+    {
+        <div class="flex flex-row">
+        @for (int i = 0; i < Items.Count; i++)
+        {
+            int index = i;
+            <div>
+                <div class="flex justify-center items-center flex-row py-2  bg-[#3e3e3e] m-2 rounded-md">
+                    <p class="text-lg ml-2">@Items[i]</p>
+                    <div class="mx-2 flex justify-center items-center text-white w-8 h-4 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95"
+                        @onclick='() => RemoveItem(index)'>-</div>
+                </div>
+            </div>
+        }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<TItem> Items { get; set; } = new List<TItem>();
+
+    private void RemoveItem(int index)
+    {
+        if (Items == null || index < 0 || index >= Items.Count)
+        {
+            return;
+        }
+
+        Items.RemoveAt(index);
+    }
+}

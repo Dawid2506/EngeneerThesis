@@ -13,7 +13,7 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
     public partial class YourSchedule
     {
         private int holiday { get; set; }
-        private List<int> holidays { get; set; } = new List<int>();
+        //private List<int> holidays { get; set; } = new List<int>();
         private string? errorMessage { get; set; }
         private int month { get; set; }
         private int year { get; set; }
@@ -24,7 +24,7 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
 
         protected override void OnInitialized()
         {
-            holidays = new List<int>();
+            //holidays = appState.CompanyInstance.holidays;
             month = 4;
             year = 2024;
         }
@@ -33,7 +33,7 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
         {
             if (holiday <= 0 || holiday >= 32) return;
 
-            holidays.Add(holiday);
+            appState.CompanyInstance.holidays.Add(holiday);
             holiday = 0;
         }
 
@@ -79,14 +79,6 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
 
             List<int> workingDaysInt = MakeNumberOfDaysDictionary();
             Company company = appState.CompanyInstance;
-
-            foreach (var employee in employees)
-            {
-                foreach (var day in holidays)
-                {
-                    employee.daysOff.Add(day);
-                }
-            }
 
             appState.schedule.InitializeSchedule(NumOfDaysInApril, workingDaysInt, FirstDayOfMonth, employees, company);
 

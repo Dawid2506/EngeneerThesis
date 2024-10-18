@@ -70,7 +70,7 @@ namespace BlazorSchedule
             FirstLayerOfSchedule(numberOfDays, workingDaysInt, actualDay);
 
             // Making second layer of schedule with information about employees
-            SecondLayerOfSchedule(numberOfEmployees, employees, numberOfDays);
+            SecondLayerOfSchedule(numberOfEmployees, employees, numberOfDays, company);
 
             // Making third layer of schedule with information about positions
             //ThirdLayerOfSchedule(numberOfDays, firstDayOfMonth, employees, company);
@@ -103,14 +103,14 @@ namespace BlazorSchedule
             }
         }
 
-        private void SecondLayerOfSchedule(int numberOfEmployees, List<Employee> employees, int numberOfDays)
+        private void SecondLayerOfSchedule(int numberOfEmployees, List<Employee> employees, int numberOfDays, Company company)
         {
             int actualDate = 1;
             for (int i = 0; i < numberOfEmployees; i++)
             {
                 for (int j = 0; j < numberOfDays; j++)
                 {
-                    if (schedule[j, 0] == ScheduleCellContent.holiday.ToSymbol())
+                    if (company.holidays.Contains(actualDate))
                     {
                         schedule[j, i + 2] = ScheduleCellContent.holiday.ToSymbol();
                     }
@@ -152,7 +152,7 @@ namespace BlazorSchedule
             {
                 string dayString = GetDayOfWeekName(daysOfWeek[i]);
                 int dayInt = i;
-                if (!company.workingDays.Contains(dayString))
+                if (!company.workingDays.Contains(dayString) || company.holidays.Contains(dayInt))
                 {
                     continue;
                 }

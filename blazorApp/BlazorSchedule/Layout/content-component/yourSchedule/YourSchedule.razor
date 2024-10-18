@@ -3,6 +3,7 @@
 @using Blazorise.Extensions;
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory _httpClientFactory;
+@using Reusable;
 @inject AppState appState;
 
 @if (errorMessage != null)
@@ -35,23 +36,9 @@
     <p class="text-xl">Holidays</p>
     <input type="text" class="ml-4 rounded-lg text-black" @bind="holiday">
     <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => AddHoliday(holiday)'>Add</div>
-    @if (holidays != null)
-    {
-        @for (int i = 0; i < holidays.Count; i++)
-        {
-            <div>
-                @if (i == 0)
-                {
-                    <p class="text-lg">&nbsp;&nbsp;@holidays[i]</p>
-                    //&nbsp; - non-breaking space
-                }
-                else if (i > 0)
-                {
-                    <p class="text-lg">, @holidays[i]</p>
-                }
-            </div>
-        }
-    }
+    <div>
+        <RemoveFromList Items="appState.CompanyInstance.holidays" />
+    </div>
 </div>
 
 <div class="flex flex-row">

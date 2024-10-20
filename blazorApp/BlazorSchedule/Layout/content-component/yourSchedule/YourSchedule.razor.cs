@@ -160,13 +160,57 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
                     }
                 }
 
-                // Save file to memory
+                //print employee
+                int employeeInfoPlaceX = schedule.GetLength(1) + 2;
+                for (int i = 1; i <= employees.Count; i++)
+                {
+                    //name
+                    string cellAddress = $"{(char)('A' + employeeInfoPlaceX)}{i}";
+                    worksheet.Cells[cellAddress].Value = employees[i - 1].name;
+
+                    //hours
+                    cellAddress = $"{(char)('A' + employeeInfoPlaceX + 1)}{i}";
+                    worksheet.Cells[cellAddress].Value = employees[i - 1].realHoursUsed();
+
+                    cellAddress = $"{(char)('A' + employeeInfoPlaceX + 2)}{i}";
+                    worksheet.Cells[cellAddress].Value = employees[i - 1].minHours;
+                }
+
+                // Dodanie liczby godzin pracy dla dni tygodnia (kolumna pomocnicza)
+                int hoursColumnIndex = schedule.GetLength(1) + 1;
+                worksheet.Cells[$"{(char)('A' + hoursColumnIndex)}1"].Value = "Godziny na dzień";
+
+                // Mapowanie dni tygodnia na liczby godzin (Excel formula)
+                for (int i = 0; i < schedule.GetLength(0); i++)
+                {
+                    string cellAddress = $"{(char)('A' + hoursColumnIndex)}{i + 2}";
+
+                    // Używamy formuły, która porównuje dokładnie dni tygodnia z kolumny B
+                    worksheet.Cells[cellAddress].Formula = $"IF(B{i + 2}=\"Saturday\",6,IF(B{i + 2}=\"Sunday\",6,8))";
+                }
+
+                // Dodanie formuł Excel do zliczania godzin pracy dla każdego pracownika
+                for (int j = 0; j < employees.Count; j++)
+                {
+                    // Kolumna z grafikiem pracownika (B, C, D, itd.)
+                    int employeeColumn = j + 2;
+
+                    // Zakres dla formuły SUMIF
+                    string employeeScheduleColumn = $"{(char)('A' + employeeColumn)}";
+
+                    // Komórka, w której będzie wyświetlona suma godzin
+                    string totalHoursCell = $"{(char)('A' + employeeColumn)}{schedule.GetLength(0) + 3}";
+
+                    // Formuła zliczająca godziny dla danego pracownika, ignorując dni wolne ("x")
+                    worksheet.Cells[totalHoursCell].Formula =
+                        $"SUMIF({employeeScheduleColumn}2:{employeeScheduleColumn}{schedule.GetLength(0) + 1}, \"<>x\", " +
+                        $"{(char)('A' + hoursColumnIndex)}2:{(char)('A' + hoursColumnIndex)}{schedule.GetLength(0) + 1})";
+                }
+
                 var excelBytes = package.GetAsByteArray();
 
-                // Create file name
                 var fileName = "example.xlsx";
 
-                // Dwonload file
                 await JSRuntime.InvokeVoidAsync("BlazorDownloadFile.saveAsFile", fileName, Convert.ToBase64String(excelBytes),
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }

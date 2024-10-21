@@ -8,6 +8,7 @@ namespace BlazorSchedule{
         public Dictionary<string, Dictionary<string, string>> workingHoursDay { get; set; }
         public Dictionary<string, List<string>> positionsPerDay { get; set; }
         public List<string> positionsList { get; set; }
+        public List<int> holidays { get; set; }
         public bool isCheckboxChecked { get; set; } = false;
 
         public Company()
@@ -18,6 +19,7 @@ namespace BlazorSchedule{
             name = string.Empty;
             workingHoursDay = new Dictionary<string, Dictionary<string, string>>();
             positionsList = new List<string>();
+            holidays = new List<int>();
         }
 
         public void SetWorkingHoursDay(Dictionary<string, Dictionary<string, string>> workingHoursDay)

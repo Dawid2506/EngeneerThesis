@@ -3,6 +3,7 @@
 @using Blazorise.Extensions;
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory _httpClientFactory;
+@using Reusable;
 @inject AppState appState;
 @using Reusable;
 
@@ -34,13 +35,36 @@
 
 <div class="flex p-8 justify-start items-center">
     <p class="text-xl">Holidays</p>
-    <input type="text" class="ml-4 rounded-lg text-black" @bind="holiday">
+    <input type="text" class="ml-4 rounded-lg text-black" @bind="holiday" @onkeydown="(e) => OnEnterKeyPress(e, holiday)" @oninput="(e) => holiday = int.TryParse(e.Value?.ToString(), out var result) ? result : holiday" >
     <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick='() => AddHoliday(holiday)'>Add</div>
-    <RemoveFromList Items="holidays" />
+    <div>
+        <RemoveFromList Items="appState.CompanyInstance.holidays" />
+    </div>
 </div>
 
+<Modal @ref="modal" title="Adjust symbols" Class="text-black">
+    <BodyTemplate>
+        <div>
+            <p>Set holiday symbol</p>
+            <input type="text" @bind="appState.scheduleSymbols.holidaySymbol" class="border rounded p-1" />
+
+            <p class="mt-4">Set not scheduled symbol</p>
+            <input type="text" @bind="appState.scheduleSymbols.notScheduledSymbol" class="border rounded p-1" />
+
+            <p class="mt-4">Set day off symbol</p>
+            <input type="text" @bind="appState.scheduleSymbols.dayOffSymbol" class="border rounded p-1" />
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="OnHideModalClick">Close</div>
+        <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="OnHideModalClick">Save</div>
+        <div class="ml-4 flex justify-center items-center text-white w-20 h-8 bg-[#661D15] border-none shadow-md hover:bg-[#551811] active:scale-95" @onclick="ResetSymbols">Reset</div>
+    </FooterTemplate>
+</Modal>
+
 <div class="flex flex-row">
-    <div class="ml-4 mt-4 flex justify-center items-center common-button" @onclick="MakeScheduleGenerator" data-test-id="show-schedule-button">Show Schedule</div>
+    <div class="ml-4 mt-4 flex justify-center items-center common-button" @onclick="MakeSchedule" data-test-id="show-schedule-button">Show schedule</div>
+    <div class="ml-4 mt-4 flex justify-center items-center common-button" @onclick="OnShowModalClick" data-test-id="show-schedule-button">Adjust symbols</div>
     <div class="ml-4 mt-4 flex justify-center items-center common-button" @onclick="GenerateExcel" data-test-id="show-schedule-button">Download excel file</div>
 </div>
 

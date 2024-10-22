@@ -185,7 +185,14 @@ namespace BlazorSchedule.Layout.content_component.yourSchedule
                     string cellAddress = $"{(char)('A' + hoursColumnIndex)}{i + 2}";
 
                     string day = worksheet.Cells[$"B{i + 2}"].Text;
-                    worksheet.Cells[cellAddress].Formula = $"IF(B{i + 2}=\"Saturday\", {appState.CompanyInstance.CountWorkingHours(day)}, IF(B{i + 2}=\"Sunday\", 6, 0))";
+                    worksheet.Cells[cellAddress].Formula = 
+                                                            $"IF(B{i + 2}=\"Monday\", {appState.CompanyInstance.CountWorkingHours("Monday")}, " +
+                                                            $"IF(B{i + 2}=\"Tuesday\", {appState.CompanyInstance.CountWorkingHours("Tuesday")}, " +
+                                                            $"IF(B{i + 2}=\"Wednesday\", {appState.CompanyInstance.CountWorkingHours("Wednesday")}, " +
+                                                            $"IF(B{i + 2}=\"Thursday\", {appState.CompanyInstance.CountWorkingHours("Thursday")}, " +
+                                                            $"IF(B{i + 2}=\"Friday\", {appState.CompanyInstance.CountWorkingHours("Friday")}, " +
+                                                            $"IF(B{i + 2}=\"Saturday\", {appState.CompanyInstance.CountWorkingHours("Saturday")}, " +
+                                                            $"IF(B{i + 2}=\"Sunday\", {appState.CompanyInstance.CountWorkingHours("Sunday")}, 0)))))))";
                 }
 
                 for (int j = 0; j < employees.Count; j++)

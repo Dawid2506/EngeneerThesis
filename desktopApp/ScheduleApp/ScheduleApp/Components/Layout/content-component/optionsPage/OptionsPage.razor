@@ -1,0 +1,11 @@
+@page "/options"
+@inject AppState appState;
+@using BlazorSchedule;
+
+<div class="flex items-center mt-8">
+    <div class="ml-4 flex justify-center items-center common-button" @onclick="SavaAllData">Save data</div>
+    <div class="ml-4 flex justify-center items-center common-button" @onclick="LoadAllData" data-test-id="load-data">Load data</div>
+    <div class="ml-4 flex justify-center items-center common-button" @onclick="ReadData">read</div>
+    <input type="text" id="date" class="ml-4 rounded-lg text-black" @bind="employeeData">
+    <input type="text" id="date" class="ml-4 rounded-lg text-black" @bind="companyData">
+</div>

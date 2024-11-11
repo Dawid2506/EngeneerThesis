@@ -1,14 +1,43 @@
+# Ogólne ignorowanie plików dla .NET i Blazor
+bin/
+obj/
+*.user
+*.binlog
+*.cache/
+artifacts/
+.vscode/
+.vs/
+.dotnet/
+node_modules/
+compressed/
 
-/blazorApp/BlazorSchedule/obj/Debug/net8.0/compressed
-/blazorApp/BlazorSchedule/bin/Debug
-/blazorApp/BlazorSchedule/bin/Debug
-/blazorApp/BlazorSchedule/.vs/
-/blazorApp/BlazorSchedule/bin/
-/blazorApp/BlazorSchedule/obj/
-/blazorApp/BlazorSchedule/*.user
-/blazorApp/BlazorSchedule/artifacts/
-/blazorApp/BlazorSchedule/.vscode/
-/blazorApp/BlazorSchedule/.dotnet/
-/blazorApp/BlazorSchedule/*.binlog
-/blazorApp/BlazorSchedule/node_modules
+# Ignorowanie plików z `Debug` oraz `Release`
+**/bin/Debug/
+**/bin/Release/
+**/obj/Debug/
+**/obj/Release/
 
+# Ignorowanie plików specyficznych dla Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignorowanie plików tymczasowych systemu
+*.tmp
+*.temp
+*.log
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignorowanie folderów specyficznych dla projektów Blazor/WebAssembly
+wwwroot/dist/
+wwwroot/build/
+wwwroot/node_modules/
+
+# Ignorowanie plików specyficznych dla platformy macOS (jeśli pracujesz na macOS)
+.DS_Store
+
+# Ignorowanie plików cache i tymczasowych
+**/compressed

@@ -1,0 +1,51 @@
+
+
+.person-info-container{
+    height: 100vh;
+    width: 350px;
+    background-color: #551811;
+    display: none;
+    position: fixed;
+}
+
+.person-info-container.active{
+    display: flex;
+}
+
+.block-field{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.block-field.active{
+    padding-left: 350px;
+}
+
+.particular-block{
+    width: 300px;
+    height: 200px;
+    background-color: #661D15;
+    margin: 1.5em 0 0 1.5em;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.particular-block:hover{
+    background-color: #551811;
+    transform: scale(1.1);
+}
+
+.add-employee-icon{
+    font-size: 38px;
+    padding-right: 0.5em;
+}
+
+.employee-name-block{
+    font-size: 38px;
+}

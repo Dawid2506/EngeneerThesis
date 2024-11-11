@@ -11,6 +11,8 @@ using BlazorSchedule;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using ClosedXML.Excel;
+using System.IO;
 
 
 namespace ScheduleApp.Components.Layout.content_component.yourSchedule
@@ -131,9 +133,9 @@ namespace ScheduleApp.Components.Layout.content_component.yourSchedule
         {
             try
             {
-                using (var package = new ExcelPackage())
+                using (var workbook = new XLWorkbook())
                 {
-                    var worksheet = package.Workbook.Worksheets.Add("Arkusz1");
+                    var worksheet = workbook.Worksheets.Add("Arkusz1");
 
                     // Pobieranie danych
                     string[,] schedule = appState.schedule.schedule;
@@ -142,38 +144,71 @@ namespace ScheduleApp.Components.Layout.content_component.yourSchedule
                     string year = appState.schedule.year;
                     string month = appState.schedule.month;
                     string monthYear = $"{month}.{year}";
-                    worksheet.Cells["B1"].Value = monthYear;
+                    worksheet.Cell(1, 2).Value = monthYear;
 
                     // Nagłówki kolumn z nazwami pracowników
                     for (int i = 0; i < employees.Count; i++)
                     {
-                        string cellAddress = $"{(char)('A' + i + 2)}1";
-                        worksheet.Cells[cellAddress].Value = employees[i].name;
+                        worksheet.Cell(1, i + 3).Value = employees[i].name;
                     }
 
-                    // Wypełnianie tabeli danymi
+                    // Wypełnianie tabeli z numerami dni
                     for (int i = 0; i < schedule.GetLength(0); i++)
                     {
-                        worksheet.Cells[$"A{i + 2}"].Value = i + 1; // Numer dnia
-
+                        worksheet.Cell(i + 2, 1).Value = i + 1; // Numer dnia
                         for (int j = 1; j < schedule.GetLength(1); j++)
                         {
-                            string cellAddress = $"{(char)('A' + j)}{i + 2}";
-                            worksheet.Cells[cellAddress].Value = schedule[i, j];
+                            worksheet.Cell(i + 2, j + 1).Value = schedule[i, j];
                         }
+                    }
+
+                    // Dodatkowe informacje o pracownikach (nazwa, godziny)
+                    int employeeInfoPlaceX = schedule.GetLength(1) + 2;
+                    for (int i = 0; i < employees.Count; i++)
+                    {
+                        worksheet.Cell(i + 2, employeeInfoPlaceX).Value = employees[i].name;
+                        worksheet.Cell(i + 2, employeeInfoPlaceX + 1).Value = employees[i].realHoursUsed();
+                        worksheet.Cell(i + 2, employeeInfoPlaceX + 2).Value = employees[i].minHours;
+                    }
+
+                    // Obliczenia godzin dla każdego dnia
+                    int hoursColumnIndex = schedule.GetLength(1) + 1;
+                    worksheet.Cell(1, hoursColumnIndex + 1).Value = "Godziny na dzień";
+
+                    for (int i = 0; i < schedule.GetLength(0); i++)
+                    {
+                        string day = worksheet.Cell(i + 2, 2).GetString();
+                        int hours = appState.CompanyInstance.CountWorkingHours(day);
+                        worksheet.Cell(i + 2, hoursColumnIndex + 1).Value = hours;
+                    }
+
+                    // Podsumowanie godzin dla pracowników
+                    for (int j = 0; j < employees.Count; j++)
+                    {
+                        string employeeScheduleColumn = $"{(char)('A' + j + 2)}";
+                        string totalHoursCell = $"{(char)('A' + j + 2)}{schedule.GetLength(0) + 3}";
+
+                        worksheet.Cell(schedule.GetLength(0) + 3, j + 3).FormulaA1 =
+                            $"SUMIF({employeeScheduleColumn}2:{employeeScheduleColumn}{schedule.GetLength(0) + 1}, \"<>x\", " +
+                            $"{(char)('A' + hoursColumnIndex)}2:{(char)('A' + hoursColumnIndex)}{schedule.GetLength(0) + 1})";
                     }
 
                     // Zapis pliku Excel w lokalnym systemie plików
                     var filePath = Path.Combine(FileSystem.AppDataDirectory, "GeneratedSchedule.xlsx");
-                    await File.WriteAllBytesAsync(filePath, package.GetAsByteArray());
+                    Console.WriteLine($"Próba zapisu pliku w: {filePath}");
 
-                    // Powiadomienie użytkownika o zapisaniu pliku
-                    Console.WriteLine($"Plik Excel został zapisany: {filePath}");
+                    // Zapis pliku do systemu plików
+                    using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                    {
+                        workbook.SaveAs(stream);
+                    }
+
+                    await JSRuntime.InvokeVoidAsync("console.log", $"Plik Excel został zapisany pomyślnie w: {filePath}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Błąd podczas generowania pliku Excel: {ex.Message}");
+                await JSRuntime.InvokeVoidAsync("console.error", $"Błąd podczas generowania pliku Excel: {ex.Message}");
             }
         }
 

@@ -18,6 +18,10 @@ main {
     background-color: #661D15;
 }
 
+.sidebar:hover {
+    color: white;
+}
+
 article {
     padding: 0 !important;
 }

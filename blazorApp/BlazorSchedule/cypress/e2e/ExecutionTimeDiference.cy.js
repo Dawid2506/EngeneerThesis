@@ -2,6 +2,7 @@ let executionTimeTest5;
 let executionTimeTest10;
 let executionTimeTest15;
 let executionTimeTest20;
+let startTime;
 
 function addEmployees(num) {
     for (let i = 1; i <= num; i++) {
@@ -23,8 +24,10 @@ function generateSchedule() {
     cy.get('[data-test-id="choose-month"]').select('5');
     cy.get('[data-test-id="choose-year"]').select('2024');
 
-    let startTime = Date.now();
-    cy.get('[data-test-id="show-schedule-button"]').click();
+    cy.get('[data-test-id="show-schedule-button"]').click().then(() => {
+        // Set startTime after the click command has executed
+        startTime = Date.now();
+    });
 
     return cy.get('table').should('be.visible').then(() => {
         // Calculate the time difference after generating the schedule
@@ -58,8 +61,8 @@ describe('Execution time difference', () => {
     });
 
     it('Execution schedule time with 10 participants', () => {
-        addEmployees(5); // Add 5 more employees
-        cy.get('[data-test-id="particular-person"]').should('have.length', 11);
+        addEmployees(15); // Add 5 more employees
+        cy.get('[data-test-id="particular-person"]').should('have.length', 21);
         generateSchedule().then(executionTime => {
             executionTimeTest10 = executionTime;
             cy.log(`Schedule generation time: ${executionTimeTest10} ms`);
@@ -67,8 +70,8 @@ describe('Execution time difference', () => {
     });
 
     it('Execution schedule time with 15 participants', () => {
-        addEmployees(10); // Add 10 more employees
-        cy.get('[data-test-id="particular-person"]').should('have.length', 16);
+        addEmployees(25); // Add 10 more employees
+        cy.get('[data-test-id="particular-person"]').should('have.length', 31);
         generateSchedule().then(executionTime => {
             executionTimeTest15 = executionTime;
             cy.log(`Schedule generation time: ${executionTimeTest15} ms`);
@@ -76,8 +79,8 @@ describe('Execution time difference', () => {
     });
 
     it('Execution schedule time with 20 participants', () => {
-        addEmployees(15); // Add 15 more employees
-        cy.get('[data-test-id="particular-person"]').should('have.length', 21);
+        addEmployees(35); // Add 15 more employees
+        cy.get('[data-test-id="particular-person"]').should('have.length', 41);
         generateSchedule().then(executionTime => {
             executionTimeTest20 = executionTime;
             cy.log(`Schedule generation time: ${executionTimeTest20} ms`);

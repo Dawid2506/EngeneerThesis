@@ -32,6 +32,12 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
                 workingDaysList = appState.CompanyInstance.workingDays;
                 positions = appState.CompanyInstance.positionsList;
             }
+
+            appState.CompanyInstance.positionsPerDay = new Dictionary<string, List<string>>();
+            foreach (var day in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
+            {
+                appState.CompanyInstance.positionsPerDay.Add(day.ToString(), new List<string>());
+            }
         }
 
         private void AddDay(string day)
@@ -48,6 +54,7 @@ namespace BlazorSchedule.Layout.content_component.companyInformation
             else
             {
                 workingDaysList.Add(day);
+                //appState.CompanyInstance.positionsPerDay.Add(day, new List<string>());
             }
         }
 

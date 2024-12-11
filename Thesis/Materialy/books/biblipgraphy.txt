@@ -1,0 +1,5 @@
+Michael Pinedo. (2012). Scheduling: Theory, Algorithms, and Systems. Springer.
+Yves Robert, & Frederic Vivien. (2017). Introduction to Scheduling. CRC Press.
+Chris Sainty. (2022). Blazor in Action. Manning.
+Aditya Bhargava. (2017). Algorytmy. Ilustrowany przewodnik. Helion.
+Michael Mcmillan. (2007). Data Structures and Algorithms Using C#. Cambridge University Press.

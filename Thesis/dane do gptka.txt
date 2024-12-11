@@ -1,0 +1,9 @@
+teraz podam ci informacje na temat mojej pracy ktora wykonalem i pomozesz mi ja opisac pozniej jak poprosze 
+tytul Aplikacja do tworzenia harmonogramów pracy dla małych przedsiębiorstw
+opis Celem pracy jest opracowanie aplikacji służącej do tworzenia harmonogramów pracy dla małych przedsiębiorstw na podstawie wielu zależności. W zakresie pracy jest stworzenie interfejsu użytkownika, za pomocą którego będzie można wprowadzać dane dotyczące struktury firmy, dni pracujących oraz preferencji pracowników. Na postawie tych danych aplikacja stworzy oraz zaprezentuje harmonogram pracy wszystkich pracowników oraz pozwoli pobrać plik programu Excel z gotowym harmonogramem
+
+
+i mam napiasny program w blazor web assembly plus tailwind. apliakcja pozwala na dodawanie informacji o firmie takich jak dni w ktorych firma pracuje, stanowiska jakie sa w formie godziny rozpoczecia i zakonczenia pracy kazdego dnia i jakie stanowiska sa potrzebne i ile jakiego dnia 
+podaje sie rowniez pracownikow z informacjami o nich takimi jak nazwa pracownika rodzaj umowy (zlecenie czy o prace) minimalna ilosc godzin jakie powinien miec pracownik w miesiacu i na jakihc stanowiskach moze pracowac w kolejnej zakladce jest mozliwosc dodania dni wolnych ktore dany pracownik chce na dany miesiac
+w zakladce create schedule dostosowywyjemy miesiac rok oraz dni w ktorcyh firma nie pracuje i na podstawie tych danych algorytm oblicza grafik dal wszystkihc pracownikow jest tez mozliwosc dostosowania symboli jakimi grafik bedzie opisany (grafik jest w formie tabelki) 
+tabelke mozna pograc jako plik excel. plik ten zawiera grafik oraz informacje o tym ile dany dzien ma godzin pracy i laczne wykorzystane godziny pracy kazdego pracownika w danym miesiacu gdy podmienimy jakies komorki w pliku excel na przyklad dodamy komus dzien pracy dodatkowy to dane sie automatycznie zaktualizuja
